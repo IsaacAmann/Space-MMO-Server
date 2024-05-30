@@ -37,6 +37,9 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-messaging'
 	implementation 'org.springframework.session:spring-session-jdbc'
 	implementation 'org.springframework.shell:spring-shell-starter'
+
+	implementation 'org.springframework.security:spring-security-oauth2-jose'
+
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'

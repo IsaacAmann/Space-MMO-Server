@@ -1,0 +1,19 @@
+
+spring:
+  application:
+    name: SpaceMMO
+
+  security:
+    oauth2:
+      client:
+        provider:
+          cognito:
+            issuer-uri: https://cognito-idp.us-east-2.amazonaws.com/us-east-2_4jvWqxPQ0
+        registration:
+          cognito:
+            client-id: 7v6ht9ct2j9anv6p194hb3s3q8
+            client-secret: 1rrjaql6gsnbk082k33rd69fupejf313kqonbskak39l3n2lhnb0
+            scope: openid
+            redirect-uri: http://localhost:8080
+
+
