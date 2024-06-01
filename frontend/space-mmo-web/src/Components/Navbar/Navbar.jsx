@@ -61,8 +61,7 @@ function Navbar()
 				<Typography variant="h5">User Role: {loginInfo.userRole}</Typography>
 				<Divider />
 
-
-				<Button variant="contained" onClick={() => handleLogout()}> <LogoutIcon/>Sign Out </Button>
+				<Button component={Link} to="https://space-mmo-sso.auth.us-east-2.amazoncognito.com/logout?client_id=7v6ht9ct2j9anv6p194hb3s3q8&logout_uri=http%3A%2F%2Flocalhost%3A5173%2Fsignout" variant="contained" >Sign Out</Button>
 			</Box>
 		);
 		return(

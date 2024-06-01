@@ -12,6 +12,7 @@ import {getToken} from "./AuthService.js";
 import './App.css'
 
 import HomePage from "./Pages/HomePage/HomePage.jsx";
+import SignoutPage from "./Pages/SignoutPage.jsx";
 
 export const LoginInfoContext = createContext({token: null, setToken: () => {}});
 
@@ -117,7 +118,7 @@ function App() {
 				<Routes>
 					<Route path="/">
 						<Route index element={<HomePage />} />
-
+                        <Route path="signout" element={<SignoutPage/>} />
 					</Route>
 				</Routes>
 			</BrowserRouter>
