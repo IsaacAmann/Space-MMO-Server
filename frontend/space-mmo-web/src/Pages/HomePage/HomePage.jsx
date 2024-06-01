@@ -4,12 +4,14 @@ import {useContext} from 'react'
 import {useState} from 'react'
 
 import {LoginInfoContext} from "../../App.jsx";
+import Navbar from "../../Components/Navbar/Navbar.jsx";
 
 function HomePage()
 {
 	return(
 		<>
-			<p>test</p>
+		    <Navbar/>
+			<p>test </p>
 		</>
 	);
 }
