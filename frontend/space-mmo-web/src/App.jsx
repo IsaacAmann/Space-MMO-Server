@@ -86,9 +86,27 @@ function App() {
         //Check for existing token in sessionStorage
 		else
 		{
-
+            if(currentToken != null && currentToken != "null")
+            {
+                var decodedToken = jwtDecode(currentToken);
+                console.log(decodedToken);
+                console.log(new Date(decodedToken.exp*1000));
+                //Check that token is not expired
+                console.log(Date.now() <= decodedToken.exp * 1000);
+                if(Date.now() <= decodedToken.exp * 1000)
+                {
+                    setUsername(decodedToken.username);
+                    setToken(decodedToken);
+                    console.log("not expired");
+                }
+                else
+                {
+                     sessionStorage.setItem("accessToken", null);
+                     sessionStorage.setItem("idToken", null);
+                     sessionStorage.setItem("refreshToken", null);
+                }
+            }
         }
-
 	}, []);
 	
 	return (
