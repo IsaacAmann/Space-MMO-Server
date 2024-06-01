@@ -52,4 +52,14 @@ public class LoginController
         output.put("response", response);
         return output;
     }
+
+    @PostMapping("/api/authTest")
+    public Map<String, Object> authTest(@RequestBody Map<String, Object> payload, HttpServletRequest request)
+    {
+        HashMap<String, Object> output = new HashMap<String, Object>();
+
+        output.put("Message", "Authed");
+
+        return output;
+    }
 }

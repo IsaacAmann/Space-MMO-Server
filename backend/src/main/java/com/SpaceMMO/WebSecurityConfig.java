@@ -18,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static jakarta.servlet.DispatcherType.ERROR;
 import static jakarta.servlet.DispatcherType.FORWARD;
+import static org.springframework.security.oauth2.core.authorization.OAuth2AuthorizationManagers.hasScope;
 
 
 @Configuration
@@ -33,11 +34,13 @@ public class WebSecurityConfig
 			.authorizeHttpRequests((authorize) -> authorize
 				.dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
 				.requestMatchers("/public/**").permitAll()
+					.requestMatchers("/api/**").access(hasScope("openid"))
 				.anyRequest()
 				.authenticated()
 			).csrf((csrf) -> csrf
 						.ignoringRequestMatchers("/*/**")
-				);
+				)
+				.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
 
 		return http.build();
 	}

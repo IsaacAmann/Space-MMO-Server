@@ -1,3 +1,9 @@
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
 
 spring:
   application:
@@ -5,6 +11,10 @@ spring:
 
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://cognito-idp.us-east-2.amazonaws.com/us-east-2_4jvWqxPQ0
+          jwk-set-uri: https://cognito-idp.us-east-2.amazonaws.com/us-east-2_4jvWqxPQ0/.well-known/jwks.json
       client:
         provider:
           cognito:
