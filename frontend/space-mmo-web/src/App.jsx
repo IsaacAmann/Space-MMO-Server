@@ -1,16 +1,20 @@
 import {createContext, useContext, useState, useEffect} from 'react'
+import CssBaseline from '@mui/material/CssBaseline';
+
 import ReactDOM from "react-dom/client"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom"
 import {colors, ThemeProvider} from "@mui/material"
 import {createTheme} from "@mui/material/styles"
-import CssBaseline from '@mui/material/CssBaseline';
 import { jwtDecode } from "jwt-decode";
+
+import {getToken} from "./AuthService.js";
 
 import './App.css'
 
 import HomePage from "./Pages/HomePage/HomePage.jsx";
 
 export const LoginInfoContext = createContext({token: null, setToken: () => {}});
+
 
 
 export const mainTheme = createTheme({
@@ -43,11 +47,11 @@ function App() {
 	const [username, setUsername] = useState(null);
 	const [userRole, setUserRole] = useState(null);
 	const loginInfo = useContext(LoginInfoContext);
-	
-	//Check for token in cookie
-	useEffect(() => 
+
+	//Check for token
+	useEffect(() =>
 	{
-	/*
+	    /*
 		var currentToken = APICallContainer.getLoginInfo();
 		if(currentToken != null)
 		{
@@ -58,6 +62,33 @@ function App() {
 			setUserRole(decodedToken.userRole);
 		}
 		*/
+		var currentToken = sessionStorage.getItem("accessToken");
+		var queryString = window.location.search;
+		var urlParams = new URLSearchParams(queryString);
+		var code = urlParams.get("code");
+		if(code != null)
+		{
+            //Request JWT from backend
+            getToken(code).then(
+                function(value)
+                {
+                    console.log(value);
+                    if(value.loggedIn == true)
+                    {
+                        sessionStorage.setItem("accessToken", value.accessToken);
+                        sessionStorage.setItem("idToken", value.idToken);
+                        sessionStorage.setItem("refreshToken", value.refreshToken);
+                    }
+                    window.location.replace("http://localhost:5173");
+                }
+            );
+        }
+        //Check for existing token in sessionStorage
+		else
+		{
+
+        }
+
 	}, []);
 	
 	return (

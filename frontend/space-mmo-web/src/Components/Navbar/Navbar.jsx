@@ -101,7 +101,7 @@ function Navbar()
 
 			<Toolbar>
 				<Typography component="div" sx={{mr: 2}}>
-                    Space MMO
+                    Kosmos
                 </Typography>
 				<Box sx={{flexGrow: 1}}>
 					<Button component={Link} to="/" variant="contained" color="secondary" sx={{mx: 1}}>
