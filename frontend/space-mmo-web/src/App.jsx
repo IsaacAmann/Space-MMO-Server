@@ -79,6 +79,7 @@ function App() {
                         sessionStorage.setItem("accessToken", value.accessToken);
                         sessionStorage.setItem("idToken", value.idToken);
                         sessionStorage.setItem("refreshToken", value.refreshToken);
+                        sessionStorage.setItem("userRole", value.account.userRole);
                     }
                     window.location.replace("http://localhost:5173");
                 }
@@ -98,6 +99,7 @@ function App() {
                 {
                     setUsername(decodedToken.username);
                     setToken(decodedToken);
+                    setUserRole(sessionStorage.userRole);
                     console.log("not expired");
                 }
                 else
@@ -105,6 +107,7 @@ function App() {
                      sessionStorage.setItem("accessToken", null);
                      sessionStorage.setItem("idToken", null);
                      sessionStorage.setItem("refreshToken", null);
+                     sessionStorage.setItem("userRole", null);
                 }
             }
         }

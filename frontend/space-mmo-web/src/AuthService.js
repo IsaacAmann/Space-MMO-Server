@@ -27,6 +27,7 @@ export const getToken = async function(code)
     output.accessToken = result.data.response.access_token;
     output.refreshToken = result.data.response.refresh_token;
     output.idToken = result.data.response.id_token;
+    output.account = result.data.account;
     if(output.accessToken != null || output.accessToken != undefined)
     {
         output.loggedIn = true;

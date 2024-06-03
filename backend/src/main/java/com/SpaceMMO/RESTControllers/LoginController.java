@@ -1,6 +1,8 @@
 package com.SpaceMMO.RESTControllers;
 
 import com.SpaceMMO.Services.AuthorizationService;
+import com.SpaceMMO.UserManagement.UserAccount;
+import com.SpaceMMO.UserManagement.UserAccountRepository;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.env.Environment;
@@ -27,6 +29,8 @@ public class LoginController
     private Environment env;
     @Autowired
     private AuthorizationService authorizationService;
+    @Autowired
+    private UserAccountRepository userAccountRepository;
 
     private final String awsAuthOUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/oauth2/token";
     @PostMapping("/public/login")
@@ -48,8 +52,18 @@ public class LoginController
         HttpEntity<MultiValueMap<String,String>> httpRequest = new HttpEntity<MultiValueMap<String,String>>(body, header);
 
         LinkedHashMap<String,String> response = restTemplate.postForObject(awsAuthOUrl, httpRequest, LinkedHashMap.class);
+
+        //Check if user has an account created yet, if not create it on the database
+        UserAccount account = authorizationService.getAccountFromToken((String)response.get("access_token"));
+       if(account == null)
+        {
+            account = new UserAccount((String)authorizationService.getToken((String)response.get("access_token")).get("username"), UserAccount.UserRole.USER);
+            userAccountRepository.save(account);
+        }
+
         //Return JWT to client
         output.put("response", response);
+        output.put("account", account);
         return output;
     }
 

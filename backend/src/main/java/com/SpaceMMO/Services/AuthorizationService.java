@@ -24,6 +24,12 @@ public class AuthorizationService
         return userAccountRepository.findByUsername((String)getToken(request).get("username"));
     }
 
+    public UserAccount getAccountFromToken(String token)
+    {
+        String[] decoded = decodeToken(token);
+        return userAccountRepository.findByUsername((String)jsonToMap(decoded[1]).get("username"));
+    }
+
 
     public Map<String, Object> getToken(HttpServletRequest request)
     {
@@ -35,6 +41,13 @@ public class AuthorizationService
         String[] decoded = decodeToken(authHeader);
         return jsonToMap(decoded[1]);
     }
+
+    public Map<String, Object> getToken(String token)
+    {
+        String[] decoded = decodeToken(token);
+        return jsonToMap(decoded[1]);
+    }
+
     public void printToken(HttpServletRequest request)
     {
 

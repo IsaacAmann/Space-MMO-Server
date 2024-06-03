@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.security.core.parameters.P;
 
 @Entity
 public class UserAccount
@@ -27,6 +28,12 @@ public class UserAccount
     {
         this.username = username;
         this.userRole = userRole;
+    }
+
+    public UserAccount()
+    {
+        userRole = UserRole.USER;
+        username = null;
     }
 
 }
