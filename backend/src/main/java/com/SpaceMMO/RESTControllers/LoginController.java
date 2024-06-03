@@ -1,5 +1,6 @@
 package com.SpaceMMO.RESTControllers;
 
+import com.SpaceMMO.Services.AuthorizationService;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.env.Environment;
@@ -24,15 +25,14 @@ public class LoginController
 {
     @Autowired
     private Environment env;
+    @Autowired
+    private AuthorizationService authorizationService;
 
     private final String awsAuthOUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/oauth2/token";
     @PostMapping("/public/login")
     public Map<String, Object> login(@RequestBody Map<String, Object> payload, HttpServletRequest request)
     {
         HashMap<String, Object> output = new HashMap<String, Object>();
-        System.out.println("yuh");
-        System.out.println(env.getProperty("spring.security.oauth2.client.registration.cognito.client-secret"));
-
         //Retrieve JWT from amazon
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders header = new HttpHeaders();
@@ -57,8 +57,9 @@ public class LoginController
     public Map<String, Object> authTest(@RequestBody Map<String, Object> payload, HttpServletRequest request)
     {
         HashMap<String, Object> output = new HashMap<String, Object>();
-        String authHeader = request.getHeader("Authorization");
 
+
+        authorizationService.printToken(request);
         //System.out.println(authHeader);
         output.put("Message", "Authed");
 
