@@ -10,10 +10,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class SpaceMmoApplication {
 
+	/*
 	public static void main(String[] args) {
 		SpringApplication.run(SpaceMmoApplication.class, args);
 	}
+	*/
 
+	public static void main(String[] args)
+	{
+		SpringApplication application = new SpringApplication(SpaceMmoApplication.class);
+		application.setAdditionalProfiles("dev");
+		application.run(args);
+	}
 	@Configuration
 	@EnableWebMvc
 	public class Config implements WebMvcConfigurer

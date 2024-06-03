@@ -57,7 +57,9 @@ public class LoginController
     public Map<String, Object> authTest(@RequestBody Map<String, Object> payload, HttpServletRequest request)
     {
         HashMap<String, Object> output = new HashMap<String, Object>();
+        String authHeader = request.getHeader("Authorization");
 
+        //System.out.println(authHeader);
         output.put("Message", "Authed");
 
         return output;

@@ -26,13 +26,6 @@ spring:
             scope: openid
 
 
-#spring:
-#  application:
-#    name: SpaceMMO
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: https://cognito-idp.us-east-2.amazonaws.com/us-east-2_4jvWqxPQ0
+
 
 
