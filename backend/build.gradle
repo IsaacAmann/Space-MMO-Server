@@ -39,6 +39,7 @@ dependencies {
 	implementation 'org.springframework.shell:spring-shell-starter'
 
 	implementation 'org.springframework.security:spring-security-oauth2-jose'
+	implementation 'com.bucket4j:bucket4j-core:8.10.0'
 
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
