@@ -60,9 +60,11 @@ public class LoginController
 
 
         authorizationService.printToken(request);
+        Map<String, Object> token = authorizationService.getToken(request);
         //System.out.println(authHeader);
         output.put("Message", "Authed");
-
+        output.put("tokenUsername", token.get("username"));
+        output.put("account", authorizationService.getAccountFromToken(request));
         return output;
     }
 }

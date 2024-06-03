@@ -1,8 +1,11 @@
 package com.SpaceMMO.Services;
 
+import com.SpaceMMO.UserManagement.UserAccount;
+import com.SpaceMMO.UserManagement.UserAccountRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -12,7 +15,26 @@ import java.util.Map;
 @Service
 public class AuthorizationService
 {
+    @Autowired
+    private UserAccountRepository userAccountRepository;
 
+
+    public UserAccount getAccountFromToken(HttpServletRequest request)
+    {
+        return userAccountRepository.findByUsername((String)getToken(request).get("username"));
+    }
+
+
+    public Map<String, Object> getToken(HttpServletRequest request)
+    {
+        String authHeader = request.getHeader("Authorization");
+        authHeader = authHeader.replace("Bearer ", "");
+
+        //System.out.println(decodeToken(authHeader));
+
+        String[] decoded = decodeToken(authHeader);
+        return jsonToMap(decoded[1]);
+    }
     public void printToken(HttpServletRequest request)
     {
 
