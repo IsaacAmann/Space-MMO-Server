@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.springframework.security.core.parameters.P;
-
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;

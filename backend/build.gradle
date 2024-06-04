@@ -33,13 +33,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	//implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.springframework.security:spring-security-messaging'
 	implementation 'org.springframework.session:spring-session-jdbc'
 	implementation 'org.springframework.shell:spring-shell-starter'
 
 	implementation 'org.springframework.security:spring-security-oauth2-jose'
 	implementation 'com.bucket4j:bucket4j-core:8.10.0'
+
+	implementation 'org.apache.commons:commons-pool2:2.12.0'
 
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
