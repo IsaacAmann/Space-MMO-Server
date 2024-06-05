@@ -15,6 +15,8 @@ public class GameServer extends BinaryWebSocketHandler
 {
     @Autowired
     UserAccountRepository userAccountRepository;
+    @Autowired
+    GameSessionService gameSessionService;
 
     @Override
     public void handleBinaryMessage(WebSocketSession session, BinaryMessage message)
@@ -47,10 +49,33 @@ public class GameServer extends BinaryWebSocketHandler
         if(acceptConnection == false)
         {
             session.close(CloseStatus.BAD_DATA);
+            System.out.println("Game Connection refused: username: " + username + " validToke: " +account.isValidGameToken(encodedToken) + "sessionStarted: " + account.inGame);
         }
         else
         {
             //Begin user game session
+            account.inGame = true;
+            System.out.println(username + " has connected to the game");
+            gameSessionService.userSocketSessions.put(session.getId(), account);
+            gameSessionService.usernameToSessionMap.put(account.username, session);
+            userAccountRepository.save(account);
+        }
+    }
+
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus)
+    {
+        UserAccount account = gameSessionService.userSocketSessions.get(session.getId());
+        if(account != null)
+        {
+            account.inGame = false;
+            System.out.println(account.username + " has disconnected from the game");
+            userAccountRepository.save(account);
+            //remove from userSocketSessions map
+            gameSessionService.userSocketSessions.remove(session.getId());
+            //remove from usernameToSession map
+            gameSessionService.usernameToSessionMap.remove(account.username);
+
         }
     }
 }
