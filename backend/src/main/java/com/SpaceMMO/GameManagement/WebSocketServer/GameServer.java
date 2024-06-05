@@ -1,35 +1,16 @@
 package com.SpaceMMO.GameManagement.WebSocketServer;
 
-import jakarta.websocket.*;
-import jakarta.websocket.OnOpen;
-import jakarta.websocket.server.PathParam;
-import jakarta.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/openGameSession/{username}")
-public class GameServer
+import org.springframework.web.socket.BinaryMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.BinaryWebSocketHandler;
+
+public class GameServer extends BinaryWebSocketHandler
 {
-    @OnOpen
-    public void open(Session session, @PathParam("username") String username)
+    @Override
+    public void handleBinaryMessage(WebSocketSession session, BinaryMessage message)
     {
-
-    }
-
-    @OnClose
-    public void close(Session session)
-    {
-
-    }
-
-    @OnError
-    public void onError(Throwable error)
-    {
-
-    }
-
-    @OnMessage
-    public void handleMessage(SocketMessage message, String session)
-    {
-
+        
     }
 }
 

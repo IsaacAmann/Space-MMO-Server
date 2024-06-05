@@ -1,14 +1,20 @@
 package com.SpaceMMO;
 
+import com.SpaceMMO.GameManagement.WebSocketServer.GameServer;
 import com.SpaceMMO.Services.RateLimitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 @SpringBootApplication
 public class SpaceMmoApplication {
@@ -39,5 +45,22 @@ public class SpaceMmoApplication {
 			registry.addInterceptor(interceptor).addPathPatterns("/*");
 		}
 
+	}
+
+	@Configuration
+	@EnableWebSocket
+	public class WebSocketConfig implements WebSocketConfigurer
+	{
+		@Override
+		public void registerWebSocketHandlers(WebSocketHandlerRegistry registry)
+		{
+			registry.addHandler(webSocketHandler(), "/openGameSession/{username}");
+		}
+
+		@Bean
+		public WebSocketHandler webSocketHandler()
+		{
+			return new GameServer();
+		}
 	}
 }
