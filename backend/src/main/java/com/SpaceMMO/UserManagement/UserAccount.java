@@ -38,6 +38,8 @@ public class UserAccount
         this.username = username;
         this.userRole = userRole;
         inGame = false;
+        gameSessionToken = new byte[16];
+
     }
 
     public UserAccount()
@@ -45,6 +47,7 @@ public class UserAccount
         userRole = UserRole.USER;
         username = null;
         inGame = false;
+        gameSessionToken = new byte[16];
     }
 
     //Return encoded session token

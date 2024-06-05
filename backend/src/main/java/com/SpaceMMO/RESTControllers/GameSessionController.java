@@ -7,10 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@RestController
 public class GameSessionController
 {
     @Autowired
@@ -18,8 +20,8 @@ public class GameSessionController
     @Autowired
     UserAccountRepository userAccountRepository;
 
-    @PostMapping("/api/authTest")
-    public Map<String, Object> authTest(@RequestBody Map<String, Object> payload, HttpServletRequest request)
+    @PostMapping("/api/getGameToken")
+    public Map<String, Object> getGameToken(@RequestBody Map<String, Object> payload, HttpServletRequest request)
     {
         HashMap<String, Object> output = new HashMap<String, Object>();
 

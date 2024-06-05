@@ -46,24 +46,31 @@ public class LoginController
         body.add("code", (String)payload.get("code"));
         body.add("client_id", env.getProperty("spring.security.oauth2.client.registration.cognito.client-id"));
         body.add("client_secret", env.getProperty("spring.security.oauth2.client.registration.cognito.client-secret"));
+        //System.out.println(env.getProperty("spring.security.oauth2.client.registration.cognito.client-id"));
         body.add("grant_type", "authorization_code");
         body.add("redirect_uri", "http://localhost:5173");
 
         HttpEntity<MultiValueMap<String,String>> httpRequest = new HttpEntity<MultiValueMap<String,String>>(body, header);
 
         LinkedHashMap<String,String> response = restTemplate.postForObject(awsAuthOUrl, httpRequest, LinkedHashMap.class);
+        //System.out.println("code: " + (String)payload.get("code"));
 
         //Check if user has an account created yet, if not create it on the database
         UserAccount account = authorizationService.getAccountFromToken((String)response.get("access_token"));
        if(account == null)
         {
+            System.out.println("username: "+ (String)authorizationService.getToken((String)response.get("access_token")).get("username"));
             account = new UserAccount((String)authorizationService.getToken((String)response.get("access_token")).get("username"), UserAccount.UserRole.USER);
             userAccountRepository.save(account);
         }
 
         //Return JWT to client
+        System.out.println("user2: " + account.username);
         output.put("response", response);
-        output.put("account", account);
+        HashMap<String, Object> accountObject = new HashMap<String, Object>();
+        accountObject.put("username", account.username);
+        accountObject.put("userRole", account.userRole);
+        output.put("account", accountObject);
         return output;
     }
 

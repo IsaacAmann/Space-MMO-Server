@@ -54,13 +54,15 @@ public class SpaceMmoApplication {
 		@Override
 		public void registerWebSocketHandlers(WebSocketHandlerRegistry registry)
 		{
-			registry.addHandler(webSocketHandler(), "/openGameSession/{username}");
+			registry.addHandler(binaryWebSocketHandler(), "/openGameSession");
 		}
 
 		@Bean
-		public WebSocketHandler webSocketHandler()
+		public WebSocketHandler binaryWebSocketHandler()
 		{
 			return new GameServer();
 		}
+
+
 	}
 }
