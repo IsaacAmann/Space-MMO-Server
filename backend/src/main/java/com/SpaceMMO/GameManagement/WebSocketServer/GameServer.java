@@ -1,6 +1,8 @@
 package com.SpaceMMO.GameManagement.WebSocketServer;
 
 
+import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.BasicMessageHandlers;
+import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.ProtocolConstants;
 import com.SpaceMMO.UserManagement.UserAccount;
 import com.SpaceMMO.UserManagement.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,25 @@ public class GameServer extends BinaryWebSocketHandler
     UserAccountRepository userAccountRepository;
     @Autowired
     GameSessionService gameSessionService;
+    @Autowired
+    BasicMessageHandlers basicMessageHandlers;
 
     @Override
-    public void handleBinaryMessage(WebSocketSession session, BinaryMessage message)
+    public void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception
     {
         System.out.println(message.toString());
+        //Get first byte that contains the message type
+        Byte messageType = message.getPayload().array()[0];
+        switch(messageType.byteValue())
+        {
+            case ProtocolConstants.PLAYER_INFO:
+                basicMessageHandlers.handlePlayerInfo(session, message);
+                break;
 
+            default:
+
+                break;
+        }
     }
 
     @Override
@@ -79,4 +94,5 @@ public class GameServer extends BinaryWebSocketHandler
         }
     }
 }
+
 
