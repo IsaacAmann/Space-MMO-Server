@@ -39,7 +39,7 @@ public class BasicMessageHandlers
             System.out.println(accountJSON);
             System.out.println(encodedJSON);
             System.out.println(encodedJSON.getBytes(StandardCharsets.US_ASCII).length + 1);
-            
+
             ByteBuffer payload = ByteBuffer.allocate(encodedJSON.getBytes(StandardCharsets.US_ASCII).length + 1);
 
             System.out.println(payload.array().length);
@@ -59,4 +59,6 @@ public class BasicMessageHandlers
 
         }
     }
+
+
 }
