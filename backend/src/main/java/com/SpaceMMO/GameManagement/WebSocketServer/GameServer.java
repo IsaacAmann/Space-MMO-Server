@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement.WebSocketServer;
 
 
+import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.BasicMessageHandlers;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.ProtocolConstants;
 import com.SpaceMMO.UserManagement.UserAccount;
@@ -23,6 +24,9 @@ public class GameServer extends BinaryWebSocketHandler
     @Autowired
     BasicMessageHandlers basicMessageHandlers;
 
+    public static Sector testSector = new Sector();
+    public static float testX = 1;
+    public static float testY = 1;
     @Override
     public void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception
     {

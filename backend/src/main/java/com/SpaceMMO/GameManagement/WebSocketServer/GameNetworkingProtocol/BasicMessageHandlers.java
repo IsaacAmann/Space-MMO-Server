@@ -1,9 +1,13 @@
 package com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol;
 
+import com.SpaceMMO.GameManagement.EntitySystem.BasicEntity;
+import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
+import com.SpaceMMO.GameManagement.WebSocketServer.GameServer;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameSessionService;
 import com.SpaceMMO.UserManagement.UserAccount;
 import com.SpaceMMO.UserManagement.UserAccountRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.Basic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.BinaryMessage;
@@ -49,6 +53,7 @@ public class BasicMessageHandlers
 
             BinaryMessage response = new BinaryMessage(payload.array());
 
+            GameServer.testSector.entityTree.add(new BasicEntity(GameServer.testX++, GameServer.testY++, 5, 5));
             //Send response
             session.sendMessage(response);
 
