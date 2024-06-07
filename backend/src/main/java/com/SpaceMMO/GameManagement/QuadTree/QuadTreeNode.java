@@ -1,5 +1,6 @@
-package com.SpaceMMO.GameManagement.EntitySystem;
+package com.SpaceMMO.GameManagement.QuadTree;
 
+import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 import org.apache.commons.pool2.ObjectPool;
 
 import java.util.ArrayList;
