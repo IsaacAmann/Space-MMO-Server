@@ -10,6 +10,7 @@ import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.BinaryWebSocketHandler;
+import org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorator;
 
 import java.io.IOException;
 
@@ -72,7 +73,7 @@ public class GameServer extends BinaryWebSocketHandler
             account.inGame = true;
             System.out.println(username + " has connected to the game");
             gameSessionService.userSocketSessions.put(session.getId(), account);
-            gameSessionService.usernameToSessionMap.put(account.username, session);
+            gameSessionService.usernameToSessionMap.put(account.username, new ConcurrentWebSocketSessionDecorator(session, 500, 8000));
             userAccountRepository.save(account);
         }
     }
