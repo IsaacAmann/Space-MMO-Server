@@ -53,20 +53,29 @@ public class QuadTreeNode
         {
             if(children.size() == 0)
             {
+                //exceeding 10000 nodes quickly, check this
                 System.out.println("Splitting node into 4");
+                System.out.println("Current Nodes: " + quadTreePool.getNumActive());
                 QuadTreeNode n1 = quadTreePool.borrowObject();
                 QuadTreeNode n2 = quadTreePool.borrowObject();
                 QuadTreeNode n3 = quadTreePool.borrowObject();
                 QuadTreeNode n4 = quadTreePool.borrowObject();
-
+                System.out.println("Point");
                 n1.set(x, y, width/2, height/2, level + 1);
+                n1.quadTreePool = this.quadTreePool;
                 children.add(n1);
+
                 n2.set(x+width/2, y, width/2, height/2, level + 1);
                 children.add(n2);
+                n2.quadTreePool = this.quadTreePool;
+
                 n3.set(x, y+height/2, width/2, height/2, level + 1);
                 children.add(n3);
+                n3.quadTreePool = this.quadTreePool;
+
                 n4.set(x+width/2, y+height/2, width/2, height/2, level + 1);
                 children.add(n4);
+                n4.quadTreePool = this.quadTreePool;
 
                 for(GameEntity currentEntity : entities)
                 {
@@ -96,7 +105,7 @@ public class QuadTreeNode
         System.out.println("Comparing entity: x: " + entity.x + " y: " + entity.y + " width: " + entity.width + " height: " + entity.height);
         System.out.println("Bounding box: x: " + x + " y: " + y + " width: " + width + " height: " + height);
         if (entity.x < (x + width) && (entity.x + entity.width) > x &&
-            entity.y > (y + height) && (entity.y + entity.height) < y)
+            entity.y < (y + height) && (entity.y + entity.height) > y)
         {
 
             return true;

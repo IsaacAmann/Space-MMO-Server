@@ -7,6 +7,7 @@ import com.SpaceMMO.GameManagement.QuadTree.QuadTreeNode;
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import java.util.ArrayList;
 
@@ -14,16 +15,21 @@ public class Sector
 {
     public static final float SECTOR_WIDTH = 1000000000;
     public static final float SECTOR_HEIGHT = 1000000000;
+    public static final int MAX_QUAD_NODES = 10000;
 
     public String name;
-    public ObjectPool<QuadTreeNode> quadTreePool;
+    public GenericObjectPool<QuadTreeNode> quadTreePool;
     public QuadTreeNode entityTree;
     public ArrayList<GameEntity> entities;
 
     public Sector()
     {
         name = "Unamed Sector";
-        quadTreePool = new GenericObjectPool(new PooledQuadNodeFactory());
+        GenericObjectPoolConfig<QuadTreeNode> quadPoolConfig = new GenericObjectPoolConfig<QuadTreeNode>();
+        quadPoolConfig.setMaxTotal(MAX_QUAD_NODES);
+
+        quadTreePool = new GenericObjectPool(new PooledQuadNodeFactory(), quadPoolConfig);
+        System.out.println("MAX OBJECT POOL: " + quadTreePool.getMaxTotal());
         entities = new ArrayList<GameEntity>();
         entityTree = new QuadTreeNode(0,0,SECTOR_WIDTH, SECTOR_HEIGHT, 0, quadTreePool);
     }
