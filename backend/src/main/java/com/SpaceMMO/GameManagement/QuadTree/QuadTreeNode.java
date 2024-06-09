@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class QuadTreeNode
 {
 
-    public static final int MAX_LEVEL = 5000;
+    public static final int MAX_LEVEL = 7;
 
     float x,y;
     float width, height;
@@ -61,6 +61,7 @@ public class QuadTreeNode
                 QuadTreeNode n3 = quadTreePool.borrowObject();
                 QuadTreeNode n4 = quadTreePool.borrowObject();
                 System.out.println("Point");
+
                 n1.set(x, y, width/2, height/2, level + 1);
                 n1.quadTreePool = this.quadTreePool;
                 children.add(n1);
@@ -102,8 +103,8 @@ public class QuadTreeNode
 
     public boolean inside(GameEntity entity)
     {
-        System.out.println("Comparing entity: x: " + entity.x + " y: " + entity.y + " width: " + entity.width + " height: " + entity.height);
-        System.out.println("Bounding box: x: " + x + " y: " + y + " width: " + width + " height: " + height);
+       // System.out.println("Comparing entity: x: " + entity.x + " y: " + entity.y + " width: " + entity.width + " height: " + entity.height);
+       // System.out.println("Bounding box: x: " + x + " y: " + y + " width: " + width + " height: " + height);
         if (entity.x < (x + width) && (entity.x + entity.width) > x &&
             entity.y < (y + height) && (entity.y + entity.height) > y)
         {
@@ -112,18 +113,9 @@ public class QuadTreeNode
         }
         else
         {
-            System.out.println("not intersecting");
+          //  System.out.println("not intersecting");
             return false;
         }
-
-      /*
-        if (entity.x > x + width && entity.x + entity.width < x &&
-                entity.y < y + height && entity.y + entity.height > y)
-            return true;
-        else
-            return false;
-
-       */
     }
 
     public void set(float x, float y, float width, float height, float level) throws Exception
@@ -131,7 +123,9 @@ public class QuadTreeNode
         System.out.println("Setting");
         clearChildren();
 
+        clearChildren();
         children.clear();
+
         entities.clear();
 
         this.x = x;
@@ -151,7 +145,7 @@ public class QuadTreeNode
 
         for(QuadTreeNode node : children)
         {
-            quadTreePool.invalidateObject(node);
+            quadTreePool.returnObject(node);
         }
 
     }

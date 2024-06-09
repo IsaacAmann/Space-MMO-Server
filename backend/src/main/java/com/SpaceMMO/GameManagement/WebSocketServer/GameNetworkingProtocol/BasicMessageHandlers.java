@@ -53,7 +53,9 @@ public class BasicMessageHandlers
 
             BinaryMessage response = new BinaryMessage(payload.array());
 
-            GameServer.testSector.entityTree.add(new BasicEntity(GameServer.testX++, GameServer.testY++, 5, 5));
+            GameServer.testSector.entityTree.add(new BasicEntity(GameServer.testX+=10, GameServer.testY+=10, 5, 5));
+            GameServer.testSector.entityTree.add(new BasicEntity(10, 10, 5, 5));
+
             //Send response
             session.sendMessage(response);
 

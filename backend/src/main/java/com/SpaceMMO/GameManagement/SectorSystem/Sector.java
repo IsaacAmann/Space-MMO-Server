@@ -15,6 +15,7 @@ public class Sector
 {
     public static final float SECTOR_WIDTH = 1000000000;
     public static final float SECTOR_HEIGHT = 1000000000;
+
     public static final int MAX_QUAD_NODES = 10000;
 
     public String name;
@@ -48,6 +49,25 @@ public class Sector
         for(GameEntity entity : entities)
         {
             entityTree.add(entity);
+        }
+    }
+
+    public class SectorUpdateThread extends Thread
+    {
+        public boolean running;
+        
+        public SectorUpdateThread()
+        {
+            running = true;
+        }
+
+        @Override
+        public void run()
+        {
+            while(running)
+            {
+
+            }
         }
     }
 }
