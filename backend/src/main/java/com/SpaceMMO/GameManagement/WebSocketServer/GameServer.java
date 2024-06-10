@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement.WebSocketServer;
 
 
+import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.BasicMessageHandlers;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.ProtocolConstants;
@@ -78,6 +79,8 @@ public class GameServer extends BinaryWebSocketHandler
             System.out.println(username + " has connected to the game");
             gameSessionService.userSocketSessions.put(session.getId(), account);
             gameSessionService.usernameToSessionMap.put(account.username, new ConcurrentWebSocketSessionDecorator(session, 500, 8000));
+            Player newPlayer = new Player(gameSessionService.usernameToSessionMap.get(account.username), account);
+            gameSessionService.playerList.add(newPlayer);
             userAccountRepository.save(account);
         }
     }
