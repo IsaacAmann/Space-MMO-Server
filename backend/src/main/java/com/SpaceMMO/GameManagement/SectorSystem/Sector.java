@@ -5,13 +5,22 @@ import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 
 import com.SpaceMMO.GameManagement.QuadTree.PooledQuadNodeFactory;
 import com.SpaceMMO.GameManagement.QuadTree.QuadTreeNode;
+import com.SpaceMMO.GameManagement.ServiceContainer;
+import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.BasicMessageHandlers;
+import com.SpaceMMO.UserManagement.UserAccount;
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.orm.hibernate5.SpringSessionContext;
+import org.springframework.web.socket.WebSocketSession;
 
+import java.security.Provider;
 import java.util.ArrayList;
 
+@Configurable
 public class Sector
 {
     public static final float SECTOR_WIDTH = 1000000000;
@@ -29,11 +38,18 @@ public class Sector
     public ArrayList<GameEntity> entities;
     public ArrayList<Player> players;
 
+    public static int nextID = 0;
+    public int sectorID;
+
+    public ServiceContainer serviceContainer;
+
     private SectorUpdateThread sectorUpdateThread;
 
-    public Sector()
+    public Sector(ServiceContainer serviceContainer)
     {
         name = "Unamed Sector";
+        this.serviceContainer = serviceContainer;
+        sectorID = nextID++;
         GenericObjectPoolConfig<QuadTreeNode> quadPoolConfig = new GenericObjectPoolConfig<QuadTreeNode>();
         quadPoolConfig.setMaxTotal(MAX_QUAD_NODES);
 
@@ -46,6 +62,15 @@ public class Sector
         sectorUpdateThread = new SectorUpdateThread();
         sectorUpdateThread.running = true;
         sectorUpdateThread.start();
+
+
+    }
+
+    public void addPlayer(UserAccount account, WebSocketSession session)
+    {
+        Player newPlayer = new Player(session, account);
+
+        players.add(newPlayer);
     }
 
     //Statements to be run each simulation frame
@@ -70,11 +95,12 @@ public class Sector
     }
 
     //Prepare a game state update message for each player and send it
-    public void postGameStateUpdate()
+    public void postGameStateUpdate() throws Exception
     {
         for(Player player : this.players)
         {
-
+            System.out.println("Posting gamestate");
+            serviceContainer.basicMessageHandlers.sendErrorMessage(player.session, (short)1, "test");
         }
 
     }

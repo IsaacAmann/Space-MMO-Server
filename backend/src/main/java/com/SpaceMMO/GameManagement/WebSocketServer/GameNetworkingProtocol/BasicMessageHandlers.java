@@ -18,6 +18,7 @@ import java.nio.MappedByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class BasicMessageHandlers
@@ -65,6 +66,21 @@ public class BasicMessageHandlers
         {
 
         }
+    }
+
+    public void sendErrorMessage(WebSocketSession session, short errorCode, String message) throws Exception
+    {
+        String encodedMessage = Base64.getEncoder().encodeToString(message.getBytes());
+
+        ByteBuffer payload = ByteBuffer.allocate(encodedMessage.getBytes(StandardCharsets.US_ASCII).length + 3);
+
+        payload.put(ProtocolConstants.ERROR);
+        payload.putShort(errorCode);
+        payload.put(encodedMessage.getBytes(StandardCharsets.US_ASCII));
+
+        BinaryMessage response = new BinaryMessage(payload.array());
+
+        session.sendMessage(response);
     }
 
 

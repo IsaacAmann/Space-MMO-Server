@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement.WebSocketServer;
 
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
+import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.SpaceMMO.UserManagement.UserAccount;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
@@ -20,4 +21,6 @@ public class GameSessionService
 
     //Player map
     public static List<Player> playerList = Collections.synchronizedList(new ArrayList<Player>());
+    //Sector map
+    public static ConcurrentHashMap<Integer, Sector> sectorMap = new ConcurrentHashMap<Integer, Sector>();
 }

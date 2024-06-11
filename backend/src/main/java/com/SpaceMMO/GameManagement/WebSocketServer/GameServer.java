@@ -3,8 +3,11 @@ package com.SpaceMMO.GameManagement.WebSocketServer;
 
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
+import com.SpaceMMO.GameManagement.ServiceContainer;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.BasicMessageHandlers;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.ProtocolConstants;
+import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.SectorMessages;
+import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.TestingMessageHandlers;
 import com.SpaceMMO.UserManagement.UserAccount;
 import com.SpaceMMO.UserManagement.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +27,20 @@ public class GameServer extends BinaryWebSocketHandler
     GameSessionService gameSessionService;
     @Autowired
     BasicMessageHandlers basicMessageHandlers;
+    @Autowired
+    SectorMessages sectorMessages;
+    @Autowired
+    ServiceContainer serviceContainer;
+    @Autowired
+    TestingMessageHandlers testingMessageHandlers;
 
-    public static Sector testSector = new Sector();
+    public static Sector testSector;
     public static float testX = 1;
     public static float testY = 1;
+
+    public GameServer()
+    {
+    }
     @Override
     public void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception
     {
@@ -38,6 +51,12 @@ public class GameServer extends BinaryWebSocketHandler
         {
             case ProtocolConstants.PLAYER_INFO:
                 basicMessageHandlers.handlePlayerInfo(session, message);
+                break;
+            case ProtocolConstants.SECTOR_JOIN:
+                System.out.println("sector join");
+                break;
+            case ProtocolConstants.JOIN_DEBUG:
+                testingMessageHandlers.joinDebugSector(session,message);
                 break;
 
             default:
@@ -50,6 +69,10 @@ public class GameServer extends BinaryWebSocketHandler
     public void afterConnectionEstablished(WebSocketSession session) throws IOException
     {
         boolean acceptConnection = false;
+        if(testSector == null)
+        {
+            testSector = new Sector(serviceContainer);
+        }
         //Check header for token
         System.out.println(session.getHandshakeHeaders().get("username").get(0));
         System.out.println(session.getHandshakeHeaders().get("token").get(0));

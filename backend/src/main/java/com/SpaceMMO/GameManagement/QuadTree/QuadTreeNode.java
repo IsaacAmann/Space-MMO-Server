@@ -120,7 +120,7 @@ public class QuadTreeNode
 
     public void set(float x, float y, float width, float height, float level) throws Exception
     {
-        System.out.println("Setting");
+        //System.out.println("Setting");
         clearChildren();
 
         clearChildren();
