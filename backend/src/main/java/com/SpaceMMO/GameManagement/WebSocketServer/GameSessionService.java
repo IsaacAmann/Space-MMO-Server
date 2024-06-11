@@ -8,6 +8,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,7 +21,7 @@ public class GameSessionService
     public static ConcurrentHashMap<String, WebSocketSession>  usernameToSessionMap = new ConcurrentHashMap<String, WebSocketSession>();
 
     //Player map
-    public static List<Player> playerList = Collections.synchronizedList(new ArrayList<Player>());
+    public static ConcurrentHashMap<String, Player> playerList = new ConcurrentHashMap<String, Player>();
     //Sector map
     public static ConcurrentHashMap<Integer, Sector> sectorMap = new ConcurrentHashMap<Integer, Sector>();
 }

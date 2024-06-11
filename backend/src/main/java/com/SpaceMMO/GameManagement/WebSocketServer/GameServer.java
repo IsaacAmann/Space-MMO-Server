@@ -103,7 +103,7 @@ public class GameServer extends BinaryWebSocketHandler
             gameSessionService.userSocketSessions.put(session.getId(), account);
             gameSessionService.usernameToSessionMap.put(account.username, new ConcurrentWebSocketSessionDecorator(session, 500, 8000));
             Player newPlayer = new Player(gameSessionService.usernameToSessionMap.get(account.username), account);
-            gameSessionService.playerList.add(newPlayer);
+            gameSessionService.playerList.put(account.username, newPlayer);
             userAccountRepository.save(account);
         }
     }
@@ -121,6 +121,20 @@ public class GameServer extends BinaryWebSocketHandler
             gameSessionService.userSocketSessions.remove(session.getId());
             //remove from usernameToSession map
             gameSessionService.usernameToSessionMap.remove(account.username);
+
+            //remove player from player map and save data
+            Player player = gameSessionService.playerList.get(account.username);
+            if(player != null)
+            {
+                if(player.currentSector != null)
+                {
+                    //Remove player from current sector
+                }
+                //Updates fields on players account
+
+                //Remove from player list
+                gameSessionService.playerList.remove(account.username);
+            }
 
         }
     }

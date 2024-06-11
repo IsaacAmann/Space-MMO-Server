@@ -6,10 +6,10 @@ import org.springframework.web.socket.WebSocketSession;
 
 public class Player
 {
-    WebSocketSession session;
-    GameEntity currentEntity;
-    Sector currentSector;
-    UserAccount account;
+    public WebSocketSession session;
+    public GameEntity currentEntity;
+    public Sector currentSector;
+    public UserAccount account;
 
     public Player(WebSocketSession session, UserAccount account)
     {
