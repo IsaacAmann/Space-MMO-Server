@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement;
 
 import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.BasicMessageHandlers;
+import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.EntitySystemHandlers;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.SectorMessages;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.TestingMessageHandlers;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameSessionService;
@@ -22,4 +23,6 @@ public class ServiceContainer
     public SectorMessages sectorMessages;
     @Autowired
     public TestingMessageHandlers testingMessageHandlers;
+    @Autowired
+    public EntitySystemHandlers entitySystemHandlers;
 }

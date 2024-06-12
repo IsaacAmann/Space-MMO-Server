@@ -3,6 +3,7 @@ package com.SpaceMMO.GameManagement.SectorSystem;
 import ch.qos.logback.core.encoder.EchoEncoder;
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 
+import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
 import com.SpaceMMO.GameManagement.QuadTree.PooledQuadNodeFactory;
 import com.SpaceMMO.GameManagement.QuadTree.QuadTreeNode;
 import com.SpaceMMO.GameManagement.ServiceContainer;
@@ -15,6 +16,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.orm.hibernate5.SpringSessionContext;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.security.Provider;
@@ -70,6 +72,10 @@ public class Sector
     {
         players.add(player);
         player.currentSector = this;
+
+        //Create player entity
+        PlayerEntity newPlayerEntity = new PlayerEntity();
+        entities.add(newPlayerEntity);
     }
 
     public void removePlayer(Player player)
@@ -105,7 +111,11 @@ public class Sector
         for(Player player : this.players)
         {
             System.out.println("Posting gamestate");
-            serviceContainer.basicMessageHandlers.sendErrorMessage(player.session, (short)1, "test");
+            //serviceContainer.basicMessageHandlers.sendErrorMessage(player.session, (short)1, "test");
+            for(GameEntity entity : this.entities)
+            {
+                serviceContainer.entitySystemHandlers.sendEntityUpdate(player.session, entity);
+            }
         }
 
     }

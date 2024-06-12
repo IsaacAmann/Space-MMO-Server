@@ -15,4 +15,6 @@ public abstract class GameEntity
     {
         System.out.println("Collided with: " + otherEntity);
     }
+
+    public abstract String getEntityDataJSON();
 }

@@ -1,6 +1,8 @@
 package com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol;
 
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
+import org.springframework.security.access.method.P;
+import org.springframework.stereotype.Service;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -8,6 +10,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
+@Service
 public class EntitySystemHandlers
 {
     public void sendErrorMessage(WebSocketSession session, short errorCode, String message) throws Exception
@@ -27,7 +30,7 @@ public class EntitySystemHandlers
 
     public void sendEntityUpdate(WebSocketSession session, GameEntity entity) throws Exception
     {
-        //MessageType(1) + EntityID(4) + X(4) + Y(4) + VelocityX(4) + VelocityY(4) + Health(4) =
+        //MessageType(1) + EntityID(4) + X(4) + Y(4) + VelocityX(4) + VelocityY(4) + Health(4) = 25
         ByteBuffer payload = ByteBuffer.allocate(25);
 
         payload.put(ProtocolConstants.ENTITY_UPDATE);
@@ -37,6 +40,20 @@ public class EntitySystemHandlers
         payload.putFloat(entity.velocityX);
         payload.putFloat(entity.velocityY);
         payload.putInt(entity.health);
+
+        BinaryMessage response = new BinaryMessage(payload.array());
+
+        session.sendMessage(response);
+    }
+
+    public void sendNewEntityNotification(WebSocketSession session, GameEntity entity) throws Exception
+    {
+        String json = entity.getEntityDataJSON();
+        json = Base64.getEncoder().encodeToString(json.getBytes());
+
+        ByteBuffer payload = ByteBuffer.allocate(json.getBytes(StandardCharsets.US_ASCII).length + 1);
+        payload.put(ProtocolConstants.NEW_ENTITY_NOTIFICATION);
+        payload.put(json.getBytes(StandardCharsets.US_ASCII));
 
         BinaryMessage response = new BinaryMessage(payload.array());
 
