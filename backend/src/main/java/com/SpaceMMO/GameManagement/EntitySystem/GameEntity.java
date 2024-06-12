@@ -6,6 +6,10 @@ public abstract class GameEntity
     public float y;
     public float width;
     public float height;
+    public float velocityX;
+    public float velocityY;
+    public int health;
+    public int entityID;
 
     public void handleCollision(GameEntity otherEntity)
     {

@@ -66,11 +66,16 @@ public class Sector
 
     }
 
-    public void addPlayer(UserAccount account, WebSocketSession session)
+    public void addPlayer(Player player)
     {
-        Player newPlayer = new Player(session, account);
+        players.add(player);
+        player.currentSector = this;
+    }
 
-        players.add(newPlayer);
+    public void removePlayer(Player player)
+    {
+        player.currentSector = null;
+        this.players.remove(player);
     }
 
     //Statements to be run each simulation frame

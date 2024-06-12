@@ -35,7 +35,7 @@ public class TestingMessageHandlers
         UserAccount account = GameSessionService.userSocketSessions.get(session.getId());
         if(account != null)
         {
-            GameServer.testSector.addPlayer(account, session);
+            GameServer.testSector.addPlayer(gameSessionService.playerList.get(account.username));
             sectorMessages.sectorJoinNotification(session, GameServer.testSector);
         }
         else

@@ -129,6 +129,7 @@ public class GameServer extends BinaryWebSocketHandler
                 if(player.currentSector != null)
                 {
                     //Remove player from current sector
+                    player.currentSector.removePlayer(player);
                 }
                 //Updates fields on players account
 
