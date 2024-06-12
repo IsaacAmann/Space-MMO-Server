@@ -47,20 +47,20 @@ public class QuadTreeNode
         if(entities.size() < 4 || level == MAX_LEVEL)
         {
             entities.add(entity);
-            System.out.println("Entity added, level: " + level);
+          //  System.out.println("Entity added, level: " + level);
         }
         else
         {
             if(children.size() == 0)
             {
                 //exceeding 10000 nodes quickly, check this
-                System.out.println("Splitting node into 4");
-                System.out.println("Current Nodes: " + quadTreePool.getNumActive());
+               // System.out.println("Splitting node into 4");
+               // System.out.println("Current Nodes: " + quadTreePool.getNumActive());
                 QuadTreeNode n1 = quadTreePool.borrowObject();
                 QuadTreeNode n2 = quadTreePool.borrowObject();
                 QuadTreeNode n3 = quadTreePool.borrowObject();
                 QuadTreeNode n4 = quadTreePool.borrowObject();
-                System.out.println("Point");
+               // System.out.println("Point");
 
                 n1.set(x, y, width/2, height/2, level + 1);
                 n1.quadTreePool = this.quadTreePool;

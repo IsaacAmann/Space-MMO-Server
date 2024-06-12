@@ -56,7 +56,7 @@ public class EntitySystemHandlers
         payload.put(json.getBytes(StandardCharsets.US_ASCII));
 
         BinaryMessage response = new BinaryMessage(payload.array());
-
+        System.out.println("new entity message");
         session.sendMessage(response);
     }
 }

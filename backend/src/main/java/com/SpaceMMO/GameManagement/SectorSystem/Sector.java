@@ -68,6 +68,22 @@ public class Sector
 
     }
 
+    public void addEntity(GameEntity entity)
+    {
+        entities.add(entity);
+        for(Player player : players)
+        {
+            try
+            {
+                serviceContainer.entitySystemHandlers.sendNewEntityNotification(player.session, entity);
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void addPlayer(Player player)
     {
         players.add(player);
@@ -75,7 +91,7 @@ public class Sector
 
         //Create player entity
         PlayerEntity newPlayerEntity = new PlayerEntity();
-        entities.add(newPlayerEntity);
+        addEntity(newPlayerEntity);
     }
 
     public void removePlayer(Player player)
@@ -110,7 +126,7 @@ public class Sector
     {
         for(Player player : this.players)
         {
-            System.out.println("Posting gamestate");
+            //System.out.println("Posting gamestate");
             //serviceContainer.basicMessageHandlers.sendErrorMessage(player.session, (short)1, "test");
             for(GameEntity entity : this.entities)
             {
