@@ -35,7 +35,7 @@ public class WebSecurityConfig
 				.dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
 				.requestMatchers("/public/**").permitAll()
 					.requestMatchers("/api/**").access(hasScope("openid"))
-					.requestMatchers("/openGameSession").permitAll()
+					.requestMatchers("/openGameSession/*/*").permitAll()
 				.anyRequest()
 				.authenticated()
 			).csrf((csrf) -> csrf

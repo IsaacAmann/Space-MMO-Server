@@ -74,12 +74,16 @@ public class GameServer extends BinaryWebSocketHandler
             testSector = new Sector(serviceContainer);
         }
         //Check header for token
-        System.out.println(session.getHandshakeHeaders().get("username").get(0));
-        System.out.println(session.getHandshakeHeaders().get("token").get(0));
+       // System.out.println(session.getHandshakeHeaders().get("username").get(0));
+        //System.out.println(session.getHandshakeHeaders().get("token").get(0));
 
-        String username = session.getHandshakeHeaders().get("username").get(0);
-        String encodedToken = session.getHandshakeHeaders().get("token").get(0);
+      //  String username = session.getHandshakeHeaders().get("username").get(0);
+      //  String encodedToken = session.getHandshakeHeaders().get("token").get(0);
+        String username = (String)session.getAttributes().get("username");
+        String encodedToken = (String)session.getAttributes().get("token");
 
+       // System.out.println("NEW: " + session.getAttributes().get("username"));
+       // System.out.println("NEW: " + session.getAttributes().get("token"));
         //Verify token
         UserAccount account = userAccountRepository.findByUsername(username);
         if(account != null)

@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableLoadTimeWeaving;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,6 +19,9 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.server.HandshakeInterceptor;
+
+import java.util.Map;
 
 @SpringBootApplication
 public class SpaceMmoApplication {
@@ -56,8 +61,17 @@ public class SpaceMmoApplication {
 		@Override
 		public void registerWebSocketHandlers(WebSocketHandlerRegistry registry)
 		{
-			registry.addHandler(binaryWebSocketHandler(), "/openGameSession");
+			try
+			{
+				registry.addHandler(binaryWebSocketHandler(), "/openGameSession/{username}/{token}").addInterceptors(SpaceMmoApplication.interceptor());
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
+
+
 
 		@Bean
 		public WebSocketHandler binaryWebSocketHandler()
@@ -67,4 +81,27 @@ public class SpaceMmoApplication {
 
 
 	}
+
+	public static HandshakeInterceptor interceptor() throws Exception
+	{
+		return new HandshakeInterceptor() {
+			@Override
+			public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+
+				String[] subStrings = request.getURI().getPath().split("/");
+
+				attributes.put("username", subStrings[2]);
+				attributes.put("token", subStrings[3]);
+
+
+				return true;
+			}
+
+			@Override
+			public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
+
+			}
+		};
+	}
+
 }
