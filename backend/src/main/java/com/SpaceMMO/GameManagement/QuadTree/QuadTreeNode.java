@@ -123,7 +123,7 @@ public class QuadTreeNode
         //System.out.println("Setting");
         clearChildren();
 
-        clearChildren();
+       // clearChildren();
         children.clear();
 
         entities.clear();

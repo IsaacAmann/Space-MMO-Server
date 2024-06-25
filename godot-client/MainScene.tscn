@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkwtjjfwfojqi"]
+
+[ext_resource type="Script" path="res://WebSocketHandler.gd" id="1_355yi"]
+[ext_resource type="Script" path="res://EntityHandler.gd" id="2_tn10v"]
+
+[node name="MainScene" type="Node2D"]
+
+[node name="WebSocketHandler" type="Node2D" parent="."]
+script = ExtResource("1_355yi")
+
+[node name="EntityHandler" type="Node2D" parent="." node_paths=PackedStringArray("webSocketHandler")]
+script = ExtResource("2_tn10v")
+webSocketHandler = NodePath("../WebSocketHandler")

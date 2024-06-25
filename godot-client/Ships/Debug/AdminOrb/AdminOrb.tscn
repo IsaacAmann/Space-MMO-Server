@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgjc84qg5imru"]
+
+[ext_resource type="Texture2D" uid="uid://xwk6cq2cfewn" path="res://Ships/Debug/AdminOrb/AdminOrb.png" id="1_pd3p7"]
+
+[node name="AdminOrb" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pd3p7")
