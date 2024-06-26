@@ -10,6 +10,7 @@ public class PlayerEntity extends GameEntity
     {
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, Object> entityData = new HashMap<String, Object>();
+        entityData.put("test", "helloworld");
         String output = null;
         try
         {

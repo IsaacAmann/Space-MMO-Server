@@ -51,12 +51,16 @@ public class EntitySystemHandlers
         String json = entity.getEntityDataJSON();
         json = Base64.getEncoder().encodeToString(json.getBytes());
 
-        ByteBuffer payload = ByteBuffer.allocate(json.getBytes(StandardCharsets.US_ASCII).length + 1);
+        ByteBuffer payload = ByteBuffer.allocate(json.getBytes(StandardCharsets.US_ASCII).length + 1 + 1 + 4);
         payload.put(ProtocolConstants.NEW_ENTITY_NOTIFICATION);
+
+        payload.putInt(entity.entityID);
+        payload.put((byte)0);
         payload.put(json.getBytes(StandardCharsets.US_ASCII));
 
         BinaryMessage response = new BinaryMessage(payload.array());
         System.out.println("new entity message");
+        System.out.println("JSON: " + json);
         session.sendMessage(response);
     }
 }

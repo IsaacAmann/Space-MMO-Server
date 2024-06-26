@@ -10,14 +10,14 @@ signal entity_delete_message(message)
 signal sector_join_message(message)
 signal error_message(message)
 
-
+var entityHandler
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("connecting")
-	var error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian/8VGLXBaAnP89vWC27VBj0w==");
+	var error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian/0xbetvLnl1kvFFa7doynvg==");
 	print(error);
-	
+	entityHandler = get_node("../EntityHandler")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,25 +37,28 @@ func _process(delta):
 			var type = packet.decode_s8(0)
 			match type:
 				#player info
-				1:
+				0:
 					print("player info")
 				#sector join
-				2:
+				1:
 					print("sector join")
 				#error
-				3:
+				2:
 					print("error")
 				#join debug
-				4:
+				3:
 					print("join debug")
 				
 				#entity update
-				5:
+				4:
+					entityHandler.handleEntityUpdate(packet)
 					print("entity update")
 				
 				#new entity notification
-				6: 
+				5: 
+					entityHandler.handleNewEntity(packet)
 					print("new entity notification")
+					
 	elif state == WebSocketPeer.STATE_CLOSING:
 		
 		pass

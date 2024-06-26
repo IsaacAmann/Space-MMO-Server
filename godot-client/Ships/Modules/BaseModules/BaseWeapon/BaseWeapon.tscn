@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://gg6ur4551vh8"]
+
+[ext_resource type="Script" path="res://Ships/Modules/BaseModules/BaseWeapon/BaseWeapon.gd" id="1_44xjw"]
+
+[node name="BaseWeapon" type="Node2D"]
+script = ExtResource("1_44xjw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

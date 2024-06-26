@@ -91,6 +91,7 @@ public class Sector
 
         //Create player entity
         PlayerEntity newPlayerEntity = new PlayerEntity();
+        newPlayerEntity.velocityX = 60;
         addEntity(newPlayerEntity);
     }
 
