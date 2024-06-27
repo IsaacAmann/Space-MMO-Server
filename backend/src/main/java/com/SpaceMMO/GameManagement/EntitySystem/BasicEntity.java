@@ -30,4 +30,10 @@ public class BasicEntity extends GameEntity
 
         return output;
     }
+
+    @Override
+    public void update()
+    {
+
+    }
 }

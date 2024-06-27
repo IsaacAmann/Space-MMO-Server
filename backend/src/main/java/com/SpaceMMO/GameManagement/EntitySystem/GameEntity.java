@@ -10,6 +10,7 @@ public abstract class GameEntity
     public float velocityY;
     public int health;
     public int entityID;
+    public float rotation;
 
     public void handleCollision(GameEntity otherEntity)
     {
@@ -17,4 +18,6 @@ public abstract class GameEntity
     }
 
     public abstract String getEntityDataJSON();
+
+    public abstract void update();
 }

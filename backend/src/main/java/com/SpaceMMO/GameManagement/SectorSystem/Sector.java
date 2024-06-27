@@ -39,6 +39,7 @@ public class Sector
     public QuadTreeNode entityTree;
     public ArrayList<GameEntity> entities;
     public ArrayList<Player> players;
+    public int nextEntityID = 0;
 
     public static int nextID = 0;
     public int sectorID;
@@ -70,6 +71,7 @@ public class Sector
 
     public void addEntity(GameEntity entity)
     {
+        entity.entityID = nextEntityID++;
         entities.add(entity);
         for(Player player : players)
         {
@@ -91,7 +93,7 @@ public class Sector
 
         //Create player entity
         PlayerEntity newPlayerEntity = new PlayerEntity();
-        newPlayerEntity.velocityX = 60;
+        newPlayerEntity.velocityX = 100;
         addEntity(newPlayerEntity);
     }
 
@@ -107,7 +109,10 @@ public class Sector
         //Handle input
 
         //Handle entity updates
-
+        for(GameEntity entity : entities)
+        {
+            entity.update();
+        }
         //Handle Collisions
 
         //Rebuild quad tree

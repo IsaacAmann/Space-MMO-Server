@@ -27,9 +27,14 @@ func handleNewEntity(message: PackedByteArray):
 	
 	#skip message type label
 	var currentIndex = 1
-	entityId = message.decode_s32(currentIndex)
+	var currentSlice = message.slice(currentIndex, currentIndex + 4)
+	currentSlice.reverse()
+	entityId = currentSlice.decode_s32(0)
 	currentIndex += 4
-	entityType = message.decode_s8(currentIndex)
+	
+	currentSlice = message.slice(currentIndex, currentIndex + 1)
+	currentSlice.reverse()
+	entityType = currentSlice.decode_s8(0)
 	currentIndex += 1
 	
 	print("entityID: " + str(entityId))
@@ -78,15 +83,23 @@ func handleEntityUpdate(message: PackedByteArray):
 	var velocityX
 	var velocityY
 	var health
+	var rotation
 	
 	var currentIndex = 1
-	entityId = message.decode_s32(currentIndex)
+	var currentSlice = message.slice(currentIndex, currentIndex + 4)
+	currentSlice.reverse()
+	entityId = currentSlice.decode_s32(0)
 	currentIndex += 4
 	
-	positionX = message.decode_float(currentIndex)
+	currentSlice = message.slice(currentIndex, currentIndex + 4)
+	currentSlice.reverse()
+	positionX = currentSlice.decode_float(0)
 	currentIndex += 4
+	print(positionX)
 	
-	positionY = message.decode_float(currentIndex)
+	currentSlice = message.slice(currentIndex, currentIndex + 4)
+	currentSlice.reverse()
+	positionY = currentSlice.decode_float(0)
 	currentIndex += 4
 	
 	#java encodes in big endian, need to reverse the floats
@@ -95,16 +108,26 @@ func handleEntityUpdate(message: PackedByteArray):
 	velocityX = velocitySlice.decode_float(0)
 	currentIndex += 4
 	
-	velocityY = message.decode_float(currentIndex)
+	currentSlice = message.slice(currentIndex, currentIndex + 4)
+	currentSlice.reverse()
+	velocityY = currentSlice.decode_float(0)
 	currentIndex += 4
 	
-	health = message.decode_s32(currentIndex)
+	currentSlice = message.slice(currentIndex, currentIndex + 4)
+	currentSlice.reverse()
+	health = currentSlice.decode_s32(0)
 	currentIndex += 4
+	
+	currentSlice = message.slice(currentIndex, currentIndex + 4)
+	currentSlice.reverse()
+	rotation = currentSlice.decode_float(0)
 	
 	#modify entity
-	var entity = entityDictionary[entityId]
-	#entity.position = Vector2(positionX, positionY)
-	entity.velocity = Vector2(velocityX, velocityY)
-	print("velocityx: " + str(velocityX))
+	var entity = entityDictionary.get(entityId)
+	if(entity != null):
+		entity.position = Vector2(positionX, positionY)
+		entity.velocity = Vector2(velocityX, velocityY)
+		entity.rotation = rotation
+		print("velocityx: " + str(rotation))
 
 
