@@ -4,10 +4,7 @@ package com.SpaceMMO.GameManagement.WebSocketServer;
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.SpaceMMO.GameManagement.ServiceContainer;
-import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.BasicMessageHandlers;
-import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.ProtocolConstants;
-import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.SectorMessages;
-import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.TestingMessageHandlers;
+import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.*;
 import com.SpaceMMO.UserManagement.UserAccount;
 import com.SpaceMMO.UserManagement.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,8 @@ public class GameServer extends BinaryWebSocketHandler
     ServiceContainer serviceContainer;
     @Autowired
     TestingMessageHandlers testingMessageHandlers;
+    @Autowired
+    UserInputHandlers userInputHandlers;
 
     public static Sector testSector;
     public static float testX = 1;
@@ -58,6 +57,8 @@ public class GameServer extends BinaryWebSocketHandler
             case ProtocolConstants.JOIN_DEBUG:
                 testingMessageHandlers.joinDebugSector(session,message);
                 break;
+            case ProtocolConstants.PLAYER_SHIP_INPUT:
+                userInputHandlers.handlePlayerShipControl(session, message);
 
             default:
 

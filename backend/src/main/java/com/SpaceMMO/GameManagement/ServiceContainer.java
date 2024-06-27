@@ -1,9 +1,6 @@
 package com.SpaceMMO.GameManagement;
 
-import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.BasicMessageHandlers;
-import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.EntitySystemHandlers;
-import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.SectorMessages;
-import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.TestingMessageHandlers;
+import com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol.*;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameSessionService;
 import com.SpaceMMO.UserManagement.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,4 +22,6 @@ public class ServiceContainer
     public TestingMessageHandlers testingMessageHandlers;
     @Autowired
     public EntitySystemHandlers entitySystemHandlers;
+    @Autowired
+    public UserInputHandlers userInputHandlers;
 }

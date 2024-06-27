@@ -69,11 +69,12 @@ func handleEntityDelete(message: PackedByteArray):
 	
 	entityId = message.decode_s32(currentIndex)
 	#get reference from dictionary
-	var entity = entityDictionary[entityId]
-	#remove from tree and from dictionary
-	entity.queue_free()
-	entityDictionary.erase(entityId)
-	pass
+	var entity = entityDictionary.get(entityId)
+	if(entity != null):
+		#remove from tree and from dictionary
+		entity.queue_free()
+		entityDictionary.erase(entityId)
+	
 
 func handleEntityUpdate(message: PackedByteArray):
 	#parse message

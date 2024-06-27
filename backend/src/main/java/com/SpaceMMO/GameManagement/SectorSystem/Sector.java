@@ -91,6 +91,17 @@ public class Sector
         players.add(player);
         player.currentSector = this;
 
+        //Send new entity notifications for pre existing entities
+        for(GameEntity entity : entities)
+        {
+            try {
+                serviceContainer.entitySystemHandlers.sendNewEntityNotification(player.session, entity);
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
         //Create player entity
         PlayerEntity newPlayerEntity = new PlayerEntity();
         newPlayerEntity.velocityX = 100;
