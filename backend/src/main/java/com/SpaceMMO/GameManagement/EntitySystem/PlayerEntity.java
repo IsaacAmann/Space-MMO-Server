@@ -11,8 +11,10 @@ public class PlayerEntity extends GameEntity
     //Value added to velocity from thrust
     public float acceleration = 4;
     public float maxSpeed = 1000;
+    //Rotational speed
+    public float rotationalSpeed = (float)0.0101;
     //Rotation in radians
-    public float rotation = 0;
+
 
     //Friction value to slow down, may be 0
     public float friction = (float)2;
@@ -23,8 +25,9 @@ public class PlayerEntity extends GameEntity
     {
         super();
         this.player = player;
-        width = 50;
-        height = 30;
+        width = 211;
+        height = 80;
+        rotation = 0;
     }
     public String getEntityDataJSON()
     {
@@ -47,7 +50,7 @@ public class PlayerEntity extends GameEntity
     @Override
     public void update()
     {
-       // this.rotation += 0.002;
+       //this.rotation += 0.002;
         // System.out.println("ID: " + entityID + " rot: " + rotation);
         if(player.inputW)
         {
@@ -94,6 +97,16 @@ public class PlayerEntity extends GameEntity
             {
                 velocityX = maxSpeed;
             }
+        }
+        if(player.inputQ)
+        {
+            this.rotation -= rotationalSpeed;
+            //System.out.println("rotating");
+            //System.out.println(rotation);
+        }
+        if (player.inputE)
+        {
+            this.rotation += rotationalSpeed;
         }
 
         this.x += this.velocityX / Sector.TICKS_PER_SECOND;

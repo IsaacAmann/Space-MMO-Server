@@ -41,6 +41,7 @@ public class EntitySystemHandlers
         payload.putFloat(entity.velocityY);
         payload.putInt(entity.health);
         payload.putFloat(entity.rotation);
+        System.out.println(entity.rotation);
 
         BinaryMessage response = new BinaryMessage(payload.array());
 

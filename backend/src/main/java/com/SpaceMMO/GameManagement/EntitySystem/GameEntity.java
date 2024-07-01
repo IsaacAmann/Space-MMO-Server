@@ -15,6 +15,13 @@ public abstract class GameEntity
     public void handleCollision(GameEntity otherEntity)
     {
         System.out.println("Collided with: " + otherEntity);
+        //bounce off
+        /*
+        velocityX = -1 * velocityX;
+        x += velocityX;
+        velocityY = -1 * velocityY;
+        y += velocityY;
+        */
     }
 
     public abstract String getEntityDataJSON();
