@@ -19,7 +19,7 @@ func _ready():
 
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+#FIX NEEDED: add known acceleration to local velocity to reduce rubber banding in movement while accelerating
 func _process(delta):
 	inputChanged = false
 	#Check for user input

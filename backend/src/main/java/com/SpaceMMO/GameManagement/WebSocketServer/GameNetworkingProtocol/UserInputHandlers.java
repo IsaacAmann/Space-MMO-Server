@@ -45,41 +45,81 @@ public class UserInputHandlers
             if((inputBitMap & W_BITMASK) == W_BITMASK)
             {
                 System.out.println("W pressed by " + playerAccount.username);
+                player.inputW = true;
+            }
+            else
+            {
+                player.inputW = false;
             }
 
             if((inputBitMap & A_BITMASK) == A_BITMASK)
             {
                 System.out.println("A pressed by " + playerAccount.username);
+                player.inputA = true;
+            }
+            else
+            {
+                player.inputA = false;
             }
 
             if((inputBitMap & S_BITMASK) == S_BITMASK)
             {
                 System.out.println("S pressed by " + playerAccount.username);
+                player.inputS = true;
+            }
+            else
+            {
+                player.inputS = false;
             }
 
             if((inputBitMap & D_BITMASK) == D_BITMASK)
             {
                 System.out.println("D pressed by " + playerAccount.username);
+                player.inputD = true;
+            }
+            else
+            {
+                player.inputD = false;
             }
 
             if((inputBitMap & SPACE_BITMASK) == SPACE_BITMASK)
             {
                 System.out.println("SPACE pressed by " + playerAccount.username);
+                player.inputSpace = true;
+            }
+            else
+            {
+                player.inputSpace = false;
             }
 
             if((inputBitMap & Q_BITMASK) == Q_BITMASK)
             {
                 System.out.println("Q pressed by " + playerAccount.username);
+                player.inputQ = true;
+            }
+            else
+            {
+                player.inputQ = false;
             }
 
             if((inputBitMap & E_BITMASK) == E_BITMASK)
             {
                 System.out.println("E pressed by " + playerAccount.username);
+                player.inputE = true;
+            }
+            else
+            {
+                player.inputE = false;
             }
 
             if((inputBitMap & F_BITMASK) == F_BITMASK)
             {
                 System.out.println("F pressed by " + playerAccount.username);
+                player.inputF = true;
+            }
+            else
+            {
+                player.inputF = false;
             }
 
 

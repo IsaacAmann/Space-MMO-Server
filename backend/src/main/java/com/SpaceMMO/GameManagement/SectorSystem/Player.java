@@ -11,23 +11,28 @@ public class Player
     public Sector currentSector;
     public UserAccount account;
 
-    boolean inputUp;
-    boolean inputDown;
-    boolean inputLeft;
-    boolean inputRight;
-    boolean inputSpace;
+    public boolean inputW;
+    public boolean inputA;
+    public boolean inputS;
+    public boolean inputD;
+    public boolean inputSpace;
+    public boolean inputQ;
+    public boolean inputE;
+    public boolean inputF;
 
     public Player(WebSocketSession session, UserAccount account)
     {
         this.session = session;
         this.account = account;
 
-        inputUp = false;
-        inputDown = false;
-        inputLeft = false;
-        inputRight = false;
+        inputW = false;
+        inputA = false;
+        inputS = false;
+        inputD = false;
         inputSpace = false;
-
+        inputQ = false;
+        inputE = false;
+        inputF = false;
 
     }
 

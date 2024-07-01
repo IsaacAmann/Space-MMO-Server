@@ -103,8 +103,7 @@ public class Sector
             }
         }
         //Create player entity
-        PlayerEntity newPlayerEntity = new PlayerEntity();
-        newPlayerEntity.velocityX = 100;
+        PlayerEntity newPlayerEntity = new PlayerEntity(player);
         addEntity(newPlayerEntity);
     }
 
