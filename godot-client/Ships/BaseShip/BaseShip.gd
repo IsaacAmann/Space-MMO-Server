@@ -6,6 +6,8 @@ var InternalModule = preload("res://Ships/InternalModule.gd")
 var internalModules: Array[InternalModule] = []
 var externalModules: Array[ExternalModule] = []
 
+var angularVelocity: float = 0
+
 @export var entityID: int
 
 # Called when the node enters the scene tree for the first time.
@@ -20,5 +22,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	position += velocity * delta
+	rotation += angularVelocity * delta
 
 

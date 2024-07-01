@@ -85,6 +85,7 @@ func handleEntityUpdate(message: PackedByteArray):
 	var velocityY
 	var health
 	var rotation
+	var rotationalVelocity
 	
 	var currentIndex = 1
 	var currentSlice = message.slice(currentIndex, currentIndex + 4)
@@ -122,12 +123,19 @@ func handleEntityUpdate(message: PackedByteArray):
 	currentSlice = message.slice(currentIndex, currentIndex + 4)
 	currentSlice.reverse()
 	rotation = currentSlice.decode_float(0)
+	currentIndex += 4
+	
+	currentSlice = message.slice(currentIndex, currentIndex + 4)
+	currentSlice.reverse()
+	rotationalVelocity = currentSlice.decode_float(0)
+	
 	
 	#modify entity
 	var entity = entityDictionary.get(entityId)
 	if(entity != null):
 		entity.position = Vector2(positionX, positionY)
 		entity.velocity = Vector2(velocityX, velocityY)
+		entity.angularVelocity = rotationalVelocity
 		entity.rotation = rotation
 		print("velocityx: " + str(rotation))
 		print("y: " + str(positionY))

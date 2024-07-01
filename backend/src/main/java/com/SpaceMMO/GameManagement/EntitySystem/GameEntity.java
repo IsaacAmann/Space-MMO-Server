@@ -10,7 +10,9 @@ public abstract class GameEntity
     public float velocityY;
     public int health;
     public int entityID;
+
     public float rotation;
+    public float rotationalVelocity;
 
     public void handleCollision(GameEntity otherEntity)
     {

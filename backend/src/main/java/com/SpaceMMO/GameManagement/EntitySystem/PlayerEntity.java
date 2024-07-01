@@ -12,7 +12,8 @@ public class PlayerEntity extends GameEntity
     public float acceleration = 4;
     public float maxSpeed = 1000;
     //Rotational speed
-    public float rotationalSpeed = (float)0.0101;
+    public float rotationalAcceleration = (float)0.0101;
+    public float maxRotationalVelocity = (float)20;
     //Rotation in radians
 
 
@@ -100,16 +101,21 @@ public class PlayerEntity extends GameEntity
         }
         if(player.inputQ)
         {
-            this.rotation -= rotationalSpeed;
-            //System.out.println("rotating");
-            //System.out.println(rotation);
+            if(rotationalVelocity - rotationalAcceleration > -1 * maxRotationalVelocity)
+                rotationalVelocity -= rotationalAcceleration;
+            else
+                rotationalVelocity = maxRotationalVelocity * -1;
         }
         if (player.inputE)
         {
-            this.rotation += rotationalSpeed;
+            if(rotationalVelocity + rotationalAcceleration < maxRotationalVelocity)
+                this.rotationalVelocity += rotationalAcceleration;
+            else
+                rotationalVelocity = maxRotationalVelocity;
         }
 
         this.x += this.velocityX / Sector.TICKS_PER_SECOND;
         this.y += this.velocityY / Sector.TICKS_PER_SECOND;
+        this.rotation += rotationalVelocity / Sector.TICKS_PER_SECOND;
     }
 }

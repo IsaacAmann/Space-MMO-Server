@@ -30,8 +30,8 @@ public class EntitySystemHandlers
 
     public void sendEntityUpdate(WebSocketSession session, GameEntity entity) throws Exception
     {
-        //MessageType(1) + EntityID(4) + X(4) + Y(4) + VelocityX(4) + VelocityY(4) + Health(4) + rotation(4)= 29
-        ByteBuffer payload = ByteBuffer.allocate(29);
+        //MessageType(1) + EntityID(4) + X(4) + Y(4) + VelocityX(4) + VelocityY(4) + Health(4) + rotation(4) + rotationalVelocity(4)= 33
+        ByteBuffer payload = ByteBuffer.allocate(33);
 
         payload.put(ProtocolConstants.ENTITY_UPDATE);
         payload.putInt(entity.entityID);
@@ -41,6 +41,7 @@ public class EntitySystemHandlers
         payload.putFloat(entity.velocityY);
         payload.putInt(entity.health);
         payload.putFloat(entity.rotation);
+        payload.putFloat(entity.rotationalVelocity);
         System.out.println(entity.rotation);
 
         BinaryMessage response = new BinaryMessage(payload.array());
