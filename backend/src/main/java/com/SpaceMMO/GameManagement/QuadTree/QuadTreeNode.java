@@ -118,6 +118,38 @@ public class QuadTreeNode
         }
     }
 
+    public void runCollisionCheck(QuadTreeNode root)
+    {
+        QuadTreeNode currentNode = root;
+        //Leaf node, check entity collisions
+        if(currentNode.children.size() == 0)
+        {
+
+            for(GameEntity entity : currentNode.entities)
+            {
+                for(GameEntity otherEntity : currentNode.entities)
+                {
+                    //Dont check collisions on self
+                    if(entity != otherEntity)
+                    {
+                        if(entity.isColliding(otherEntity))
+                        {
+                            //Handle collision
+                            entity.handleCollision(otherEntity);
+                            otherEntity.handleCollision(entity);
+                        }
+                    }
+                }
+            }
+        }
+        //Recursively check child node collisions
+        else
+        {
+            for(int i = 0; i < 4; i++)
+                runCollisionCheck(currentNode.children.get(i));
+        }
+    }
+
     public void set(float x, float y, float width, float height, float level) throws Exception
     {
         //System.out.println("Setting");

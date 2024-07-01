@@ -20,4 +20,17 @@ public abstract class GameEntity
     public abstract String getEntityDataJSON();
 
     public abstract void update();
+
+    public boolean isColliding(GameEntity otherEntity)
+    {
+        boolean output = false;
+
+       if(otherEntity.x < (x + width) && (otherEntity.x + otherEntity.width) > x && otherEntity.y < (y + height) && (otherEntity.y + otherEntity.height) > y)
+       {
+           output = true;
+       }
+
+        return output;
+    }
 }
+

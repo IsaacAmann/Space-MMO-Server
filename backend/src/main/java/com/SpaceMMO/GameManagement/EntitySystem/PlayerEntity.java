@@ -23,6 +23,8 @@ public class PlayerEntity extends GameEntity
     {
         super();
         this.player = player;
+        width = 50;
+        height = 30;
     }
     public String getEntityDataJSON()
     {

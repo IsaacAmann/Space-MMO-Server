@@ -124,7 +124,7 @@ public class Sector
             entity.update();
         }
         //Handle Collisions
-
+        entityTree.runCollisionCheck(entityTree);
         //Rebuild quad tree
 
         //Clear tree
