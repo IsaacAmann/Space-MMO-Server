@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkwtjjfwfojqi"]
+[gd_scene load_steps=5 format=3 uid="uid://bkwtjjfwfojqi"]
 
 [ext_resource type="Script" path="res://WebSocketHandler.gd" id="1_355yi"]
 [ext_resource type="Script" path="res://EntityHandler.gd" id="2_tn10v"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="3_jg2ql"]
+[ext_resource type="Script" path="res://InputHandler.gd" id="4_x3vnl"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -15,3 +16,6 @@ webSocketHandler = NodePath("../WebSocketHandler")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("3_jg2ql")
+
+[node name="InputHandler" type="Node2D" parent="."]
+script = ExtResource("4_x3vnl")

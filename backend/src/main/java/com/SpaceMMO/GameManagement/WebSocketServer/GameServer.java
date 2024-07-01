@@ -43,7 +43,7 @@ public class GameServer extends BinaryWebSocketHandler
     @Override
     public void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception
     {
-        System.out.println(message.toString());
+        //System.out.println(message.toString());
         //Get first byte that contains the message type
         Byte messageType = message.getPayload().array()[0];
         switch(messageType.byteValue())
