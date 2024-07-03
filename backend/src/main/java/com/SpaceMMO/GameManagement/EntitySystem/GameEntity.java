@@ -1,5 +1,8 @@
 package com.SpaceMMO.GameManagement.EntitySystem;
 
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
+
 public abstract class GameEntity
 {
     public float x;
@@ -8,11 +11,18 @@ public abstract class GameEntity
     public float height;
     public float velocityX;
     public float velocityY;
+    public RealVector velocityVector;
     public int health;
     public int entityID;
 
     public float rotation;
     public float rotationalVelocity;
+
+    public GameEntity()
+    {
+        this.velocityVector = new ArrayRealVector();
+        velocityVector = velocityVector.append(0).append(0);
+    }
 
     public void handleCollision(GameEntity otherEntity)
     {

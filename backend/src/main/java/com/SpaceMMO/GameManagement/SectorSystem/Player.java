@@ -19,6 +19,7 @@ public class Player
     public boolean inputQ;
     public boolean inputE;
     public boolean inputF;
+    public float desiredRotation;
 
     public Player(WebSocketSession session, UserAccount account)
     {

@@ -10,7 +10,7 @@ size = Vector2(231, 34)
 script = ExtResource("1_sphie")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3.5, 0)
+position = Vector2(122, 40)
 shape = SubResource("RectangleShape2D_bukiv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

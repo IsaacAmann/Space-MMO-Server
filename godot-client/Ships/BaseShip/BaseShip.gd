@@ -22,6 +22,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	position += velocity * delta
-	rotation += angularVelocity * delta
+	#rotation += angularVelocity * delta
 
 

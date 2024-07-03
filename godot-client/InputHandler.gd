@@ -12,6 +12,8 @@ var eDown = false
 var fDown = false
 #indicates that input has changed client side and server should be notified
 var inputChanged = false
+var angle: float = 0
+var previousAngle: float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -95,6 +97,13 @@ func _process(delta):
 		if(fDown == true):
 			inputChanged = true
 		fDown = false
+	#Place desired angle from mouse
+	var mousePosition = get_global_mouse_position()
+	var direction = (mousePosition - global_position).normalized()
+	angle = direction.angle()
+	if(angle != previousAngle):
+		inputChanged = true
+	previousAngle = angle
 	
 	#If input has changed, send input packet to server 
 	if(inputChanged == true):
@@ -121,7 +130,13 @@ func _process(delta):
 		message.resize(2)
 		message.encode_u8(0, 0x6)
 		message.encode_u8(1, inputByte)
-		print("SIZE: " + str(message.size()))
-		print("Byte: " + str(inputByte))
+		#print("SIZE: " + str(message.size()))
+		#print("Byte: " + str(inputByte))
+		print("ANGLE: " + str(angle))
+		var floatArray = PackedByteArray()
+		floatArray.resize(4)
+		floatArray.encode_float(0, angle)
+		floatArray.reverse()
+		message.append_array(floatArray)
 		
 		webSocketHandler.sendMessage(message)

@@ -40,6 +40,8 @@ public class UserInputHandlers
             //Parse message
             ByteBuffer messageBuffer = message.getPayload();
             byte inputBitMap = messageBuffer.get(1);
+            float desiredRotation = messageBuffer.getFloat(2);
+            //desiredRotation = (byte)Integer.reverse(Float.floatToIntBits(desiredRotation));
             System.out.println("Input byte: " + inputBitMap);
 
             if((inputBitMap & W_BITMASK) == W_BITMASK)
@@ -122,8 +124,8 @@ public class UserInputHandlers
                 player.inputF = false;
             }
 
-
-
+            System.out.println(playerAccount.username + " desired angle: " + desiredRotation);
+            player.desiredRotation = desiredRotation;
         }
 
     }

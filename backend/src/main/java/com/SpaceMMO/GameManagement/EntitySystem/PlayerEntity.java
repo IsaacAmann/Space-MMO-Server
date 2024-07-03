@@ -3,18 +3,27 @@ package com.SpaceMMO.GameManagement.EntitySystem;
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
 
 import java.util.HashMap;
 
 public class PlayerEntity extends GameEntity
 {
-    //Value added to velocity from thrust
-    public float acceleration = 4;
+    //Thrust force values
+    public float starboardThrust = 4;
+    public float portsideThrust = 4;
+    public float forwardThrust = 8;
+    public float reverseThrust = 4;
+
     public float maxSpeed = 1000;
     //Rotational speed
     public float rotationalAcceleration = (float)0.0101;
-    public float maxRotationalVelocity = (float)20;
+    public float maxRotationalVelocity = (float)5;
     //Rotation in radians
+
+    //Float desired rotation in radians that ship should attempt to orient to
+    public float desiredRotation;
 
 
     //Friction value to slow down, may be 0
@@ -51,53 +60,25 @@ public class PlayerEntity extends GameEntity
     @Override
     public void update()
     {
-       //this.rotation += 0.002;
+        RealVector impulse = new ArrayRealVector();
+        impulse = impulse.append(0).append(0);
+
         // System.out.println("ID: " + entityID + " rot: " + rotation);
         if(player.inputW)
         {
-            //Check that adding acceleration would not exceed max speed
-            if(velocityY - acceleration > -1 * maxSpeed)
-            {
-                //Check later if acceleration should also be divided by ticks per second
-                velocityY -= acceleration;
-            }
-            else
-            {
-                velocityY = -1 * maxSpeed;
-            }
+            impulse.addToEntry(0, forwardThrust);
         }
         if(player.inputS)
         {
-            if(velocityY + acceleration < maxSpeed )
-            {
-                velocityY += acceleration;
-            }
-            else
-            {
-                velocityY = maxSpeed;
-            }
+            impulse.addToEntry(0, reverseThrust*-1);
         }
         if(player.inputA)
         {
-            if(velocityX - acceleration > -1 * maxSpeed)
-            {
-                velocityX -= acceleration;
-            }
-            else
-            {
-                velocityX = -1 * maxSpeed;
-            }
+            impulse.addToEntry(1, portsideThrust*-1);
         }
         if(player.inputD)
         {
-            if(velocityX + acceleration < maxSpeed)
-            {
-                velocityX += acceleration;
-            }
-            else
-            {
-                velocityX = maxSpeed;
-            }
+            impulse.addToEntry(1, starboardThrust);
         }
         if(player.inputQ)
         {
@@ -114,8 +95,44 @@ public class PlayerEntity extends GameEntity
                 rotationalVelocity = maxRotationalVelocity;
         }
 
-        this.x += this.velocityX / Sector.TICKS_PER_SECOND;
-        this.y += this.velocityY / Sector.TICKS_PER_SECOND;
-        this.rotation += rotationalVelocity / Sector.TICKS_PER_SECOND;
+        //Handle rotation
+        this.desiredRotation = player.desiredRotation;
+        //springRotation();
+        this.rotation += rotationalVelocity;
+
+        //Set direction of velocity vector
+        //x' = x * cos(theta) - y * sin(theta)
+        impulse.setEntry(0, impulse.getEntry(0)*Math.cos(rotation) - impulse.getEntry(1) * Math.sin(rotation));
+        //y' = x * sin(theta) + y * cos(theta)
+        impulse.setEntry(1, impulse.getEntry(0)*Math.sin(rotation) + impulse.getEntry(1)*Math.cos(rotation));
+
+        velocityVector = velocityVector.add(impulse);
+
+        //Check that magnitude does not exceed max speed
+
+
+
+        this.x += velocityVector.getEntry(0) / Sector.TICKS_PER_SECOND;
+        this.y += velocityVector.getEntry(1) / Sector.TICKS_PER_SECOND;
+        //this.rotation += rotationalVelocity / Sector.TICKS_PER_SECOND;
+    }
+
+    //See https://stackoverflow.com/questions/5100811/algorithm-to-control-acceleration-until-a-position-is-reached
+    public void springRotation()
+    {
+        float target = desiredRotation;
+        float current = rotation;
+        float timeStep = ((float)1)/Sector.TICKS_PER_SECOND;
+        //float springConstant = rotationalAcceleration;
+        float springConstant = 50;
+
+        float currentToTarget = target - current;
+        float springForce = currentToTarget * springConstant;
+        float dampingForce = -1*rotationalVelocity * 2 * (float)Math.sqrt(springConstant);
+        float force = springForce + dampingForce;
+
+        rotationalVelocity += force * timeStep;
+        System.out.println("force: " + timeStep);
+
     }
 }

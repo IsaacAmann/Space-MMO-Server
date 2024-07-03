@@ -16,7 +16,7 @@ var inputHandler
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("connecting")
-	var error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian/TsIuYd_CcdzLJf862B5lqg==");
+	var error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian/X2lSVxQStE48rLXNsM-RIg==");
 	#var error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian2/uXVlqbA27aCYXtrIdxpQJw==");
 	print(error);
 	entityHandler = get_node("../EntityHandler")
