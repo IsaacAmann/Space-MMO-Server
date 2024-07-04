@@ -7,11 +7,13 @@
 size = Vector2(231, 34)
 
 [node name="SovietRocketOne" type="CharacterBody2D"]
+position = Vector2(0, 1)
 script = ExtResource("1_sphie")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(122, 40)
+position = Vector2(180, -35)
 shape = SubResource("RectangleShape2D_bukiv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(119, 13)
 texture = ExtResource("2_52e1j")

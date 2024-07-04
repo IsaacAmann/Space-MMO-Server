@@ -63,7 +63,7 @@ public class PlayerEntity extends GameEntity
         RealVector impulse = new ArrayRealVector();
         impulse = impulse.append(0).append(0);
 
-        // System.out.println("ID: " + entityID + " rot: " + rotation);
+         System.out.println("ID: " + entityID + " rot: " + rotation);
         if(player.inputW)
         {
             impulse.addToEntry(0, forwardThrust);
@@ -101,11 +101,27 @@ public class PlayerEntity extends GameEntity
         this.rotation += rotationalVelocity;
 
         //Set direction of velocity vector
-        //x' = x * cos(theta) - y * sin(theta)
-        impulse.setEntry(0, impulse.getEntry(0)*Math.cos(rotation) - impulse.getEntry(1) * Math.sin(rotation));
-        //y' = x * sin(theta) + y * cos(theta)
-        impulse.setEntry(1, impulse.getEntry(0)*Math.sin(rotation) + impulse.getEntry(1)*Math.cos(rotation));
+        float impulseX = (float)impulse.getEntry(0);
+        float impulseY = (float)impulse.getEntry(1);
 
+        if(impulseX != 0 || impulseY != 0) {
+            //See https://stackoverflow.com/questions/620745/c-rotating-a-vector-around-a-certain-point
+            //double finalImpulseX = ((impulseX - x) * Math.cos(rotation)) - ((y - impulseY) * Math.sin(rotation)) + x;
+            //double finalImpulseY = y - ((y - impulseY) * Math.cos(rotation)) + ((impulseX - x) * Math.sin(rotation));
+
+            double finalImpulseX = ((impulseX - 0) * Math.cos(rotation)) - ((0 - impulseY) * Math.sin(rotation)) + 0;
+            double finalImpulseY = 0 - ((0 - impulseY) * Math.cos(rotation)) + ((impulseX - 0) * Math.sin(rotation));
+
+            impulse.setEntry(0, finalImpulseX);
+            impulse.setEntry(1, finalImpulseY);
+        }
+        /*
+        if(x < 0)
+        {
+            //impulse.setEntry(0, impulse.getEntry(0)*-1);
+            impulse.setEntry(1, impulse.getEntry(1)*-1);
+        }
+        */
         velocityVector = velocityVector.add(impulse);
 
         //Check that magnitude does not exceed max speed
