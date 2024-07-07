@@ -15,5 +15,5 @@ position = Vector2(180, -35)
 shape = SubResource("RectangleShape2D_bukiv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(119, 13)
+position = Vector2(120, 14)
 texture = ExtResource("2_52e1j")

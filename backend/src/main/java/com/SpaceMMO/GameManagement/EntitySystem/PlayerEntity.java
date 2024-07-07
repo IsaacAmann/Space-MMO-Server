@@ -106,11 +106,8 @@ public class PlayerEntity extends GameEntity
 
         if(impulseX != 0 || impulseY != 0) {
             //See https://stackoverflow.com/questions/620745/c-rotating-a-vector-around-a-certain-point
-            //double finalImpulseX = ((impulseX - x) * Math.cos(rotation)) - ((y - impulseY) * Math.sin(rotation)) + x;
-            //double finalImpulseY = y - ((y - impulseY) * Math.cos(rotation)) + ((impulseX - x) * Math.sin(rotation));
-
-            double finalImpulseX = ((impulseX - 0) * Math.cos(rotation)) - ((0 - impulseY) * Math.sin(rotation)) + 0;
-            double finalImpulseY = 0 - ((0 - impulseY) * Math.cos(rotation)) + ((impulseX - 0) * Math.sin(rotation));
+            double finalImpulseX = ((impulseX - 0.0) * Math.cos(rotation)) - ((impulseY) * Math.sin(rotation));
+            double finalImpulseY = 0.0 - ((0.0 - impulseY) * Math.cos(rotation)) + ((impulseX - 0.0) * Math.sin(rotation));
 
             impulse.setEntry(0, finalImpulseX);
             impulse.setEntry(1, finalImpulseY);
