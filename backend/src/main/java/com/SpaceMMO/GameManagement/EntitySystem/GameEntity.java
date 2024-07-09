@@ -51,5 +51,38 @@ public abstract class GameEntity
 
         return output;
     }
+    //Alter x and y position to handle rotation around center point
+    public void rotateAboutCenter(float angle)
+    {
+        //double finalImpulseX = ((impulseX - 0.0) * Math.cos(rotation)) - ((impulseY) * Math.sin(rotation));
+        //double finalImpulseY = 0.0 - ((0.0 - impulseY) * Math.cos(rotation)) + ((impulseX - 0.0) * Math.sin(rotation));
+
+        //Calculate center
+        float centerX = getCenterX();
+        float centerY = getCenterY();
+
+        //Calculate new x and y
+        double newX = ((x - centerX) * Math.cos(angle)) - ((centerY - y) * Math.sin(angle)) + centerX;
+        double newY = centerY - ((centerY - y) * Math.cos(angle)) + ((x - centerX) * Math.sin(angle));
+
+
+        //Set x and y
+        this.x = (float)newX;
+        this.y = (float)newY;
+
+    }
+
+    public float getCenterX()
+    {
+        double centerX = (this.x + this.width/2) * Math.cos(rotation) - ((this.y+this.height/2)) * Math.sin(rotation);
+
+        return (float)centerX;
+    }
+
+    public float getCenterY()
+    {
+        double centerY = (this.x + this.width/2) * Math.sin(rotation) + ((this.y + this.height/2)) * Math.cos(rotation);
+        return (float)centerY;
+    }
 }
 

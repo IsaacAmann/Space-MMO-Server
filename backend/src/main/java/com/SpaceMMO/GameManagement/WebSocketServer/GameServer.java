@@ -89,7 +89,7 @@ public class GameServer extends BinaryWebSocketHandler
         UserAccount account = userAccountRepository.findByUsername(username);
         if(account != null)
         {
-            if(account.isValidGameToken(encodedToken) == true && account.inGame == false)
+            if(account.isValidGameToken(encodedToken) == true /*&& account.inGame == false*/)
             {
                 acceptConnection = true;
             }

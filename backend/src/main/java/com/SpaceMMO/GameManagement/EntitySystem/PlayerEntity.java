@@ -98,6 +98,11 @@ public class PlayerEntity extends GameEntity
         //Handle rotation
         this.desiredRotation = player.desiredRotation;
         //springRotation();
+        float oldRotation = this.rotation;
+        if(oldRotation != rotation + rotationalVelocity)
+        {
+            this.rotateAboutCenter(rotation - oldRotation);
+        }
         this.rotation += rotationalVelocity;
 
         //Set direction of velocity vector

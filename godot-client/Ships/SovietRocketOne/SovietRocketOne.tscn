@@ -11,9 +11,9 @@ position = Vector2(0, 1)
 script = ExtResource("1_sphie")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(180, -35)
+position = Vector2(122, 38)
 shape = SubResource("RectangleShape2D_bukiv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(120, 14)
+position = Vector2(120, 39)
 texture = ExtResource("2_52e1j")

@@ -136,7 +136,7 @@ func handleEntityUpdate(message: PackedByteArray):
 		entity.position = Vector2(positionX, positionY)
 		entity.velocity = Vector2(velocityX, velocityY)
 		entity.angularVelocity = rotationalVelocity
-		entity.rotation = rotation
+		entity.spriteRotation = rotation
 		print("velocityx: " + str(rotation))
 		print("y: " + str(positionY))
 		print("rotation: " + str(rotation))
