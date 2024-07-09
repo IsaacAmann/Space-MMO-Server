@@ -19,7 +19,7 @@ public class PlayerEntity extends GameEntity
     public float maxSpeed = 1000;
     //Rotational speed
     public float rotationalAcceleration = (float)0.0101;
-    public float maxRotationalVelocity = (float)5;
+    public float maxRotationalVelocity = (float).035;
     //Rotation in radians
 
     //Float desired rotation in radians that ship should attempt to orient to
@@ -80,19 +80,18 @@ public class PlayerEntity extends GameEntity
         {
             impulse.addToEntry(1, starboardThrust);
         }
+
         if(player.inputQ)
         {
-            if(rotationalVelocity - rotationalAcceleration > -1 * maxRotationalVelocity)
-                rotationalVelocity -= rotationalAcceleration;
-            else
-                rotationalVelocity = maxRotationalVelocity * -1;
+            rotationalVelocity = maxRotationalVelocity * -1;
         }
-        if (player.inputE)
+        else if (player.inputE)
         {
-            if(rotationalVelocity + rotationalAcceleration < maxRotationalVelocity)
-                this.rotationalVelocity += rotationalAcceleration;
-            else
-                rotationalVelocity = maxRotationalVelocity;
+            rotationalVelocity = maxRotationalVelocity;
+        }
+        else
+        {
+            rotationalVelocity = 0;
         }
 
         //Handle rotation

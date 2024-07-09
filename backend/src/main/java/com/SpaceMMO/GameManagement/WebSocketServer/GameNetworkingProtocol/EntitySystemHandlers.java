@@ -37,8 +37,8 @@ public class EntitySystemHandlers
         payload.putInt(entity.entityID);
         payload.putFloat(entity.x);
         payload.putFloat(entity.y);
-        payload.putFloat(entity.velocityX);
-        payload.putFloat(entity.velocityY);
+        payload.putFloat((float)entity.velocityVector.getEntry(0));
+        payload.putFloat((float)entity.velocityVector.getEntry(1));
         payload.putInt(entity.health);
         payload.putFloat(entity.rotation);
         payload.putFloat(entity.rotationalVelocity);
