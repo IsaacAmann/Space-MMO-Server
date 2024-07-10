@@ -105,8 +105,8 @@ public class QuadTreeNode
     {
        // System.out.println("Comparing entity: x: " + entity.x + " y: " + entity.y + " width: " + entity.width + " height: " + entity.height);
        // System.out.println("Bounding box: x: " + x + " y: " + y + " width: " + width + " height: " + height);
-        if (entity.x < (x + width) && (entity.x + entity.width) > x &&
-            entity.y < (y + height) && (entity.y + entity.height) > y)
+        if (entity.position.x < (x + width) && (entity.position.x + entity.rectangle.getWidth()) > x &&
+            entity.position.y < (y + height) && (entity.position.y + entity.rectangle.getHeight()) > y)
         {
 
             return true;
@@ -145,7 +145,7 @@ public class QuadTreeNode
         //Recursively check child node collisions
         else
         {
-            for(int i = 0; i < 4; i++)
+            for(int i = 0; i < children.size(); i++)
                 runCollisionCheck(currentNode.children.get(i));
         }
     }
@@ -177,6 +177,8 @@ public class QuadTreeNode
 
         for(QuadTreeNode node : children)
         {
+            node.children.clear();
+            node.entities.clear();
             quadTreePool.returnObject(node);
         }
 
