@@ -47,12 +47,17 @@ public abstract class GameEntity
     public boolean isColliding(GameEntity otherEntity)
     {
         Transform transform1 = new Transform();
-        transform1.setRotation(rectangle.getRotation());
+        //transform1.rotate(rotation, rectangle.getCenter());
         transform1.setTranslation(position);
+        transform1.setRotation(rectangle.getRotation());
+
+        //System.out.println("local: " + rectangle.getRotation().toRadians());
 
         Transform transform2 = new Transform();
-        transform2.setRotation(otherEntity.rectangle.getRotation());
+        //transform2.rotate(otherEntity.rotation, otherEntity.rectangle.getCenter());
         transform2.setTranslation(otherEntity.position);
+        transform2.setRotation(otherEntity.rectangle.getRotation());
+
         //Run collision check
         return collisionDetector.detect(this.rectangle, transform1, otherEntity.rectangle, transform2);
     }

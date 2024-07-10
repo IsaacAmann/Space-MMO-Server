@@ -34,7 +34,7 @@ public class PlayerEntity extends GameEntity
 
     public PlayerEntity(Player player)
     {
-        super(0, 0, 211, 80, 0);
+        super(0, 0, 60, 20, 0);
         this.player = player;
     }
     public String getEntityDataJSON()
@@ -96,6 +96,7 @@ public class PlayerEntity extends GameEntity
         //springRotation();
         this.rectangle.rotateAboutCenter(rotationalVelocity);
         this.rotation += rotationalVelocity;
+        //System.out.println("VERTICE: " + rectangle.get);
 
         impulse.rotate(rotation);
         velocityVector = velocityVector.add(impulse);

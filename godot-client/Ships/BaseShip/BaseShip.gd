@@ -28,6 +28,8 @@ func _process(delta):
 	position += velocity * delta
 	sprite.rotation = spriteRotation
 	sprite.rotation += angularVelocity * delta
+	#rotation = spriteRotation
+	#rotation += angularVelocity * delta
 
 
 
