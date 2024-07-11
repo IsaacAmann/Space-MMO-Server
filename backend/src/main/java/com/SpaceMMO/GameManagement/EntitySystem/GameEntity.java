@@ -5,6 +5,7 @@ import org.apache.commons.math3.linear.RealVector;
 import org.dyn4j.collision.narrowphase.Penetration;
 import org.dyn4j.collision.narrowphase.Sat;
 import org.dyn4j.geometry.Rectangle;
+import org.dyn4j.geometry.Rotation;
 import org.dyn4j.geometry.Transform;
 import org.dyn4j.geometry.Vector2;
 
@@ -49,14 +50,14 @@ public abstract class GameEntity
         Transform transform1 = new Transform();
         //transform1.rotate(rotation, rectangle.getCenter());
         transform1.setTranslation(position);
-        transform1.setRotation(rectangle.getRotation());
+        transform1.setRotation(new Rotation(0.0));
 
         //System.out.println("local: " + rectangle.getRotation().toRadians());
 
         Transform transform2 = new Transform();
         //transform2.rotate(otherEntity.rotation, otherEntity.rectangle.getCenter());
         transform2.setTranslation(otherEntity.position);
-        transform2.setRotation(otherEntity.rectangle.getRotation());
+        transform2.setRotation(new Rotation(0.0));
 
         //Run collision check
         return collisionDetector.detect(this.rectangle, transform1, otherEntity.rectangle, transform2);

@@ -34,7 +34,7 @@ public class PlayerEntity extends GameEntity
 
     public PlayerEntity(Player player)
     {
-        super(0, 0, 60, 20, 0);
+        super(0, 0, 240, 80, 0);
         this.player = player;
     }
     public String getEntityDataJSON()
