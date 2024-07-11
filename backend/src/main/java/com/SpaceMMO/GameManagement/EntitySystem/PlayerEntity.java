@@ -1,5 +1,6 @@
 package com.SpaceMMO.GameManagement.EntitySystem;
 
+import com.SpaceMMO.GameManagement.EntitySystem.ExternalModules.MiningDrillModule;
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,6 +8,7 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import org.dyn4j.geometry.Vector2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PlayerEntity extends GameEntity
@@ -17,7 +19,7 @@ public class PlayerEntity extends GameEntity
     public double forwardThrust = 8;
     public double reverseThrust = 4;
 
-    public double maxSpeed = 1000;
+    public double maxSpeed = 500;
     //Rotational speed
     public double rotationalAcceleration = (float)0.0101;
     public double maxRotationalVelocity = (float).035;
@@ -32,16 +34,35 @@ public class PlayerEntity extends GameEntity
     //Reference to the Player object that owns the entity
     public Player player;
 
+    //Internal Modules
+    int maxInternalModules = 1;
+    public ArrayList<ShipInternalModule> internalModules;
+
+    //External Modules
+    int maxExternalModules = 1;
+    public ArrayList<ShipExternalModule> externalModules;
+
+
     public PlayerEntity(Player player)
     {
         super(0, 0, 240, 80, 0);
+        internalModules = new ArrayList<ShipInternalModule>();
+        externalModules = new ArrayList<ShipExternalModule>();
+        externalModules.add(new MiningDrillModule(0,0));
         this.player = player;
     }
     public String getEntityDataJSON()
     {
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, Object> entityData = new HashMap<String, Object>();
-        entityData.put("test", "helloworld");
+
+        //Put external modules
+        String[] externalModuleJSON = new String[externalModules.size()];
+        for(int i = 0; i < externalModules.size(); i++)
+        {
+            externalModuleJSON[i] = externalModules.get(i).getJSON();
+        }
+        entityData.put("externalModules", externalModuleJSON);
         String output = null;
         try
         {
@@ -96,13 +117,15 @@ public class PlayerEntity extends GameEntity
         //springRotation();
         this.rectangle.rotateAboutCenter(rotationalVelocity);
         this.rotation += rotationalVelocity;
-        //System.out.println("VERTICE: " + rectangle.get);
 
         impulse.rotate(rotation);
         velocityVector = velocityVector.add(impulse);
 
         //Check that magnitude does not exceed max speed
-
+        if(velocityVector.getMagnitude() > maxSpeed)
+        {
+            velocityVector.setMagnitude(maxSpeed);
+        }
 
         Vector2 oldPosition = position;
         this.position.x += velocityVector.x / Sector.TICKS_PER_SECOND;
