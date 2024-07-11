@@ -1,49 +1,68 @@
 package com.SpaceMMO.GameManagement.EntitySystem;
 
+import com.SpaceMMO.GameManagement.EntitySystem.ExternalModules.MiningDrillModule;
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
+import org.dyn4j.geometry.Vector2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PlayerEntity extends GameEntity
 {
     //Thrust force values
-    public float starboardThrust = 4;
-    public float portsideThrust = 4;
-    public float forwardThrust = 8;
-    public float reverseThrust = 4;
+    public double starboardThrust = 4;
+    public double portsideThrust = 4;
+    public double forwardThrust = 8;
+    public double reverseThrust = 4;
 
-    public float maxSpeed = 1000;
+    public double maxSpeed = 500;
     //Rotational speed
-    public float rotationalAcceleration = (float)0.0101;
-    public float maxRotationalVelocity = (float).035;
+    public double rotationalAcceleration = (float)0.0101;
+    public double maxRotationalVelocity = (float).035;
     //Rotation in radians
 
     //Float desired rotation in radians that ship should attempt to orient to
-    public float desiredRotation;
+    public double desiredRotation;
 
 
     //Friction value to slow down, may be 0
-    public float friction = (float)2;
+    public double friction = (float)2;
     //Reference to the Player object that owns the entity
     public Player player;
 
+    //Internal Modules
+    int maxInternalModules = 1;
+    public ArrayList<ShipInternalModule> internalModules;
+
+    //External Modules
+    int maxExternalModules = 1;
+    public ArrayList<ShipExternalModule> externalModules;
+
+
     public PlayerEntity(Player player)
     {
-        super();
+        super(0, 0, 240, 80, 0);
+        internalModules = new ArrayList<ShipInternalModule>();
+        externalModules = new ArrayList<ShipExternalModule>();
+        externalModules.add(new MiningDrillModule(0,0));
         this.player = player;
-        width = 211;
-        height = 80;
-        rotation = 0;
     }
     public String getEntityDataJSON()
     {
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, Object> entityData = new HashMap<String, Object>();
-        entityData.put("test", "helloworld");
+
+        //Put external modules
+        String[] externalModuleJSON = new String[externalModules.size()];
+        for(int i = 0; i < externalModules.size(); i++)
+        {
+            externalModuleJSON[i] = externalModules.get(i).getJSON();
+        }
+        entityData.put("externalModules", externalModuleJSON);
         String output = null;
         try
         {
@@ -60,25 +79,24 @@ public class PlayerEntity extends GameEntity
     @Override
     public void update()
     {
-        RealVector impulse = new ArrayRealVector();
-        impulse = impulse.append(0).append(0);
+        Vector2 impulse = new Vector2();
 
-         System.out.println("ID: " + entityID + " rot: " + rotation);
+         //System.out.println("ID: " + entityID + " rot: " + rotation);
         if(player.inputW)
         {
-            impulse.addToEntry(0, forwardThrust);
+            impulse.x += forwardThrust;
         }
         if(player.inputS)
         {
-            impulse.addToEntry(0, reverseThrust*-1);
+            impulse.x -= reverseThrust;
         }
         if(player.inputA)
         {
-            impulse.addToEntry(1, portsideThrust*-1);
+            impulse.y -=  portsideThrust;
         }
         if(player.inputD)
         {
-            impulse.addToEntry(1, starboardThrust);
+            impulse.y += starboardThrust;
         }
 
         if(player.inputQ)
@@ -97,59 +115,25 @@ public class PlayerEntity extends GameEntity
         //Handle rotation
         this.desiredRotation = player.desiredRotation;
         //springRotation();
-        float oldRotation = this.rotation;
-        if(oldRotation != rotation + rotationalVelocity)
-        {
-            this.rotateAboutCenter(rotation - oldRotation);
-        }
+        this.rectangle.rotateAboutCenter(rotationalVelocity);
         this.rotation += rotationalVelocity;
 
-        //Set direction of velocity vector
-        float impulseX = (float)impulse.getEntry(0);
-        float impulseY = (float)impulse.getEntry(1);
-
-        if(impulseX != 0 || impulseY != 0) {
-            //See https://stackoverflow.com/questions/620745/c-rotating-a-vector-around-a-certain-point
-            double finalImpulseX = ((impulseX - 0.0) * Math.cos(rotation)) - ((impulseY) * Math.sin(rotation));
-            double finalImpulseY = 0.0 - ((0.0 - impulseY) * Math.cos(rotation)) + ((impulseX - 0.0) * Math.sin(rotation));
-
-            impulse.setEntry(0, finalImpulseX);
-            impulse.setEntry(1, finalImpulseY);
-        }
-        /*
-        if(x < 0)
-        {
-            //impulse.setEntry(0, impulse.getEntry(0)*-1);
-            impulse.setEntry(1, impulse.getEntry(1)*-1);
-        }
-        */
+        impulse.rotate(rotation);
         velocityVector = velocityVector.add(impulse);
 
         //Check that magnitude does not exceed max speed
+        if(velocityVector.getMagnitude() > maxSpeed)
+        {
+            velocityVector.setMagnitude(maxSpeed);
+        }
 
+        Vector2 oldPosition = position;
+        this.position.x += velocityVector.x / Sector.TICKS_PER_SECOND;
+        this.position.y += velocityVector.y / Sector.TICKS_PER_SECOND;
 
-
-        this.x += velocityVector.getEntry(0) / Sector.TICKS_PER_SECOND;
-        this.y += velocityVector.getEntry(1) / Sector.TICKS_PER_SECOND;
-        //this.rotation += rotationalVelocity / Sector.TICKS_PER_SECOND;
-    }
-
-    //See https://stackoverflow.com/questions/5100811/algorithm-to-control-acceleration-until-a-position-is-reached
-    public void springRotation()
-    {
-        float target = desiredRotation;
-        float current = rotation;
-        float timeStep = ((float)1)/Sector.TICKS_PER_SECOND;
-        //float springConstant = rotationalAcceleration;
-        float springConstant = 50;
-
-        float currentToTarget = target - current;
-        float springForce = currentToTarget * springConstant;
-        float dampingForce = -1*rotationalVelocity * 2 * (float)Math.sqrt(springConstant);
-        float force = springForce + dampingForce;
-
-        rotationalVelocity += force * timeStep;
-        System.out.println("force: " + timeStep);
+        this.rectangle.translate(position.difference(oldPosition));
 
     }
+
+
 }

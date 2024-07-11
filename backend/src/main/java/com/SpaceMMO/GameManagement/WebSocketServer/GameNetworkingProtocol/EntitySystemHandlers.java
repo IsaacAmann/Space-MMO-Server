@@ -35,13 +35,14 @@ public class EntitySystemHandlers
 
         payload.put(ProtocolConstants.ENTITY_UPDATE);
         payload.putInt(entity.entityID);
-        payload.putFloat(entity.x);
-        payload.putFloat(entity.y);
-        payload.putFloat((float)entity.velocityVector.getEntry(0));
-        payload.putFloat((float)entity.velocityVector.getEntry(1));
+        payload.putFloat((float)entity.position.x);
+        payload.putFloat((float)entity.position.y);
+
+        payload.putFloat((float)entity.velocityVector.x);
+        payload.putFloat((float)entity.velocityVector.y);
         payload.putInt(entity.health);
-        payload.putFloat(entity.rotation);
-        payload.putFloat(entity.rotationalVelocity);
+        payload.putFloat((float)entity.rotation);
+        payload.putFloat((float)entity.rotationalVelocity);
         System.out.println(entity.rotation);
 
         BinaryMessage response = new BinaryMessage(payload.array());

@@ -8,15 +8,9 @@ import java.util.HashMap;
 
 public class BasicEntity extends GameEntity
 {
-    public BasicEntity(float x, float y, float width, float height)
+    public BasicEntity(double x, double y, double width, double height)
     {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.velocityVector = new ArrayRealVector();
-        velocityVector = velocityVector.append(0).append(0);
-
+        super(x,y, width, height, 0);
     }
 
     public String getEntityDataJSON()

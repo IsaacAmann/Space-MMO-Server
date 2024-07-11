@@ -38,6 +38,8 @@ dependencies {
 	implementation 'org.springframework.session:spring-session-jdbc'
 	implementation 'org.springframework.shell:spring-shell-starter'
 
+	implementation 'org.dyn4j:dyn4j:4.2.0'
+
 	implementation 'org.springframework.security:spring-security-oauth2-jose'
 	implementation 'com.bucket4j:bucket4j-core:8.10.0'
 

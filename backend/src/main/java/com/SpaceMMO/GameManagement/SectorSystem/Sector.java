@@ -122,6 +122,7 @@ public class Sector
         for(GameEntity entity : entities)
         {
             entity.update();
+
         }
         //Handle Collisions
         entityTree.runCollisionCheck(entityTree);
