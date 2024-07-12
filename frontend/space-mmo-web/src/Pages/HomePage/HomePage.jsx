@@ -13,6 +13,7 @@ function HomePage()
 		<>
 		    <Navbar/>
 			<p>test </p>
+			<iframe src="./godot/Godot-client.html" width="100%" height="600"> </iframe>
 		</>
 	);
 }

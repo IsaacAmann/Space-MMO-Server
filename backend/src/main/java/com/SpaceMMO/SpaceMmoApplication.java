@@ -63,7 +63,7 @@ public class SpaceMmoApplication {
 		{
 			try
 			{
-				registry.addHandler(binaryWebSocketHandler(), "/openGameSession/{username}/{token}").addInterceptors(SpaceMmoApplication.interceptor());
+				registry.addHandler(binaryWebSocketHandler(), "/openGameSession/{username}/{token}").setAllowedOrigins("*").addInterceptors(SpaceMmoApplication.interceptor());
 			}
 			catch(Exception e)
 			{
