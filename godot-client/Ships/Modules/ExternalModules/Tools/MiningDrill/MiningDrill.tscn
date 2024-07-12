@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://bbch4jfjfn3bg" path="res://Ships/Modules/ExternalModules/Tools/MiningDrill/miningDrill.png" id="1_r0ec1"]
 
 [node name="Node2D" type="Node2D"]
+rotation = 3.14159
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 3.14159
 texture = ExtResource("1_r0ec1")

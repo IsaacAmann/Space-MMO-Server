@@ -11,7 +11,8 @@ public class MiningDrillModule extends ShipExternalModule
     public MiningDrillModule(double x, double y)
     {
         this.moduleName = "Mining Drill";
-        this.scenePath = "res://Modules/ExternalModules/Tools/MiningDrill.tscn";
+        this.scenePath = "res://Ships/Modules/ExternalModules/Tools/MiningDrill/MiningDrill.tscn";
+
         this.offsetVector = new Vector2(x, y);
     }
 
@@ -37,5 +38,16 @@ public class MiningDrillModule extends ShipExternalModule
         }
 
         return output;
+    }
+
+    @Override
+    public HashMap<String, Object> getValueMap()
+    {
+        HashMap<String, Object> entityData = new HashMap<String, Object>();
+        entityData.put("moduleName", moduleName);
+        entityData.put("scenePath", scenePath);
+        entityData.put("offsetVectorX", offsetVector.x);
+        entityData.put("offsetVectorY", offsetVector.y);
+        return entityData;
     }
 }

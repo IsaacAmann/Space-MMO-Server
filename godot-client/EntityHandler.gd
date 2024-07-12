@@ -50,9 +50,28 @@ func handleNewEntity(message: PackedByteArray):
 		var jsonString = Marshalls.base64_to_raw(dataSection.get_string_from_ascii()).get_string_from_ascii();
 		
 		print("Json: " + jsonString)
-		
-		newEntity = sovietRocketOne.instantiate()
-		pass
+		var json = JSON.new()
+		var error = json.parse(jsonString)
+		if error == OK:
+			var data = json.data
+			print(data.test)
+			print(data.externalModules[0].moduleName)
+			
+			newEntity = sovietRocketOne.instantiate()
+			
+			for i in range(data.externalModules.size()):
+				var moduleScene = load(data.externalModules[i].scenePath)
+
+				if(moduleScene != null):
+					var module = moduleScene.instantiate()
+					newEntity.get_node("./externalModuleContainer").add_child(module)
+				else:
+					print("Error adding module")
+				pass
+			
+		else:
+			print("JSON error: ", json.get_error_message(), " in ", jsonString, " at line ", json.get_error_line())
+
 	else:
 		#Handle binary format
 		pass
@@ -136,8 +155,12 @@ func handleEntityUpdate(message: PackedByteArray):
 		entity.position = Vector2(positionX, positionY)
 		entity.velocity = Vector2(velocityX, velocityY)
 		entity.angularVelocity = rotationalVelocity
-		entity.spriteRotation = rotation
+		#entity.spriteRotation = rotation
+		entity.rotation = rotation
 		print("velocityx: " + str(velocityX))
+		
+			
+
 		#print("y: " + str(positionY))
 		#print("rotation: " + str(rotation))
 

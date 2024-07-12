@@ -21,6 +21,7 @@ func _ready():
 	print(error);
 	entityHandler = get_node("../EntityHandler")
 	inputHandler = get_node("../InputHandler")
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

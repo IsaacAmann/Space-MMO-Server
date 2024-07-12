@@ -8,3 +8,5 @@ script = ExtResource("1_4s5jt")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+
+[node name="externalModuleContainers" type="Node2D" parent="."]

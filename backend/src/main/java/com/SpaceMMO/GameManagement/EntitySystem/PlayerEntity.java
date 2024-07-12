@@ -57,16 +57,18 @@ public class PlayerEntity extends GameEntity
         HashMap<String, Object> entityData = new HashMap<String, Object>();
 
         //Put external modules
-        String[] externalModuleJSON = new String[externalModules.size()];
+        HashMap<String,Object>[] externalModuleJSON = new HashMap[externalModules.size()];
         for(int i = 0; i < externalModules.size(); i++)
         {
-            externalModuleJSON[i] = externalModules.get(i).getJSON();
+            externalModuleJSON[i] = externalModules.get(i).getValueMap();
         }
         entityData.put("externalModules", externalModuleJSON);
+        entityData.put("test", 4040);
         String output = null;
         try
         {
             output = objectMapper.writeValueAsString(entityData);
+            System.out.println("JSON: : : : " + output);
         }
         catch(Exception e)
         {
