@@ -15,6 +15,7 @@ useEffect(() =>
 	    sessionStorage.setItem("accessToken", null);
         sessionStorage.setItem("idToken", null);
         sessionStorage.setItem("refreshToken", null);
+        sessionStorage.setItem("username", null);
         loginInfo.setUsername(null);
         loginInfo.setUserRole(null);
 

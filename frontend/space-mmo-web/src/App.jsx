@@ -16,6 +16,10 @@ import SignoutPage from "./Pages/SignoutPage.jsx";
 
 export const LoginInfoContext = createContext({token: null, setToken: () => {}});
 
+export const url = "http://localhost:5173"
+export const loginUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/oauth2/authorize?client_id=7v6ht9ct2j9anv6p194hb3s3q8&response_type=code&scope=openid&redirect_uri=http%3A%2F%2Flocalhost%3A5173"
+export const signoutUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/logout?client_id=7v6ht9ct2j9anv6p194hb3s3q8&logout_uri=http%3A%2F%2Flocalhost%3A5173%2Fsignout"
+//export const url "http://winapimonitoring.com"
 
 
 export const mainTheme = createTheme({
@@ -49,6 +53,8 @@ function App() {
 	const [userRole, setUserRole] = useState(null);
 	const loginInfo = useContext(LoginInfoContext);
 
+    //Placing the api url into session storage so the godot client can access it easily
+    sessionStorage.setItem("url", url)
 	//Check for token
 	useEffect(() =>
 	{
@@ -80,6 +86,7 @@ function App() {
                         sessionStorage.setItem("idToken", value.idToken);
                         sessionStorage.setItem("refreshToken", value.refreshToken);
                         sessionStorage.setItem("userRole", value.account.userRole);
+                        sessionStorage.setItem("username", value.account.username)
                     }
                     window.location.replace("http://localhost:5173");
                 }
@@ -98,6 +105,7 @@ function App() {
                 if(Date.now() <= decodedToken.exp * 1000)
                 {
                     setUsername(decodedToken.username);
+                    sessionStorage.setItem("username", decodedToken.username)
                     setToken(decodedToken);
                     setUserRole(sessionStorage.userRole);
                     console.log("not expired");
@@ -108,6 +116,7 @@ function App() {
                      sessionStorage.setItem("idToken", null);
                      sessionStorage.setItem("refreshToken", null);
                      sessionStorage.setItem("userRole", null);
+                     sessionStorage.setItem("username", null);
                 }
             }
         }

@@ -12,17 +12,45 @@ signal error_message(message)
 
 var entityHandler
 var inputHandler
+var debugMode = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("connecting")
-	var error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian/X2lSVxQStE48rLXNsM-RIg==");
+	var error
+	if debugMode == true:
+		error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian/X2lSVxQStE48rLXNsM-RIg==")
+	else:
+		var token = JavaScriptBridge.eval("sessionStorage.getItem('accessToken')")
+		var url = JavaScriptBridge.eval("sessionStorage.getItem('url')")
+		
+		var headers = ["Content-Type: application/json", "Authorization: Bearer " + str(token)]
+		var httpRequest = HTTPRequest.new()
+		add_child(httpRequest)
+		var body = JSON.new().stringify({"message": "test"})
+		httpRequest.request_completed.connect(self.getTokenRequestComplete)
+		httpRequest.request(url + "/api/getGameToken", headers, HTTPClient.METHOD_POST, body)
+		
 	#var error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian2/uXVlqbA27aCYXtrIdxpQJw==");
 	print(error);
 	entityHandler = get_node("../EntityHandler")
 	inputHandler = get_node("../InputHandler")
 	
-
+func getTokenRequestComplete(result, response_code, headers, body):
+	print(body)
+	var username = JavaScriptBridge.eval("sessionStorage.getItem('username')")
+	var httpUrl = JavaScriptBridge.eval("sessionStorage.getItem('url')")
+	var url = httpUrl.replace("http://", "ws://")
+	url += "/openGameSession/"
+	url = url + username + "/"
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var response = json.get_data()
+	url = url + response.gameSessionToken
+	print(response.gameSessionToken)
+	print(url)
+	socket.connect_to_url(url)
+	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	socket.poll()
@@ -69,7 +97,7 @@ func _process(delta):
 		var code = socket.get_close_code()
 		var reason = socket.get_close_reason()
 		print("Web socket closed with code %d reason %s", code ,reason);
-		set_process(false)
+		#set_process(false)
 
 func sendMessage(message: PackedByteArray):
 	socket.send(message)
