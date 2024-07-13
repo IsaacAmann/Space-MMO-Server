@@ -41,7 +41,7 @@ func getTokenRequestComplete(result, response_code, headers, body):
 	var username = JavaScriptBridge.eval("sessionStorage.getItem('username')")
 	var httpUrl = JavaScriptBridge.eval("sessionStorage.getItem('url')")
 	var url = httpUrl.replace("https://", "ws://")
-	url += "/openGameSession/"
+	url += ":8080/openGameSession/"
 	url = url + username + "/"
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
