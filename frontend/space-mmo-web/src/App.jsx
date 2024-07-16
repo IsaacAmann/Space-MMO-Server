@@ -17,9 +17,10 @@ import SignoutPage from "./Pages/SignoutPage.jsx";
 export const LoginInfoContext = createContext({token: null, setToken: () => {}});
 
 export const url = "http://localhost:5173"
+//export const url "https://winapimonitoring.com"
+
 export const loginUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/oauth2/authorize?client_id=7v6ht9ct2j9anv6p194hb3s3q8&response_type=code&scope=openid&redirect_uri=http%3A%2F%2Flocalhost%3A5173"
 export const signoutUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/logout?client_id=7v6ht9ct2j9anv6p194hb3s3q8&logout_uri=http%3A%2F%2Flocalhost%3A5173%2Fsignout"
-//export const url "http://winapimonitoring.com"
 
 
 export const mainTheme = createTheme({

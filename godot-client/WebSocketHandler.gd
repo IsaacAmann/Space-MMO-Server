@@ -12,7 +12,7 @@ signal error_message(message)
 
 var entityHandler
 var inputHandler
-var debugMode = false
+var debugMode = true
 var requestComplete = false
 
 # Called when the node enters the scene tree for the first time.
@@ -20,7 +20,8 @@ func _ready():
 	print("connecting")
 	var error
 	if debugMode == true:
-		error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian/X2lSVxQStE48rLXNsM-RIg==")
+		error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian/BDdvbh3M_BZqy7_z07GxvA==")
+		requestComplete = true
 	else:
 		var token = JavaScriptBridge.eval("sessionStorage.getItem('accessToken')")
 		#var url = JavaScriptBridge.eval("sessionStorage.getItem('url')")
