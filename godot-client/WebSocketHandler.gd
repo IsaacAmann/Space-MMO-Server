@@ -12,7 +12,8 @@ signal error_message(message)
 
 var entityHandler
 var inputHandler
-var debugMode = false;
+var debugMode = false
+var requestComplete = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,7 +41,7 @@ func getTokenRequestComplete(result, response_code, headers, body):
 	print(body)
 	var username = JavaScriptBridge.eval("sessionStorage.getItem('username')")
 	var httpUrl = JavaScriptBridge.eval("sessionStorage.getItem('url')")
-	var url1 = String('ws://winapimonitoring.com:8080/openGameSession/')
+	var url1 = String('ws://winapimonitoring.com/openGameSession/')
 	print("line 44: " + str(url1))
 	url1 = url1 + username + "/"
 	var json = JSON.new()
@@ -51,55 +52,58 @@ func getTokenRequestComplete(result, response_code, headers, body):
 	
 	print(response.gameSessionToken)
 	print("Line 53: " + url1)
+	
 	socket.connect_to_url(url1)
+	requestComplete = true
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	socket.poll()
-	var state = socket.get_ready_state()
-	if state == WebSocketPeer.STATE_OPEN:
-		if(sent == false):
-			var value = PackedByteArray()
-			value.append(3)
-			socket.send(value);
-			sent = true
-		while socket.get_available_packet_count():
-			var packet = socket.get_packet()
-			print("packet: ", packet)
-			#Get message type
-			var type = packet.decode_s8(0)
-			match type:
-				#player info
-				0:
-					print("player info")
-				#sector join
-				1:
-					print("sector join")
-				#error
-				2:
-					print("error")
-				#join debug
-				3:
-					print("join debug")
-				
-				#entity update
-				4:
-					entityHandler.handleEntityUpdate(packet)
-					print("entity update")
-				
-				#new entity notification
-				5: 
-					entityHandler.handleNewEntity(packet)
-					print("new entity notification")
+	if requestComplete == true:
+		socket.poll()
+		var state = socket.get_ready_state()
+		if state == WebSocketPeer.STATE_OPEN:
+			if(sent == false):
+				var value = PackedByteArray()
+				value.append(3)
+				socket.send(value);
+				sent = true
+			while socket.get_available_packet_count():
+				var packet = socket.get_packet()
+				print("packet: ", packet)
+				#Get message type
+				var type = packet.decode_s8(0)
+				match type:
+					#player info
+					0:
+						print("player info")
+					#sector join
+					1:
+						print("sector join")
+					#error
+					2:
+						print("error")
+					#join debug
+					3:
+						print("join debug")
 					
-	elif state == WebSocketPeer.STATE_CLOSING:
-		
-		pass
-	elif state == WebSocketPeer.STATE_CLOSED:
-		var code = socket.get_close_code()
-		var reason = socket.get_close_reason()
-		print("Web socket closed with code %d reason %s", code ,reason);
-		#set_process(false)
+					#entity update
+					4:
+						entityHandler.handleEntityUpdate(packet)
+						print("entity update")
+					
+					#new entity notification
+					5: 
+						entityHandler.handleNewEntity(packet)
+						print("new entity notification")
+						
+		elif state == WebSocketPeer.STATE_CLOSING:
+			
+			pass
+		elif state == WebSocketPeer.STATE_CLOSED:
+			var code = socket.get_close_code()
+			var reason = socket.get_close_reason()
+			print("Web socket closed with code %d reason %s", code ,reason);
+			#set_process(false)
 
 func sendMessage(message: PackedByteArray):
 	socket.send(message)
