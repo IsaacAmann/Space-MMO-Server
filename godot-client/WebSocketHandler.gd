@@ -22,8 +22,8 @@ func _ready():
 		error = socket.connect_to_url("ws://localhost:8080/openGameSession/Cnidarian/X2lSVxQStE48rLXNsM-RIg==")
 	else:
 		var token = JavaScriptBridge.eval("sessionStorage.getItem('accessToken')")
-		var url = JavaScriptBridge.eval("sessionStorage.getItem('url')")
-		
+		#var url = JavaScriptBridge.eval("sessionStorage.getItem('url')")
+		var url = "https://winapimonitoring.com"
 		var headers = ["Content-Type: application/json", "Authorization: Bearer " + str(token)]
 		var httpRequest = HTTPRequest.new()
 		add_child(httpRequest)
@@ -40,14 +40,15 @@ func getTokenRequestComplete(result, response_code, headers, body):
 	print(body)
 	var username = JavaScriptBridge.eval("sessionStorage.getItem('username')")
 	var httpUrl = JavaScriptBridge.eval("sessionStorage.getItem('url')")
-
 	var url1 = 'ws://winapimonitoring.com:8080/openGameSession/'
-	print(url1)
+	print("line 44: " + str(url1))
 	url1 = url1 + username + "/"
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
 	var response = json.get_data()
+
 	url1 = url1 + response.gameSessionToken
+	
 	print(response.gameSessionToken)
 	print(url1)
 	socket.connect_to_url(url1)
