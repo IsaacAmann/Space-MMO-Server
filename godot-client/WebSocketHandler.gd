@@ -41,15 +41,15 @@ func getTokenRequestComplete(result, response_code, headers, body):
 	var username = JavaScriptBridge.eval("sessionStorage.getItem('username')")
 	var httpUrl = JavaScriptBridge.eval("sessionStorage.getItem('url')")
 
-	var url = "ws://winapimonitoring.com:8080/openGameSession/"
-	url = url + username + "/"
+	var url1 = "ws://winapimonitoring.com:8080/openGameSession/"
+	url1 = url1 + username + "/"
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
 	var response = json.get_data()
-	url = url + response.gameSessionToken
+	url1 = url1 + response.gameSessionToken
 	print(response.gameSessionToken)
-	print(url)
-	socket.connect_to_url(url)
+	print(url1)
+	socket.connect_to_url(url1)
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
