@@ -2,22 +2,36 @@ import { defineConfig } from 'vite'
 import crossOriginIsolation from 'vite-plugin-cross-origin-isolation'
 import react from '@vitejs/plugin-react'
 import fs from 'fs'
-
+import mkcert from 'vite-plugin-mkcert'
 // https://vitejs.dev/config/
+var debug = true
+
+function getCert()
+{
+    if(debug == true)
+    {
+        return true
+    }
+    else
+    {
+        return {
+            key: fs.readFileSync('/etc/letsencrypt/live/winapimonitoring.com/privkey.pem'),
+            cert: fs.readFileSync('/etc/letsencrypt/live/winapimonitoring.com/fullchain.pem')
+        }
+    }
+}
+
 export default defineConfig({
-  plugins: [react(), crossOriginIsolation()
+  plugins: [react(), crossOriginIsolation(), mkcert()
   ],
+
 
 
 server:
 {
     host: true,
     port: 3000,
-    https:
-    {
-        key: fs.readFileSync('/etc/letsencrypt/live/winapimonitoring.com/privkey.pem'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/winapimonitoring.com/fullchain.pem')
-    },
+    https: getCert() ,
     proxy:
     {
         '/api':

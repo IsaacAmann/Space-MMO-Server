@@ -16,13 +16,13 @@ import SignoutPage from "./Pages/SignoutPage.jsx";
 
 export const LoginInfoContext = createContext({token: null, setToken: () => {}});
 
-//export const url = "http://localhost:5173"
-export const url = "https://winapimonitoring.com"
+export const url = "https://localhost:3000"
+//export const url = "https://winapimonitoring.com"
 
-//export const loginUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/oauth2/authorize?client_id=7v6ht9ct2j9anv6p194hb3s3q8&response_type=code&scope=openid&redirect_uri=http%3A%2F%2Flocalhost%3A5173"
-//export const signoutUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/logout?client_id=7v6ht9ct2j9anv6p194hb3s3q8&logout_uri=http%3A%2F%2Flocalhost%3A5173%2Fsignout"
-export const loginUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/oauth2/authorize?client_id=7v6ht9ct2j9anv6p194hb3s3q8&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwinapimonitoring.com%3A443"
-export const signoutUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/logout?client_id=7v6ht9ct2j9anv6p194hb3s3q8&logout_uri=https%3A%2F%2Fwinapimonitoring.com%3A443%2Fsignout"
+export const loginUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/oauth2/authorize?client_id=7v6ht9ct2j9anv6p194hb3s3q8&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Flocalhost%3A3000"
+export const signoutUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/logout?client_id=7v6ht9ct2j9anv6p194hb3s3q8&logout_uri=https%3A%2F%2Flocalhost%3A3000%2Fsignout"
+//export const loginUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/oauth2/authorize?client_id=7v6ht9ct2j9anv6p194hb3s3q8&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwinapimonitoring.com%3A443"
+//export const signoutUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/logout?client_id=7v6ht9ct2j9anv6p194hb3s3q8&logout_uri=https%3A%2F%2Fwinapimonitoring.com%3A443%2Fsignout"
 
 export const mainTheme = createTheme({
 	palette: {
@@ -90,7 +90,9 @@ function App() {
                         sessionStorage.setItem("userRole", value.account.userRole);
                         sessionStorage.setItem("username", value.account.username)
                     }
-                    window.location.replace("https://winapimonitoring.com");
+                    //window.location.replace("https://winapimonitoring.com");
+                    window.location.replace(url);
+
                 }
             );
         }
