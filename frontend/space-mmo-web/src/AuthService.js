@@ -8,7 +8,7 @@ const apiURL = "http://localhost:8080";
 const authClientId = "3daqdgk2g695k9663k3vo30ht8";
 const AuthFlow =  "USER_PASSWORD_AUTH";
 const appRegion = "us-east-2";
-
+import {url} from "./App.jsx";
 
 export const getToken = async function(code)
 {
