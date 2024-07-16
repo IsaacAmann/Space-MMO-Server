@@ -41,7 +41,7 @@ func getTokenRequestComplete(result, response_code, headers, body):
 	print(body)
 	var username = JavaScriptBridge.eval("sessionStorage.getItem('username')")
 	var httpUrl = JavaScriptBridge.eval("sessionStorage.getItem('url')")
-	var url1 = String('ws://winapimonitoring.com/openGameSession/')
+	var url1 = String('wss://winapimonitoring.com/openGameSession/')
 	print("line 44: " + str(url1))
 	url1 = url1 + username + "/"
 	var json = JSON.new()
