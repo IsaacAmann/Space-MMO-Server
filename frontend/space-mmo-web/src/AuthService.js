@@ -2,26 +2,24 @@
 //See amazon authentication example at https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/cognito-identity-provider/scenarios/cognito-developer-guide-react-example/frontend-client/src/authService.ts
 import { CognitoIdentityProviderClient, InitiateAuthCommand, SignUpCommand, ConfirmSignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
 import axios from 'axios';
-
-const apiURL = "http://localhost:8080";
+import {url} from "./App.jsx";
 
 const authClientId = "3daqdgk2g695k9663k3vo30ht8";
 const AuthFlow =  "USER_PASSWORD_AUTH";
 const appRegion = "us-east-2";
-import {url} from "./App.jsx";
 
 export const getToken = async function(code)
 {
     var output = {loggedIn: false, accessToken: null};
 
-    var url = "";
-    url = url.concat(apiURL, "/public/login");
+    var url1 = url;
+    url1 = url1.concat("/public/login");
 
     var json = {
         code: code
     };
 
-    var result = await axios.post(url, json);
+    var result = await axios.post(url1, json);
 
     console.log(result);
     output.accessToken = result.data.response.access_token;

@@ -48,7 +48,7 @@ public class LoginController
         body.add("client_secret", env.getProperty("spring.security.oauth2.client.registration.cognito.client-secret"));
         //System.out.println(env.getProperty("spring.security.oauth2.client.registration.cognito.client-id"));
         body.add("grant_type", "authorization_code");
-        body.add("redirect_uri", "http://localhost:5173");
+        body.add("redirect_uri", "https://winapimonitoring.com:443");
 
         HttpEntity<MultiValueMap<String,String>> httpRequest = new HttpEntity<MultiValueMap<String,String>>(body, header);
 

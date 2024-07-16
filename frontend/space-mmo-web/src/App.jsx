@@ -90,7 +90,7 @@ function App() {
                         sessionStorage.setItem("userRole", value.account.userRole);
                         sessionStorage.setItem("username", value.account.username)
                     }
-                    window.location.replace("http://localhost:5173");
+                    window.location.replace("https://winapimonitoring.com");
                 }
             );
         }
