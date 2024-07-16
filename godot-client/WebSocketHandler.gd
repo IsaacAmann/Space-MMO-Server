@@ -12,7 +12,7 @@ signal error_message(message)
 
 var entityHandler
 var inputHandler
-var debugMode = true
+var debugMode = false
 var requestComplete = false
 
 # Called when the node enters the scene tree for the first time.
