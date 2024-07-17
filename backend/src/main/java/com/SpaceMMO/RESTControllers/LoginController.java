@@ -5,6 +5,7 @@ import com.SpaceMMO.UserManagement.UserAccount;
 import com.SpaceMMO.UserManagement.UserAccountRepository;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +33,9 @@ public class LoginController
     @Autowired
     private UserAccountRepository userAccountRepository;
 
+    @Value("${URL}")
+    private  String url;
+
     private final String awsAuthOUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.com/oauth2/token";
     @PostMapping("/public/login")
     public Map<String, Object> login(@RequestBody Map<String, Object> payload, HttpServletRequest request)
@@ -49,7 +53,8 @@ public class LoginController
         //System.out.println(env.getProperty("spring.security.oauth2.client.registration.cognito.client-id"));
         body.add("grant_type", "authorization_code");
         //body.add("redirect_uri", "https://winapimonitoring.com:443");
-        body.add("redirect_uri", "https://localhost:3000");
+        //body.add("redirect_uri", "https://localhost:3000");
+        body.add("redirect_uri", url);
 
         HttpEntity<MultiValueMap<String,String>> httpRequest = new HttpEntity<MultiValueMap<String,String>>(body, header);
 
@@ -72,6 +77,7 @@ public class LoginController
         accountObject.put("username", account.username);
         accountObject.put("userRole", account.userRole);
         output.put("account", accountObject);
+        System.out.println("URL: " + url);
         return output;
     }
 

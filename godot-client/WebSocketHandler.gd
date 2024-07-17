@@ -44,8 +44,11 @@ func getTokenRequestComplete(result, response_code, headers, body):
 	var httpUrl = JavaScriptBridge.eval("sessionStorage.getItem('url')")
 	
 	#var url1 = String('wss://winapimonitoring.com/openGameSession/')
-	var url1 = httpUrl + "/openGamesession/"
-	url1 = url1.replace("https", "wss")
+	var url1 = httpUrl + "/openGameSession/"
+	if(url1.find("localhost", 0) == -1):
+		url1 = url1.replace("https", "wss")
+	else:
+		url1 = String("ws://localhost:8080/openGameSession/")
 	print("line 44: " + str(url1))
 	url1 = url1 + username + "/"
 	var json = JSON.new()

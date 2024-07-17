@@ -26,6 +26,6 @@ spring:
             scope: openid
 
 
-
+URL: ${UR:https://localhost:3000}
 
 

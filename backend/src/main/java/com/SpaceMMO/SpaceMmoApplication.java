@@ -3,6 +3,7 @@ package com.SpaceMMO;
 import com.SpaceMMO.GameManagement.WebSocketServer.GameServer;
 import com.SpaceMMO.Services.RateLimitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,7 @@ import java.util.Map;
 public class SpaceMmoApplication {
 	@Autowired
 	RateLimitService rateLimitService;
+
 
 	public static void main(String[] args)
 	{
