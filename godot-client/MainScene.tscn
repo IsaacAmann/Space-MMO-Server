@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkwtjjfwfojqi"]
+[gd_scene load_steps=6 format=3 uid="uid://bkwtjjfwfojqi"]
 
 [ext_resource type="Script" path="res://WebSocketHandler.gd" id="1_355yi"]
 [ext_resource type="Script" path="res://EntityHandler.gd" id="2_tn10v"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="3_jg2ql"]
 [ext_resource type="Script" path="res://InputHandler.gd" id="4_x3vnl"]
+[ext_resource type="PackedScene" uid="uid://dn6pc3k7m0eko" path="res://ImportedSector/testingSystem.tscn" id="5_dfn8h"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -19,3 +20,7 @@ script = ExtResource("3_jg2ql")
 
 [node name="InputHandler" type="Node2D" parent="."]
 script = ExtResource("4_x3vnl")
+
+[node name="SectorContainer" type="Node2D" parent="."]
+
+[node name="testingSystem" parent="SectorContainer" instance=ExtResource("5_dfn8h")]

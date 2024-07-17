@@ -64,6 +64,7 @@ public class PlayerEntity extends GameEntity
         }
         entityData.put("externalModules", externalModuleJSON);
         entityData.put("test", 4040);
+        entityData.put("username", player.account.username);
         String output = null;
         try
         {

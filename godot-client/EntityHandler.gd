@@ -58,7 +58,8 @@ func handleNewEntity(message: PackedByteArray):
 			print(data.externalModules[0].moduleName)
 			
 			newEntity = sovietRocketOne.instantiate()
-			
+			if(data.username != null):
+				newEntity.nameLabel = data.username
 			for i in range(data.externalModules.size()):
 				var moduleScene = load(data.externalModules[i].scenePath)
 

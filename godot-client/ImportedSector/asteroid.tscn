@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://bh2oxpc45ydwe"]
+
+[ext_resource type="Texture2D" uid="uid://0ssfd2nxdw1x" path="res://ImportedSector/assets/long.png" id="1_esste"]
+[ext_resource type="Texture2D" uid="uid://i1t1kxh6f7cr" path="res://ImportedSector/assets/rock.png" id="1_ilxb8"]
+[ext_resource type="Script" path="res://ImportedSector/asteroidSelect.gd" id="1_xj3ps"]
+[ext_resource type="Texture2D" uid="uid://dmk02c2gs7jvu" path="res://ImportedSector/assets/small.png" id="1_y28rq"]
+[ext_resource type="Texture2D" uid="uid://dfw2bkq16y2uk" path="res://ImportedSector/assets/medium.png" id="2_5avhs"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j7vej"]
+radius = 15.0
+height = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c1u2w"]
+radius = 39.0512
+
+[node name="asteroid" type="Area2D"]
+script = ExtResource("1_xj3ps")
+
+[node name="asteroidSmall" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_j7vej")
+
+[node name="Sprite2D" type="Sprite2D" parent="asteroidSmall"]
+rotation = 0.0110308
+texture = ExtResource("1_y28rq")
+
+[node name="asteroidLong" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_j7vej")
+
+[node name="Sprite2D" type="Sprite2D" parent="asteroidLong"]
+rotation = 0.0110308
+texture = ExtResource("1_esste")
+
+[node name="asteroidMedium" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_j7vej")
+
+[node name="Sprite2D" type="Sprite2D" parent="asteroidMedium"]
+rotation = 0.0110308
+texture = ExtResource("2_5avhs")
+
+[node name="asteroidL" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c1u2w")
+
+[node name="Sprite2D" type="Sprite2D" parent="asteroidL"]
+rotation = 0.0110308
+texture = ExtResource("1_ilxb8")
