@@ -139,4 +139,17 @@ func _process(delta):
 		floatArray.reverse()
 		message.append_array(floatArray)
 		
+		floatArray = PackedByteArray()
+		floatArray.resize(4)
+		floatArray.encode_float(0, mousePosition.x)
+		floatArray.reverse()
+		message.append_array(floatArray)
+		
+		floatArray = PackedByteArray()
+		floatArray.resize(4)
+		floatArray.encode_float(0, mousePosition.y)
+		floatArray.reverse()
+		message.append_array(floatArray)
+		
+		
 		webSocketHandler.sendMessage(message)

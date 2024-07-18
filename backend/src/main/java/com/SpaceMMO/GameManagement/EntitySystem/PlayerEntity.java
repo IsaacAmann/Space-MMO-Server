@@ -48,7 +48,7 @@ public class PlayerEntity extends GameEntity
         super(0, 0, 240, 80, 0);
         internalModules = new ArrayList<ShipInternalModule>();
         externalModules = new ArrayList<ShipExternalModule>();
-        externalModules.add(new MiningDrillModule(0,0));
+        externalModules.add(new MiningDrillModule(0,0, this));
         this.player = player;
     }
     public String getEntityDataJSON()
@@ -100,6 +100,17 @@ public class PlayerEntity extends GameEntity
         if(player.inputD)
         {
             impulse.y += starboardThrust;
+        }
+        //Attempt to fire weapons
+        if(player.inputSpace)
+        {
+            for(ShipExternalModule module : externalModules)
+            {
+                if(module instanceof Weapon)
+                {
+                    ((Weapon)module).fire();
+                }
+            }
         }
 
         if(player.inputQ)

@@ -149,6 +149,21 @@ public class Sector
             {
                 serviceContainer.entitySystemHandlers.sendEntityUpdate(player.session, entity);
             }
+            //Send messages on the queue
+
+            //Grab current number of elements, elements could change while running they will be sent in next game loop iteration
+            int numberMessage = player.messageQueue.size();
+            for(int i = 0; i < numberMessage; i++)
+            {
+                try {
+                    player.session.sendMessage(player.messageQueue.remove());
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+            }
         }
 
     }

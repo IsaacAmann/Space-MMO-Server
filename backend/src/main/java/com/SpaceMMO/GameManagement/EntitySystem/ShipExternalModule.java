@@ -11,7 +11,11 @@ public abstract class ShipExternalModule
     //Path of scene file within godot client
     public String scenePath;
     public String moduleName;
+    //Reference to parent entity
+    public PlayerEntity parentShip;
 
     abstract public String getJSON();
     abstract public HashMap<String, Object> getValueMap();
+
+
 }

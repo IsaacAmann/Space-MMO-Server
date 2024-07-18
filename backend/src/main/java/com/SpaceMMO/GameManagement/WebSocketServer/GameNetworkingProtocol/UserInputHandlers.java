@@ -42,8 +42,12 @@ public class UserInputHandlers
             byte inputBitMap = messageBuffer.get(1);
             float desiredRotation = messageBuffer.getFloat(2);
             //desiredRotation = (byte)Integer.reverse(Float.floatToIntBits(desiredRotation));
-            System.out.println("Input byte: " + inputBitMap);
-
+            float mouseX = messageBuffer.getFloat(6);
+            float mouseY = messageBuffer.getFloat(10);
+            player.mouseX = mouseX;
+            player.mouseY = mouseY;
+            //System.out.println("Input byte: " + inputBitMap);
+            //System.out.println("MouseX: " + mouseX + " MouseY: " + mouseY);
             if((inputBitMap & W_BITMASK) == W_BITMASK)
             {
                 System.out.println("W pressed by " + playerAccount.username);
@@ -124,7 +128,7 @@ public class UserInputHandlers
                 player.inputF = false;
             }
 
-            System.out.println(playerAccount.username + " desired angle: " + desiredRotation);
+           // System.out.println(playerAccount.username + " desired angle: " + desiredRotation);
             player.desiredRotation = desiredRotation;
         }
 

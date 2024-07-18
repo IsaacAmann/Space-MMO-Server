@@ -12,6 +12,8 @@ signal error_message(message)
 
 var entityHandler
 var inputHandler
+var affectsHandler
+
 var debugMode = false
 var requestComplete = false
 
@@ -37,6 +39,7 @@ func _ready():
 	print(error);
 	entityHandler = get_node("../EntityHandler")
 	inputHandler = get_node("../InputHandler")
+	affectsHandler = get_node("../AffectsHandler")
 	
 func getTokenRequestComplete(result, response_code, headers, body):
 	print(body)
@@ -102,6 +105,12 @@ func _process(delta):
 					5: 
 						entityHandler.handleNewEntity(packet)
 						print("new entity notification")
+					#Player input (probably wont be needed by client
+					6:
+						pass
+					#Laser effect
+					7:
+						affectsHandler.handleLaserPacket(packet)
 						
 		elif state == WebSocketPeer.STATE_CLOSING:
 			

@@ -24,4 +24,6 @@ public class ServiceContainer
     public EntitySystemHandlers entitySystemHandlers;
     @Autowired
     public UserInputHandlers userInputHandlers;
+    @Autowired
+    public ClientAffectsHandler clientAffectsHandler;
 }

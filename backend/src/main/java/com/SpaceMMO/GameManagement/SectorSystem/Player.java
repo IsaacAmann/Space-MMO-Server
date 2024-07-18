@@ -2,7 +2,10 @@ package com.SpaceMMO.GameManagement.SectorSystem;
 
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 import com.SpaceMMO.UserManagement.UserAccount;
+import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
+
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Player
 {
@@ -20,6 +23,12 @@ public class Player
     public boolean inputE;
     public boolean inputF;
     public float desiredRotation;
+    public float mouseX;
+    public float mouseY;
+
+    //Allows messages to be queued to sent without running into concurrency issues
+    public ConcurrentLinkedQueue<BinaryMessage> messageQueue;
+
 
     public Player(WebSocketSession session, UserAccount account)
     {
@@ -34,7 +43,9 @@ public class Player
         inputQ = false;
         inputE = false;
         inputF = false;
-
+        mouseX = 0;
+        mouseY = 0;
+        messageQueue = new ConcurrentLinkedQueue<BinaryMessage>();
     }
 
 

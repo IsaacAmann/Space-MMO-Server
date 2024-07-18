@@ -9,5 +9,5 @@ public class ProtocolConstants
     public static final byte ENTITY_UPDATE = 0x4;
     public static final byte NEW_ENTITY_NOTIFICATION = 0x5;
     public static final byte PLAYER_SHIP_INPUT = 0x6;
-
+    public static final byte LASER_AFFECT = 0x7;
 }
