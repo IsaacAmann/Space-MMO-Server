@@ -23,6 +23,8 @@ public abstract class GameEntity
     public double rotation;
     public double rotationalVelocity;
 
+    public String godotScenePath;
+
     public static Sat collisionDetector = new Sat();
 
     public GameEntity(double x, double y, double width, double height, double rotation)
@@ -38,7 +40,7 @@ public abstract class GameEntity
 
     public void handleCollision(GameEntity otherEntity)
     {
-        System.out.println("Collided with: " + otherEntity);
+        //System.out.println("Collided with: " + otherEntity);
     }
 
     public abstract String getEntityDataJSON();

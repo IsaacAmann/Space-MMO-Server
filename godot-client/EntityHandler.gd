@@ -6,6 +6,11 @@ extends Node2D
 
 var adminOrb = preload("res://Ships/Debug/AdminOrb/AdminOrb.tscn")
 var sovietRocketOne = preload("res://Ships/SovietRocketOne/SovietRocketOne.tscn")
+
+var playerShip = null
+func getPlayerShip():
+	return playerShip
+	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	webSocketHandler.entity_update_message.connect(handleEntityUpdate)
@@ -56,14 +61,23 @@ func handleNewEntity(message: PackedByteArray):
 			var data = json.data
 			print(data.test)
 			print(data.externalModules[0].moduleName)
+			var entityPath = data.godotScenePath
+			var entityScene
 			
-			newEntity = sovietRocketOne.instantiate()
-			if(data.username != null):
+			if entityPath != null:
+				entityScene = load(entityPath)
+			if entityScene == null:
+				entityScene = load("res://Entities/error.tscn")
+			newEntity = entityScene.instantiate()
+			if(data.username != null && "nameLabel" in newEntity):
 				newEntity.nameLabel = data.username
+				var username = JavaScriptBridge.eval("sessionStorage.getItem('username')")
+				if(username == newEntity.nameLabel):
+					playerShip = newEntity
 			for i in range(data.externalModules.size()):
 				var moduleScene = load(data.externalModules[i].scenePath)
 
-				if(moduleScene != null):
+				if(moduleScene != null && newEntity.get_node("./externalModuleContainer") != null):
 					var module = moduleScene.instantiate()
 					newEntity.get_node("./externalModuleContainer").add_child(module)
 				else:
@@ -155,7 +169,8 @@ func handleEntityUpdate(message: PackedByteArray):
 	if(entity != null):
 		entity.position = Vector2(positionX, positionY)
 		entity.velocity = Vector2(velocityX, velocityY)
-		entity.angularVelocity = rotationalVelocity
+		if("angularVelocity" in entity):
+			entity.angularVelocity = rotationalVelocity
 		#entity.spriteRotation = rotation
 		entity.rotation = rotation
 		print("velocityx: " + str(velocityX))

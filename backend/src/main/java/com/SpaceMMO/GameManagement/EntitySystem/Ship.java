@@ -45,6 +45,7 @@ public class Ship extends GameEntity
         }
         entityData.put("externalModules", externalModuleJSON);
         entityData.put("test", 4040);
+        entityData.put("godotScenePath", godotScenePath);
         //entityData.put("username", player.account.username);
         String output = null;
         try

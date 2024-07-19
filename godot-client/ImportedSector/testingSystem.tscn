@@ -841,24 +841,27 @@ _data = {
 [node name="testingSystem" type="Node2D"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-scroll_ignore_camera_zoom = true
 
 [node name="spaceLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.3, 0.3)
 motion_mirroring = Vector2(4480, 4480)
 
 [node name="space1" type="Sprite2D" parent="ParallaxBackground/spaceLayer"]
+texture_filter = 4
 texture = ExtResource("1_aa0lj")
 
 [node name="space2" type="Sprite2D" parent="ParallaxBackground/spaceLayer"]
+texture_filter = 4
 position = Vector2(2240, 0)
 texture = ExtResource("1_aa0lj")
 
 [node name="space3" type="Sprite2D" parent="ParallaxBackground/spaceLayer"]
+texture_filter = 4
 position = Vector2(0, 2240)
 texture = ExtResource("1_aa0lj")
 
 [node name="space4" type="Sprite2D" parent="ParallaxBackground/spaceLayer"]
+texture_filter = 4
 position = Vector2(2240, 2240)
 texture = ExtResource("1_aa0lj")
 

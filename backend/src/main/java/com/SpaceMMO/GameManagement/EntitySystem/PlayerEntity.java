@@ -32,6 +32,7 @@ public class PlayerEntity extends Ship
         internalModules = new ArrayList<ShipInternalModule>();
         externalModules = new ArrayList<ShipExternalModule>();
         externalModules.add(new MiningDrillModule(0,0, this));
+        godotScenePath = "res://Ships/SovietRocketOne/SovietRocketOne.tscn";
         this.player = player;
     }
 
@@ -50,6 +51,7 @@ public class PlayerEntity extends Ship
         entityData.put("externalModules", externalModuleJSON);
         entityData.put("test", 4040);
         entityData.put("username", player.account.username);
+        entityData.put("godotScenePath", godotScenePath);
         String output = null;
         try
         {
