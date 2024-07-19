@@ -13,21 +13,6 @@ import java.util.HashMap;
 
 public class PlayerEntity extends Ship
 {
-    //Thrust force values
-    //public double starboardThrust = 4;
-    //public double portsideThrust = 4;
-    //public double forwardThrust = 8;
-    //public double reverseThrust = 4;
-
-    //public double maxSpeed = 500;
-    //Rotational speed
-    //public double rotationalAcceleration = (float)0.0101;
-    //public double maxRotationalVelocity = (float).035;
-    //Rotation in radians
-
-    //Float desired rotation in radians that ship should attempt to orient to
-    //public double desiredRotation;
-
 
     //Reference to the Player object that owns the entity
     public Player player;
