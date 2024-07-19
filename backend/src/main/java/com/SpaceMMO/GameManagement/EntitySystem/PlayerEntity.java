@@ -11,38 +11,36 @@ import org.dyn4j.geometry.Vector2;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PlayerEntity extends GameEntity
+public class PlayerEntity extends Ship
 {
     //Thrust force values
-    public double starboardThrust = 4;
-    public double portsideThrust = 4;
-    public double forwardThrust = 8;
-    public double reverseThrust = 4;
+    //public double starboardThrust = 4;
+    //public double portsideThrust = 4;
+    //public double forwardThrust = 8;
+    //public double reverseThrust = 4;
 
-    public double maxSpeed = 500;
+    //public double maxSpeed = 500;
     //Rotational speed
-    public double rotationalAcceleration = (float)0.0101;
-    public double maxRotationalVelocity = (float).035;
+    //public double rotationalAcceleration = (float)0.0101;
+    //public double maxRotationalVelocity = (float).035;
     //Rotation in radians
 
     //Float desired rotation in radians that ship should attempt to orient to
-    public double desiredRotation;
+    //public double desiredRotation;
 
 
-    //Friction value to slow down, may be 0
-    public double friction = (float)2;
     //Reference to the Player object that owns the entity
     public Player player;
 
     //Internal Modules
-    int maxInternalModules = 1;
-    public ArrayList<ShipInternalModule> internalModules;
+    //int maxInternalModules = 1;
+   // public ArrayList<ShipInternalModule> internalModules;
 
     //External Modules
-    int maxExternalModules = 1;
-    public ArrayList<ShipExternalModule> externalModules;
+    //int maxExternalModules = 1;
+    //public ArrayList<ShipExternalModule> externalModules;
 
-
+    //Simple constructor for debugging
     public PlayerEntity(Player player)
     {
         super(0, 0, 240, 80, 0);
@@ -51,6 +49,8 @@ public class PlayerEntity extends GameEntity
         externalModules.add(new MiningDrillModule(0,0, this));
         this.player = player;
     }
+
+    @Override
     public String getEntityDataJSON()
     {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -135,7 +135,10 @@ public class PlayerEntity extends GameEntity
         impulse.rotate(rotation);
         velocityVector = velocityVector.add(impulse);
 
+        super.update();
+
         //Check that magnitude does not exceed max speed
+        /*
         if(velocityVector.getMagnitude() > maxSpeed)
         {
             velocityVector.setMagnitude(maxSpeed);
@@ -146,6 +149,7 @@ public class PlayerEntity extends GameEntity
         this.position.y += velocityVector.y / Sector.TICKS_PER_SECOND;
 
         this.rectangle.translate(position.difference(oldPosition));
+        */
 
     }
 
