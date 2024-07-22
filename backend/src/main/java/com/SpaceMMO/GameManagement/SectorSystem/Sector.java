@@ -21,6 +21,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.security.Provider;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Configurable
 public class Sector
@@ -35,14 +36,22 @@ public class Sector
     public static final long OPTIMAL_TIME = 1000000000 / TICKS_PER_SECOND;
 
     public String name;
+
+    //Quad tree for collision handling
     public GenericObjectPool<QuadTreeNode> quadTreePool;
     public QuadTreeNode entityTree;
-    public ArrayList<GameEntity> entities;
+
+    //Entity containers
+    private ArrayList<GameEntity> entities;
     public ArrayList<Player> players;
     public int nextEntityID = 0;
 
     public static int nextID = 0;
     public int sectorID;
+
+    //Entity queue, allows outside classes to push entities into the sector
+    //Needed since the add entity function makes a non-thread safe operation
+    public ConcurrentLinkedQueue<GameEntity> entityAddQueue;
 
     public ServiceContainer serviceContainer;
 
@@ -61,6 +70,7 @@ public class Sector
         entities = new ArrayList<GameEntity>();
         entityTree = new QuadTreeNode(0,0,SECTOR_WIDTH, SECTOR_HEIGHT, 0, quadTreePool);
         players = new ArrayList<Player>();
+        entityAddQueue = new ConcurrentLinkedQueue<GameEntity>();
 
         sectorUpdateThread = new SectorUpdateThread();
         sectorUpdateThread.running = true;
@@ -69,7 +79,7 @@ public class Sector
 
     }
 
-    public void addEntity(GameEntity entity)
+    private void addEntity(GameEntity entity)
     {
         entity.entityID = nextEntityID++;
         entities.add(entity);
@@ -121,7 +131,17 @@ public class Sector
         //Handle entity updates
         for(GameEntity entity : entities)
         {
-            entity.update();
+            //Check if entity should be deleted
+            if(entity.removeFlag == true)
+            {
+                //Send entity remove notification to all clients
+
+                //Remove entity
+            }
+            else
+            {
+                entity.update();
+            }
 
         }
         //Handle Collisions
@@ -135,6 +155,13 @@ public class Sector
         for(GameEntity entity : entities)
         {
             entityTree.add(entity);
+        }
+
+        //Add items off the entity add queue
+        int amountToAdd = entityAddQueue.size();
+        for(int i = 0; i < amountToAdd; i++)
+        {
+            addEntity(entityAddQueue.remove());
         }
     }
 

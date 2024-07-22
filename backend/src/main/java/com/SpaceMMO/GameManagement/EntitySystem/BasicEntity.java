@@ -11,6 +11,8 @@ public class BasicEntity extends GameEntity
     public BasicEntity(double x, double y, double width, double height)
     {
         super(x,y, width, height, 0);
+        this.health = 1000;
+
     }
 
     public String getEntityDataJSON()

@@ -1,5 +1,6 @@
 package com.SpaceMMO.GameManagement.EntitySystem;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import org.dyn4j.collision.narrowphase.Penetration;
@@ -9,10 +10,14 @@ import org.dyn4j.geometry.Rotation;
 import org.dyn4j.geometry.Transform;
 import org.dyn4j.geometry.Vector2;
 
+import java.util.HashMap;
+
 public abstract class GameEntity
 {
     public Vector2 position;
     public Vector2 velocityVector;
+    //Indicates that the entity should be removed on the next game loop iteration
+    public boolean removeFlag;
 
     public Rectangle rectangle;
 
@@ -41,6 +46,24 @@ public abstract class GameEntity
     public void handleCollision(GameEntity otherEntity)
     {
         //System.out.println("Collided with: " + otherEntity);
+    }
+
+    public String basicGetEntityJSON(HashMap<String, Object> data)
+    {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String output = null;
+        try
+        {
+            output = objectMapper.writeValueAsString(data);
+            System.out.println("JSON: : : : " + output);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return output;
     }
 
     public abstract String getEntityDataJSON();
