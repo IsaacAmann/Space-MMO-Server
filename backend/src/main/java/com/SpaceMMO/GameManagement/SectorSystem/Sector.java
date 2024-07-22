@@ -72,6 +72,8 @@ public class Sector
         players = new ArrayList<Player>();
         entityAddQueue = new ConcurrentLinkedQueue<GameEntity>();
 
+
+
         sectorUpdateThread = new SectorUpdateThread();
         sectorUpdateThread.running = true;
         sectorUpdateThread.start();

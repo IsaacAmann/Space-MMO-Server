@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxwsjpw6yxngj"]
+
+[ext_resource type="Texture2D" uid="uid://usfgjektocd2" path="res://Entities/Asteroids/helium3Asteroid.png" id="1_qnl5s"]
+
+[node name="Helium3Asteroid" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qnl5s")

@@ -101,7 +101,7 @@ func _process(delta):
 					#entity update
 					4:
 						entityHandler.handleEntityUpdate(packet)
-						print("entity update")
+						#print("entity update")
 					
 					#new entity notification
 					5: 

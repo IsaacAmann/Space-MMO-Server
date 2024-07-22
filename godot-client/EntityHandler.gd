@@ -59,8 +59,6 @@ func handleNewEntity(message: PackedByteArray):
 		var error = json.parse(jsonString)
 		if error == OK:
 			var data = json.data
-			print(data.test)
-			print(data.externalModules[0].moduleName)
 			var entityPath = data.godotScenePath
 			var entityScene
 			
@@ -69,20 +67,21 @@ func handleNewEntity(message: PackedByteArray):
 			if entityScene == null:
 				entityScene = load("res://Entities/error.tscn")
 			newEntity = entityScene.instantiate()
-			if(data.username != null && "nameLabel" in newEntity):
+			if("username" in data && data.username != null && "nameLabel" in newEntity):
 				newEntity.nameLabel = data.username
 				var username = JavaScriptBridge.eval("sessionStorage.getItem('username')")
 				if(username == newEntity.nameLabel):
 					playerShip = newEntity
-			for i in range(data.externalModules.size()):
-				var moduleScene = load(data.externalModules[i].scenePath)
+			if("externalModules" in data):
+				for i in range(data.externalModules.size()):
+					var moduleScene = load(data.externalModules[i].scenePath)
 
-				if(moduleScene != null && newEntity.get_node("./externalModuleContainer") != null):
-					var module = moduleScene.instantiate()
-					newEntity.get_node("./externalModuleContainer").add_child(module)
-				else:
-					print("Error adding module")
-				pass
+					if(moduleScene != null && newEntity.get_node("./externalModuleContainer") != null):
+						var module = moduleScene.instantiate()
+						newEntity.get_node("./externalModuleContainer").add_child(module)
+					else:
+						print("Error adding module")
+					pass
 			
 		else:
 			print("JSON error: ", json.get_error_message(), " in ", jsonString, " at line ", json.get_error_line())
@@ -131,7 +130,7 @@ func handleEntityUpdate(message: PackedByteArray):
 	currentSlice.reverse()
 	positionX = currentSlice.decode_float(0)
 	currentIndex += 4
-	print(positionX)
+	#print(positionX)
 	
 	currentSlice = message.slice(currentIndex, currentIndex + 4)
 	currentSlice.reverse()
@@ -168,12 +167,13 @@ func handleEntityUpdate(message: PackedByteArray):
 	var entity = entityDictionary.get(entityId)
 	if(entity != null):
 		entity.position = Vector2(positionX, positionY)
-		entity.velocity = Vector2(velocityX, velocityY)
+		if("velocity" in entity):
+			entity.velocity = Vector2(velocityX, velocityY)
 		if("angularVelocity" in entity):
 			entity.angularVelocity = rotationalVelocity
 		#entity.spriteRotation = rotation
 		entity.rotation = rotation
-		print("velocityx: " + str(velocityX))
+		#print("velocityx: " + str(velocityX))
 		
 			
 

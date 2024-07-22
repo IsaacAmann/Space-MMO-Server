@@ -50,7 +50,7 @@ public class UserInputHandlers
             //System.out.println("MouseX: " + mouseX + " MouseY: " + mouseY);
             if((inputBitMap & W_BITMASK) == W_BITMASK)
             {
-                System.out.println("W pressed by " + playerAccount.username);
+               // System.out.println("W pressed by " + playerAccount.username);
                 player.inputW = true;
             }
             else
@@ -60,7 +60,7 @@ public class UserInputHandlers
 
             if((inputBitMap & A_BITMASK) == A_BITMASK)
             {
-                System.out.println("A pressed by " + playerAccount.username);
+                //System.out.println("A pressed by " + playerAccount.username);
                 player.inputA = true;
             }
             else
@@ -70,7 +70,7 @@ public class UserInputHandlers
 
             if((inputBitMap & S_BITMASK) == S_BITMASK)
             {
-                System.out.println("S pressed by " + playerAccount.username);
+               // System.out.println("S pressed by " + playerAccount.username);
                 player.inputS = true;
             }
             else
@@ -80,7 +80,7 @@ public class UserInputHandlers
 
             if((inputBitMap & D_BITMASK) == D_BITMASK)
             {
-                System.out.println("D pressed by " + playerAccount.username);
+               // System.out.println("D pressed by " + playerAccount.username);
                 player.inputD = true;
             }
             else
@@ -90,7 +90,7 @@ public class UserInputHandlers
 
             if((inputBitMap & SPACE_BITMASK) == SPACE_BITMASK)
             {
-                System.out.println("SPACE pressed by " + playerAccount.username);
+               // System.out.println("SPACE pressed by " + playerAccount.username);
                 player.inputSpace = true;
             }
             else
@@ -100,7 +100,7 @@ public class UserInputHandlers
 
             if((inputBitMap & Q_BITMASK) == Q_BITMASK)
             {
-                System.out.println("Q pressed by " + playerAccount.username);
+               // System.out.println("Q pressed by " + playerAccount.username);
                 player.inputQ = true;
             }
             else
@@ -110,7 +110,7 @@ public class UserInputHandlers
 
             if((inputBitMap & E_BITMASK) == E_BITMASK)
             {
-                System.out.println("E pressed by " + playerAccount.username);
+                //System.out.println("E pressed by " + playerAccount.username);
                 player.inputE = true;
             }
             else
@@ -120,7 +120,7 @@ public class UserInputHandlers
 
             if((inputBitMap & F_BITMASK) == F_BITMASK)
             {
-                System.out.println("F pressed by " + playerAccount.username);
+               // System.out.println("F pressed by " + playerAccount.username);
                 player.inputF = true;
             }
             else

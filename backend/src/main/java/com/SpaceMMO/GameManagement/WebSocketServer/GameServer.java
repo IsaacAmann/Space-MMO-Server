@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement.WebSocketServer;
 
 
+import com.SpaceMMO.GameManagement.EntitySystem.SectorObjects.AsteroidSpawner;
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.SpaceMMO.GameManagement.ServiceContainer;
@@ -73,6 +74,9 @@ public class GameServer extends BinaryWebSocketHandler
         if(testSector == null)
         {
             testSector = new Sector(serviceContainer);
+            //add asteroid spawner to test sector
+            AsteroidSpawner testSpawner = new AsteroidSpawner(0,0, testSector, "gold");
+            testSector.entityAddQueue.add(testSpawner);
         }
         //Check header for token
        // System.out.println(session.getHandshakeHeaders().get("username").get(0));

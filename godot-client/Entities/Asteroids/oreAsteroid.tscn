@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbflha6geo6g5"]
+
+[ext_resource type="Texture2D" uid="uid://4kks8habf7ny" path="res://Entities/Asteroids/oreAsteroid.png" id="1_y7b53"]
+
+[node name="OreAsteroid" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_y7b53")

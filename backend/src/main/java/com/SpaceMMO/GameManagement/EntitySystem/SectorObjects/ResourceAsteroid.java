@@ -16,6 +16,8 @@ public class ResourceAsteroid extends GameEntity
     {
         super(x, y, width, height, 0);
         this.itemToGive = itemToGive;
+        godotScenePath = "res://Entities/Asteroids/goldAsteroid.tscn";
+        health = 2000;
     }
 
     public String getEntityDataJSON()

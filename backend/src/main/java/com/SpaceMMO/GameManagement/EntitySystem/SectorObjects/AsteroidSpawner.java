@@ -36,9 +36,10 @@ public class AsteroidSpawner extends GameEntity
 
         itemToGive = new InventoryItem(itemName, 1);
         asteroids = new ArrayList<ResourceAsteroid>();
-        spawnRadius = 2000;
+        spawnRadius = 333;
         ticksPerAsteroid = 100;
         tickCounter = ticksPerAsteroid;
+        maxAsteroids = 50;
     }
 
     public void update()
@@ -65,20 +66,21 @@ public class AsteroidSpawner extends GameEntity
             {
                 tickCounter = 0;
                 //Spawn asteroid
-
+                System.out.println("Spawning Asteroid");
                 //Get random position vector relative to spawner
                 Random random = new Random();
                 double magnitude = 0 + (spawnRadius - 0) * random.nextDouble();
-
+                System.out.println("Magnitude: " + magnitude);
                 //Get random rotation for position vector
                 double rotation = 0 + (6.2 - 0) * random.nextDouble();
+                System.out.println("Rotation:" + rotation);
                 //Create position vector
-                Vector2 newPosition = new Vector2();
-                newPosition.setDirection(rotation);
-                newPosition.setMagnitude(magnitude);
+                Vector2 newPosition = Vector2.create(magnitude, rotation);
+                //newPosition.setDirection(rotation);
+                //newPosition.setMagnitude(magnitude);
+                System.out.println("Asteroid x: " + newPosition.x + " y: " + newPosition.y);
 
-                ResourceAsteroid asteroid = new ResourceAsteroid(this.position.x, this.position.y, 20, 20, itemToGive);
-                asteroid.position = newPosition;
+                ResourceAsteroid asteroid = new ResourceAsteroid(this.position.x + newPosition.x, this.position.y + newPosition.y, 20, 20, itemToGive);
                 asteroid.healthPerItem = healthPerItem;
 
                 parentSector.entityAddQueue.add(asteroid);

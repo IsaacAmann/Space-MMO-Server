@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1drvno25d74t"]
+
+[ext_resource type="Texture2D" uid="uid://4am4f6l4x2jk" path="res://Entities/Asteroids/platinumAsteroid.png" id="1_8t1sg"]
+
+[node name="PlatinumAsteroid" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8t1sg")
