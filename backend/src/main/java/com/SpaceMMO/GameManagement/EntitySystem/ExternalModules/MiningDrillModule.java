@@ -29,7 +29,7 @@ public class MiningDrillModule extends ShipExternalModule implements Weapon
         {
             try
             {
-                sector.serviceContainer.clientAffectsHandler.sendLaserAffect(player, parentShip.position, new Vector2(parentShip.player.mouseX, parentShip.player.mouseY), (float)0.9, (float)0.9, 0, (float)0.2);
+                sector.serviceContainer.clientAffectsHandler.sendLaserAffect(player, parentShip.position, new Vector2(parentShip.player.mouseX, parentShip.player.mouseY), (float)0.2, (float)0.9, 0, (float)0.2);
             }
             catch(Exception e)
             {
