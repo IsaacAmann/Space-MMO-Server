@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement.SectorSystem;
 
 import ch.qos.logback.core.encoder.EchoEncoder;
+import com.SpaceMMO.GameManagement.EntitySystem.CollisionSystem.RayCast;
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 
 import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
@@ -52,6 +53,9 @@ public class Sector
     //Entity queue, allows outside classes to push entities into the sector
     //Needed since the add entity function makes a non-thread safe operation
     public ConcurrentLinkedQueue<GameEntity> entityAddQueue;
+    //List of ray cast entities that should be added to the quad tree for a frame
+    //Only added once and then discarded
+    public ConcurrentLinkedQueue<RayCast> rayCastQueue;
 
     public ServiceContainer serviceContainer;
 
