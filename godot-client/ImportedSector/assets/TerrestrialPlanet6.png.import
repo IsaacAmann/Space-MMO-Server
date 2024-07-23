@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhfsgqyu3oje7"
-path="res://.godot/imported/TerrestrialPlane6.png-8007e7728e3dc67a99916b9339c872e3.ctex"
+path="res://.godot/imported/TerrestrialPlanet6.png-e92a3d1886594d4697d0b996a81fd731.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ImportedSector/assets/TerrestrialPlane6.png"
-dest_files=["res://.godot/imported/TerrestrialPlane6.png-8007e7728e3dc67a99916b9339c872e3.ctex"]
+source_file="res://ImportedSector/assets/TerrestrialPlanet6.png"
+dest_files=["res://.godot/imported/TerrestrialPlanet6.png-e92a3d1886594d4697d0b996a81fd731.ctex"]
 
 [params]
 
