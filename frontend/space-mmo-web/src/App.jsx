@@ -27,11 +27,11 @@ export const signoutUrl = "https://space-mmo-sso.auth.us-east-2.amazoncognito.co
 export const mainTheme = createTheme({
 	palette: {
     primary: {
-      main: '#96e6bd',
+      main: '#a2dcc7',
     },
     secondary: {
-      main: '#5e1f86',
-      dark: '#5e1f86',
+      main: '#3a3858',
+      dark: '#3a3858',
     },
     divider: '#9b77ff',
     text: {
@@ -134,7 +134,7 @@ function App() {
 				<Routes>
 					<Route path="/">
 						<Route index element={<HomePage />} />
-                        <Route path="signout" element={<SignoutPage/>} />
+            <Route path="signout" element={<SignoutPage/>} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

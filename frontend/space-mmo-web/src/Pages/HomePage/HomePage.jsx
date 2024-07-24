@@ -22,7 +22,7 @@ function HomePage()
         if(token != "null")
         {
             console.log("f")
-            return (<iframe src="./godot/Godot-client.html" width="100%" height="600"> </iframe>)
+            return (<iframe src="./godot/Godot-client.html" width="1920" height="1080"> </iframe>)
         }
         else
         {
