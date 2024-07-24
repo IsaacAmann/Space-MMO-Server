@@ -45,7 +45,7 @@ public abstract class GameEntity
 
     public void handleCollision(GameEntity otherEntity)
     {
-        //System.out.println("Collided with: " + otherEntity);
+        System.out.println("Collided with: " + otherEntity);
     }
 
     public String basicGetEntityJSON(HashMap<String, Object> data)

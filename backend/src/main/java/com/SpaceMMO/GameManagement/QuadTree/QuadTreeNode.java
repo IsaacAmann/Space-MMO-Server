@@ -2,6 +2,11 @@ package com.SpaceMMO.GameManagement.QuadTree;
 
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 import org.apache.commons.pool2.ObjectPool;
+import org.dyn4j.collision.narrowphase.Sat;
+import org.dyn4j.geometry.Rectangle;
+import org.dyn4j.geometry.Rotation;
+import org.dyn4j.geometry.Transform;
+import org.dyn4j.geometry.Vector2;
 
 import java.util.ArrayList;
 
@@ -15,6 +20,9 @@ public class QuadTreeNode
     float width, height;
     float level;
     ObjectPool<QuadTreeNode> quadTreePool;
+
+    public static Sat collisionDetector = new Sat();
+
 
     public QuadTreeNode(float x, float y, float width, float height, float level, ObjectPool<QuadTreeNode> quadTreePool)
     {
@@ -100,7 +108,7 @@ public class QuadTreeNode
             }
         }
     }
-
+    /*
     public boolean inside(GameEntity entity)
     {
        // System.out.println("Comparing entity: x: " + entity.x + " y: " + entity.y + " width: " + entity.width + " height: " + entity.height);
@@ -117,6 +125,23 @@ public class QuadTreeNode
             return false;
         }
     }
+    */
+    public boolean inside(GameEntity entity)
+    {
+        Rectangle rectangle = new Rectangle(width, height);
+        rectangle.translate(new Vector2(this.x + width/2, this.y + height/2));
+
+        Transform transform1 = new Transform();
+        transform1.setTranslation(new Vector2(this.x + width/2, this.y + height/2));
+        transform1.setRotation(new Rotation(0));
+
+        Transform transform2 = new Transform();
+        transform2.setTranslation(entity.position);
+        transform2.setRotation(new Rotation(0));
+
+        return collisionDetector.detect(rectangle, transform1, entity.rectangle, transform2);
+    }
+
 
     public void runCollisionCheck(QuadTreeNode root)
     {

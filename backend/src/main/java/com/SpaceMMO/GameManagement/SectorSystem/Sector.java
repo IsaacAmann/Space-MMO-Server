@@ -56,6 +56,8 @@ public class Sector
     //List of ray cast entities that should be added to the quad tree for a frame
     //Only added once and then discarded
     public ConcurrentLinkedQueue<RayCast> rayCastQueue;
+    //Container to hold ray casts removed from the queue until the next frame where their update function can be called
+    public ArrayList<RayCast> processingRayCasts;
 
     public ServiceContainer serviceContainer;
 
@@ -76,7 +78,8 @@ public class Sector
         players = new ArrayList<Player>();
         entityAddQueue = new ConcurrentLinkedQueue<GameEntity>();
 
-
+        rayCastQueue = new ConcurrentLinkedQueue<RayCast>();
+        processingRayCasts = new ArrayList<RayCast>();
 
         sectorUpdateThread = new SectorUpdateThread();
         sectorUpdateThread.running = true;
@@ -150,8 +153,19 @@ public class Sector
             }
 
         }
+
+
         //Handle Collisions
         entityTree.runCollisionCheck(entityTree);
+
+        //Handle processing ray casts
+        for(RayCast rayCast : processingRayCasts)
+        {
+            rayCast.update();
+        }
+        //Clear processing ray casts list
+        processingRayCasts.clear();
+
         //Rebuild quad tree
 
         //Clear tree
@@ -161,6 +175,17 @@ public class Sector
         for(GameEntity entity : entities)
         {
             entityTree.add(entity);
+        }
+
+        //Pull ray casts off the queue and add them to the tree
+        int currentRayCasts = rayCastQueue.size();
+        for(int i = 0; i < currentRayCasts; i++)
+        {
+            RayCast currentRayCast = rayCastQueue.remove();
+            //Add to tree
+            entityTree.add(currentRayCast);
+            //Add to processing list
+            processingRayCasts.add(currentRayCast);
         }
 
         //Add items off the entity add queue

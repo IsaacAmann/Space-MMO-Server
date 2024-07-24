@@ -18,12 +18,17 @@ public class RayCast extends GameEntity
     public boolean resolveFirstHit;
 
 
-    public RayCast(double x,double y, double distance, double angle, GameEntity source)
+    public RayCast(double x,double y, double distance, double angle, GameEntity source, CollisionCallBack callBack)
     {
-        super(x, y, 1, distance, angle);
+        super(x + distance/2, y, distance, 1, 0);
         colliders = new ArrayList<GameEntity>();
         this.source = source;
         resolveFirstHit = true;
+        this.callBack = callBack;
+        this.position.rotate(angle, source.position);
+        this.rectangle.translate(this.position);
+        this.rectangle.rotate(angle, source.position);
+        //System.out.println("Angle: " + angle + "position: " + source.position);
     }
 
     public String getEntityDataJSON()
@@ -58,7 +63,9 @@ public class RayCast extends GameEntity
     public void handleCollision(GameEntity otherEntity)
     {
         //Add collider to list
-        this.colliders.add(otherEntity);
+        //Ignore source and other ray casts
+        if(!(otherEntity instanceof RayCast) && otherEntity != source)
+            this.colliders.add(otherEntity);
     }
 
     //Comparator for sorting by distance to ray caster

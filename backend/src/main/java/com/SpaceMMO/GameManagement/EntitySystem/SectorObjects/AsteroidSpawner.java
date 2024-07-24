@@ -37,9 +37,9 @@ public class AsteroidSpawner extends GameEntity
         itemToGive = new InventoryItem(itemName, 1);
         asteroids = new ArrayList<ResourceAsteroid>();
         spawnRadius = 333;
-        ticksPerAsteroid = 100;
+        ticksPerAsteroid = 50;
         tickCounter = ticksPerAsteroid;
-        maxAsteroids = 50;
+        maxAsteroids = 4;
     }
 
     public void update()
@@ -80,9 +80,9 @@ public class AsteroidSpawner extends GameEntity
                 //newPosition.setMagnitude(magnitude);
                 System.out.println("Asteroid x: " + newPosition.x + " y: " + newPosition.y);
 
-                ResourceAsteroid asteroid = new ResourceAsteroid(this.position.x + newPosition.x, this.position.y + newPosition.y, 20, 20, itemToGive);
+                ResourceAsteroid asteroid = new ResourceAsteroid(this.position.x + newPosition.x, this.position.y + newPosition.y, 64, 64, itemToGive);
                 asteroid.healthPerItem = healthPerItem;
-
+                asteroids.add(asteroid);
                 parentSector.entityAddQueue.add(asteroid);
             }
         }
