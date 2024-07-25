@@ -108,7 +108,7 @@ public class QuadTreeNode
             }
         }
     }
-    /*
+
     public boolean inside(GameEntity entity)
     {
        // System.out.println("Comparing entity: x: " + entity.x + " y: " + entity.y + " width: " + entity.width + " height: " + entity.height);
@@ -125,15 +125,22 @@ public class QuadTreeNode
             return false;
         }
     }
-    */
+
+    /*
     public boolean inside(GameEntity entity)
     {
         Rectangle rectangle = new Rectangle(width, height);
-        rectangle.translate(new Vector2(this.x + width/2, this.y + height/2));
+        Vector2 rectanglePosition = new Vector2(this.x + width/(double)2, this.y + height/(double)2);
+        //Vector2 rectanglePosition = new Vector2(this.x , this.y );
+
+        //rectangle.translate(rectanglePosition);
+
+        //System.out.println("width: " + (Math.floor(width/2) == (width/2)));
 
         Transform transform1 = new Transform();
-        transform1.setTranslation(new Vector2(this.x + width/2, this.y + height/2));
+        transform1.setTranslation(rectanglePosition);
         transform1.setRotation(new Rotation(0));
+        //System.out.println("width: " + rectangle.getWidth() + " Height: " + rectangle.getHeight());
 
         Transform transform2 = new Transform();
         transform2.setTranslation(entity.position);
@@ -141,6 +148,7 @@ public class QuadTreeNode
 
         return collisionDetector.detect(rectangle, transform1, entity.rectangle, transform2);
     }
+    */
 
 
     public void runCollisionCheck(QuadTreeNode root)

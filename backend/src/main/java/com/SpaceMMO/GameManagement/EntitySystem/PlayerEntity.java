@@ -66,6 +66,12 @@ public class PlayerEntity extends Ship
         return output;
     }
 
+    public void handleCollision(GameEntity otherEntity)
+    {
+        System.out.println(otherEntity);
+    }
+
+
     @Override
     public void update()
     {

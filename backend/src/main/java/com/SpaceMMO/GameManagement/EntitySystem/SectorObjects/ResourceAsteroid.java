@@ -31,6 +31,7 @@ public class ResourceAsteroid extends GameEntity
 
     public void update()
     {
+
         //If 0, asteroid depleted and should be removed
         if(health <= 0)
         {

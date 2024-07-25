@@ -35,7 +35,7 @@ public abstract class GameEntity
     public GameEntity(double x, double y, double width, double height, double rotation)
     {
         this.velocityVector = new Vector2(0, 0);
-        this.position = new Vector2(x, y);
+        this.position = new Vector2(x, -1*y);
         this.rotation = rotation;
         this.rectangle = new Rectangle(width, height);
 
@@ -45,7 +45,7 @@ public abstract class GameEntity
 
     public void handleCollision(GameEntity otherEntity)
     {
-        System.out.println("Collided with: " + otherEntity);
+        //System.out.println("Collided with: " + otherEntity);
     }
 
     public String basicGetEntityJSON(HashMap<String, Object> data)
