@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd1n6xxur6dil"
-path="res://.godot/imported/SovietRocketOneAirframe.png-e75d5c33df5cbee3f6b0ebc39f376efc.ctex"
+uid="uid://fww2ra4mpa30"
+path="res://.godot/imported/pipeDutch.png-69c2789892a283142a1c8a871300e5a4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Ships/SovietRocketOne/SovietRocketOneAirframe.png"
-dest_files=["res://.godot/imported/SovietRocketOneAirframe.png-e75d5c33df5cbee3f6b0ebc39f376efc.ctex"]
+source_file="res://Ships/pipeDutch/pipeDutch.png"
+dest_files=["res://.godot/imported/pipeDutch.png-69c2789892a283142a1c8a871300e5a4.ctex"]
 
 [params]
 
