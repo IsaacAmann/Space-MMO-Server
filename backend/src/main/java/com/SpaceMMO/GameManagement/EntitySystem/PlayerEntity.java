@@ -68,7 +68,12 @@ public class PlayerEntity extends Ship
 
     public void handleCollision(GameEntity otherEntity)
     {
-        System.out.println(otherEntity);
+
+        if(otherEntity != this)
+        {
+            System.out.println("PLAYER COLLISION: " + (otherEntity));
+            System.out.println(body.getTransform());
+        }
     }
 
 
@@ -122,7 +127,9 @@ public class PlayerEntity extends Ship
         //Handle rotation
         this.desiredRotation = player.desiredRotation;
         //springRotation();
-        this.rectangle.rotateAboutCenter(rotationalVelocity);
+
+        //this.rectangle.rotateAboutCenter(rotationalVelocity);
+        this.body.rotateAboutCenter(rotationalVelocity);
         this.rotation += rotationalVelocity;
 
         impulse.rotate(rotation);

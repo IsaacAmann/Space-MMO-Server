@@ -14,6 +14,12 @@ import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.dyn4j.collision.CollisionPair;
+import org.dyn4j.collision.broadphase.BroadphaseFilter;
+import org.dyn4j.collision.broadphase.CollisionBodyAABBProducer;
+import org.dyn4j.collision.broadphase.NullAABBExpansionMethod;
+import org.dyn4j.collision.broadphase.Sap;
+import org.dyn4j.dynamics.Body;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.orm.hibernate5.SpringSessionContext;
@@ -22,6 +28,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.security.Provider;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Configurable
@@ -63,6 +70,8 @@ public class Sector
 
     private SectorUpdateThread sectorUpdateThread;
 
+    private Sap<Body> sapDetector;
+
     public Sector(ServiceContainer serviceContainer)
     {
         name = "Unamed Sector";
@@ -85,13 +94,23 @@ public class Sector
         sectorUpdateThread.running = true;
         sectorUpdateThread.start();
 
+        sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
 
+    }
+
+    private class filter implements BroadphaseFilter<Body>
+    {
+        public boolean isAllowed(Body b1, Body b2)
+        {
+            return true;
+        }
     }
 
     private void addEntity(GameEntity entity)
     {
         entity.entityID = nextEntityID++;
         entities.add(entity);
+        sapDetector.add(entity.body);
         for(Player player : players)
         {
             try
@@ -156,7 +175,17 @@ public class Sector
 
 
         //Handle Collisions
-        entityTree.runCollisionCheck(entityTree);
+        sapDetector.update();
+        Iterator<CollisionPair<Body>> pairs = sapDetector.detectIterator(false);
+        while(pairs.hasNext())
+        {
+            CollisionPair<Body> pair = pairs.next();
+            GameEntity e1 = (GameEntity)pair.getFirst().getUserData();
+            GameEntity e2 = (GameEntity)pair.getSecond().getUserData();
+
+            e1.handleCollision(e2);
+            e2.handleCollision(e1);
+        }
 
         //Handle processing ray casts
         for(RayCast rayCast : processingRayCasts)
@@ -169,14 +198,14 @@ public class Sector
         //Rebuild quad tree
 
         //Clear tree
-        entityTree.set(0, 0, SECTOR_WIDTH, SECTOR_HEIGHT, 0);
+        //entityTree.set(0, 0, SECTOR_WIDTH, SECTOR_HEIGHT, 0);
 
         //Add entities to tree
-        for(GameEntity entity : entities)
+       /* for(GameEntity entity : entities)
         {
             entityTree.add(entity);
         }
-
+        */
         //Pull ray casts off the queue and add them to the tree
         int currentRayCasts = rayCastQueue.size();
         for(int i = 0; i < currentRayCasts; i++)

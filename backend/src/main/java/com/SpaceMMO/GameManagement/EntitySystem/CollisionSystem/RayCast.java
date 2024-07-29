@@ -26,8 +26,10 @@ public class RayCast extends GameEntity
         resolveFirstHit = true;
         this.callBack = callBack;
         this.position.rotate(angle, source.position);
-        this.rectangle.translate(this.position);
-        this.rectangle.rotate(angle, source.position);
+        //this.rectangle.translate(this.position);
+        //this.rectangle.rotate(angle, source.position);
+        this.body.translate(this.position);
+        this.body.rotate(angle, source.position);
         //System.out.println("Angle: " + angle + "position: " + source.position);
     }
 
