@@ -2,8 +2,22 @@ package com.SpaceMMO.GameManagement.QuadTree;
 
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 import org.apache.commons.pool2.ObjectPool;
+import org.dyn4j.collision.AxisAlignedBounds;
+import org.dyn4j.collision.CollisionPair;
+import org.dyn4j.collision.broadphase.BroadphaseFilter;
+import org.dyn4j.collision.broadphase.CollisionBodyAABBProducer;
+import org.dyn4j.collision.broadphase.NullAABBExpansionMethod;
+import org.dyn4j.collision.broadphase.Sap;
+import org.dyn4j.collision.narrowphase.Sat;
+import org.dyn4j.dynamics.Body;
+import org.dyn4j.dynamics.BodyFixture;
+import org.dyn4j.geometry.Rectangle;
+import org.dyn4j.geometry.Rotation;
+import org.dyn4j.geometry.Transform;
+import org.dyn4j.geometry.Vector2;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 //Quadtree implementation adapted from https://medium.com/@aprithul/implementing-a-quadtree-baac7acf3ad0
 public class QuadTreeNode
@@ -14,7 +28,11 @@ public class QuadTreeNode
     float x,y;
     float width, height;
     float level;
+    AxisAlignedBounds bounds;
     ObjectPool<QuadTreeNode> quadTreePool;
+
+    public static Sat collisionDetector = new Sat();
+    public Sap<Body> sapDetector;
 
     public QuadTreeNode(float x, float y, float width, float height, float level, ObjectPool<QuadTreeNode> quadTreePool)
     {
@@ -26,6 +44,10 @@ public class QuadTreeNode
         this.quadTreePool = quadTreePool;
         this.entities = new ArrayList<GameEntity>();
         this.children = new ArrayList<QuadTreeNode>();
+        this.bounds = new AxisAlignedBounds(width, height);
+        this.bounds.translate(x, y);
+        sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
+
     }
 
     public QuadTreeNode()
@@ -37,6 +59,17 @@ public class QuadTreeNode
         level = 0;
         this.entities = new ArrayList<GameEntity>();
         this.children = new ArrayList<QuadTreeNode>();
+        this.bounds = new AxisAlignedBounds(1,1);
+        sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
+
+    }
+
+    private class filter implements BroadphaseFilter<Body>
+    {
+        public boolean isAllowed(Body b1, Body b2)
+        {
+            return true;
+        }
     }
 
     public ArrayList<QuadTreeNode> children;
@@ -47,6 +80,7 @@ public class QuadTreeNode
         if(entities.size() < 4 || level == MAX_LEVEL)
         {
             entities.add(entity);
+            sapDetector.add(entity.body);
           //  System.out.println("Entity added, level: " + level);
         }
         else
@@ -103,6 +137,25 @@ public class QuadTreeNode
 
     public boolean inside(GameEntity entity)
     {
+        return !bounds.isOutside(entity.body);
+    }
+
+    public void runCollisionCheck(QuadTreeNode root)
+    {
+        Iterator<CollisionPair<Body>> pairs = sapDetector.detectIterator(true);
+        while(pairs.hasNext())
+        {
+            CollisionPair<Body> pair = pairs.next();
+            GameEntity e1 = (GameEntity)pair.getFirst().getUserData();
+            GameEntity e2 = (GameEntity)pair.getSecond().getUserData();
+
+            e1.handleCollision(e2);
+            e2.handleCollision(e1);
+        }
+    }
+    /*
+    public boolean inside(GameEntity entity)
+    {
        // System.out.println("Comparing entity: x: " + entity.x + " y: " + entity.y + " width: " + entity.width + " height: " + entity.height);
        // System.out.println("Bounding box: x: " + x + " y: " + y + " width: " + width + " height: " + height);
         if (entity.position.x < (x + width) && (entity.position.x + entity.rectangle.getWidth()) > x &&
@@ -117,7 +170,33 @@ public class QuadTreeNode
             return false;
         }
     }
+     */
 
+    /*
+    public boolean inside(GameEntity entity)
+    {
+        Rectangle rectangle = new Rectangle(width, height);
+        Vector2 rectanglePosition = new Vector2(this.x + width/(double)2, this.y + height/(double)2);
+        //Vector2 rectanglePosition = new Vector2(this.x , this.y );
+
+        //rectangle.translate(rectanglePosition);
+
+        //System.out.println("width: " + (Math.floor(width/2) == (width/2)));
+
+        Transform transform1 = new Transform();
+        transform1.setTranslation(rectanglePosition);
+        transform1.setRotation(new Rotation(0));
+        //System.out.println("width: " + rectangle.getWidth() + " Height: " + rectangle.getHeight());
+
+        Transform transform2 = new Transform();
+        transform2.setTranslation(entity.position);
+        transform2.setRotation(new Rotation(0));
+
+        return collisionDetector.detect(rectangle, transform1, entity.rectangle, transform2);
+    }
+    */
+
+    /*
     public void runCollisionCheck(QuadTreeNode root)
     {
         QuadTreeNode currentNode = root;
@@ -149,6 +228,7 @@ public class QuadTreeNode
                 runCollisionCheck(currentNode.children.get(i));
         }
     }
+     */
 
     public void set(float x, float y, float width, float height, float level) throws Exception
     {
@@ -159,6 +239,8 @@ public class QuadTreeNode
         children.clear();
 
         entities.clear();
+        sapDetector.clear();
+        sapDetector.clearUpdates();
 
         this.x = x;
         this.y = y;

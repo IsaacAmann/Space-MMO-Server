@@ -70,10 +70,12 @@ public class Ship extends GameEntity
             velocityVector.setMagnitude(maxSpeed);
         }
 
-        Vector2 oldPosition = position;
+        Vector2 oldPosition = new Vector2(position);
         this.position.x += velocityVector.x / Sector.TICKS_PER_SECOND;
         this.position.y += velocityVector.y / Sector.TICKS_PER_SECOND;
 
-        this.rectangle.translate(position.difference(oldPosition));
+        //this.rectangle.translate(position.difference(oldPosition));
+        //System.out.println(oldPosition.difference(position));
+        this.body.translate(position.difference(oldPosition));
     }
 }

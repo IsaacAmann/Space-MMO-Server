@@ -5,6 +5,7 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import org.dyn4j.collision.narrowphase.Penetration;
 import org.dyn4j.collision.narrowphase.Sat;
+import org.dyn4j.dynamics.Body;
 import org.dyn4j.geometry.Rectangle;
 import org.dyn4j.geometry.Rotation;
 import org.dyn4j.geometry.Transform;
@@ -19,8 +20,8 @@ public abstract class GameEntity
     //Indicates that the entity should be removed on the next game loop iteration
     public boolean removeFlag;
 
-    public Rectangle rectangle;
-
+    //public Rectangle rectangle;
+    public Body body;
 
     public int health;
     public int entityID;
@@ -35,12 +36,17 @@ public abstract class GameEntity
     public GameEntity(double x, double y, double width, double height, double rotation)
     {
         this.velocityVector = new Vector2(0, 0);
-        this.position = new Vector2(x, y);
+        this.position = new Vector2(x, -1*y);
         this.rotation = rotation;
-        this.rectangle = new Rectangle(width, height);
+        Rectangle rectangle = new Rectangle(width, height);
+        this.body = new Body();
+        body.addFixture(rectangle);
 
-        rectangle.translate(position);
-        rectangle.rotate(rotation);
+        body.translate(position);
+        body.rotate(rotation);
+        body.setUserData(this);
+        //rectangle.translate(position);
+        //rectangle.rotate(rotation);
     }
 
     public void handleCollision(GameEntity otherEntity)
@@ -70,23 +76,27 @@ public abstract class GameEntity
 
     public abstract void update();
 
+    /*
     public boolean isColliding(GameEntity otherEntity)
     {
         Transform transform1 = new Transform();
         //transform1.rotate(rotation, rectangle.getCenter());
-        transform1.setTranslation(position);
+       // transform1.setTranslation(position);
+        transform1.setTranslation(new Vector2(0,0));
         transform1.setRotation(new Rotation(0.0));
 
         //System.out.println("local: " + rectangle.getRotation().toRadians());
 
         Transform transform2 = new Transform();
+
         //transform2.rotate(otherEntity.rotation, otherEntity.rectangle.getCenter());
-        transform2.setTranslation(otherEntity.position);
+        //transform2.setTranslation(otherEntity.position);
         transform2.setRotation(new Rotation(0.0));
+        transform2.setTranslation(new Vector2(0,0));
 
         //Run collision check
         return collisionDetector.detect(this.rectangle, transform1, otherEntity.rectangle, transform2);
     }
-
+    */
 }
 
