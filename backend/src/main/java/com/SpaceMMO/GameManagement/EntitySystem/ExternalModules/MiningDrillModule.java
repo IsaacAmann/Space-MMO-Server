@@ -10,9 +10,12 @@ import com.SpaceMMO.GameManagement.EntitySystem.Weapon;
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.dyn4j.dynamics.Body;
+import org.dyn4j.geometry.Ray;
 import org.dyn4j.geometry.Vector2;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class MiningDrillModule extends ShipExternalModule implements Weapon
 {
@@ -43,9 +46,31 @@ public class MiningDrillModule extends ShipExternalModule implements Weapon
         //Ray cast and search for hits
         Vector2 mousePositionVector = new Vector2(parentShip.player.mouseX, parentShip.player.mouseY);
         //System.out.println("distance: " + parentShip.position.distance(mousePositionVector));
-        RayCast rayCast = new RayCast(parentShip.position.x, parentShip.position.y, parentShip.position.distance(mousePositionVector), mousePositionVector.getDirection(), parentShip, new AsteroidLaserCallback());
-        parentShip.player.currentSector.rayCastQueue.add(rayCast);
+        //RayCast rayCast = new RayCast(parentShip.position.x, parentShip.position.y, parentShip.position.distance(mousePositionVector), mousePositionVector.getDirection(), parentShip, new AsteroidLaserCallback());
+        //parentShip.player.currentSector.rayCastQueue.add(rayCast);
+        Ray ray = new Ray(parentShip.position, mousePositionVector.getDirection());
+        Iterator<Body> rayHits = parentShip.player.currentSector.collisionDetector.raycastIterator(ray, parentShip.position.distance(mousePositionVector));
+        handleRayHits(rayHits);
     }
+
+    private void handleRayHits(Iterator<Body> hits)
+    {
+        while(hits.hasNext())
+        {
+            Body currentCollision = hits.next();
+            if(currentCollision!= parentShip.body)
+                System.out.println("laser: " + currentCollision.getTransform());
+            if(currentCollision.getUserData() instanceof ResourceAsteroid)
+            {
+
+                System.out.println("Asteroid hit: " + currentCollision.getTransform());
+
+                //Only handle first hit
+               // break;
+            }
+        }
+    }
+
     private class AsteroidLaserCallback implements CollisionCallBack
     {
         public void call(GameEntity rayCaster, GameEntity collision)

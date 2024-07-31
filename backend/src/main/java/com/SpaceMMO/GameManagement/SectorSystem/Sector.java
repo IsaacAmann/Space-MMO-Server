@@ -15,10 +15,7 @@ import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.dyn4j.collision.CollisionPair;
-import org.dyn4j.collision.broadphase.BroadphaseFilter;
-import org.dyn4j.collision.broadphase.CollisionBodyAABBProducer;
-import org.dyn4j.collision.broadphase.NullAABBExpansionMethod;
-import org.dyn4j.collision.broadphase.Sap;
+import org.dyn4j.collision.broadphase.*;
 import org.dyn4j.dynamics.Body;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -70,7 +67,8 @@ public class Sector
 
     private SectorUpdateThread sectorUpdateThread;
 
-    private Sap<Body> sapDetector;
+    //public Sap<Body> sapDetector;
+    public DynamicAABBTree<Body> collisionDetector;
 
     public Sector(ServiceContainer serviceContainer)
     {
@@ -94,7 +92,8 @@ public class Sector
         sectorUpdateThread.running = true;
         sectorUpdateThread.start();
 
-        sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
+        //sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
+        collisionDetector = new DynamicAABBTree<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
 
     }
 
@@ -110,7 +109,7 @@ public class Sector
     {
         entity.entityID = nextEntityID++;
         entities.add(entity);
-        sapDetector.add(entity.body);
+        collisionDetector.add(entity.body);
         for(Player player : players)
         {
             try
@@ -175,8 +174,8 @@ public class Sector
 
 
         //Handle Collisions
-        sapDetector.update();
-        Iterator<CollisionPair<Body>> pairs = sapDetector.detectIterator(false);
+        collisionDetector.update();
+        Iterator<CollisionPair<Body>> pairs = collisionDetector.detectIterator(false);
         while(pairs.hasNext())
         {
             CollisionPair<Body> pair = pairs.next();
