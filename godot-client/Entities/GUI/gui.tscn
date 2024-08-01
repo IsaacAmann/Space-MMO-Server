@@ -1,0 +1,132 @@
+[gd_scene load_steps=6 format=3 uid="uid://b736mg4t3kk13"]
+
+[ext_resource type="Texture2D" uid="uid://cqlvkse6j78o8" path="res://Entities/GUI/UI.png" id="1_68tt6"]
+[ext_resource type="Texture2D" uid="uid://b7did2wc11oig" path="res://Entities/GUI/UIPullButton.png" id="1_qiycx"]
+[ext_resource type="Texture2D" uid="uid://njse3u1p2ero" path="res://Entities/GUI/ExamplePopup.png" id="2_j48q4"]
+[ext_resource type="Script" path="res://Entities/GUI/Button.gd" id="2_wweuu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1rrr2"]
+
+[node name="GUI" type="Control"]
+z_index = 100
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu" type="Control" parent="." node_paths=PackedStringArray("target_node", "back_button")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 103.0
+offset_top = 289.0
+offset_right = 143.0
+offset_bottom = 329.0
+script = ExtResource("2_wweuu")
+target_node = NodePath("Control")
+back_button = NodePath("open")
+
+[node name="open" type="Button" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 20.3
+anchor_top = 14.175
+anchor_right = 20.3
+anchor_bottom = 14.175
+offset_left = -133.0
+offset_top = -29.0001
+offset_right = 1.99994
+offset_bottom = 6.99994
+scale = Vector2(2, 2)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1rrr2")
+icon = ExtResource("1_qiycx")
+flat = true
+icon_alignment = 1
+
+[node name="Control" type="Control" parent="Menu"]
+visible = false
+anchors_preset = 0
+offset_top = 2.0
+offset_right = 40.0
+offset_bottom = 42.0
+
+[node name="close" type="Button" parent="Menu/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 20.425
+anchor_top = -5.675
+anchor_right = 20.425
+anchor_bottom = -5.675
+offset_left = -127.0
+offset_top = -28.0
+offset_right = -6.10352e-05
+scale = Vector2(2, 2)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1rrr2")
+icon = ExtResource("1_qiycx")
+flat = true
+icon_alignment = 1
+
+[node name="ExamplePopup" type="Sprite2D" parent="Menu/Control"]
+position = Vector2(786, 200)
+scale = Vector2(2, 2)
+texture = ExtResource("2_j48q4")
+
+[node name="sprite" type="Sprite2D" parent="Menu"]
+position = Vector2(9, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("1_68tt6")
+
+[node name="credits" type="Label" parent="Menu/sprite"]
+offset_left = -14.0
+offset_top = -32.0
+offset_right = 46.0
+offset_bottom = -9.0
+theme_override_font_sizes/font_size = 14
+text = ": $10,421"
+
+[node name="gold" type="Label" parent="Menu/sprite"]
+offset_left = -14.0
+offset_top = -6.0
+offset_right = 46.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 14
+text = ": 3"
+
+[node name="platinum" type="Label" parent="Menu/sprite"]
+offset_left = -14.0
+offset_top = 22.0
+offset_right = 46.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 14
+text = ": 11"
+
+[node name="he3" type="Label" parent="Menu/sprite"]
+offset_left = -14.0
+offset_top = 50.0
+offset_right = 46.0
+offset_bottom = 73.0
+theme_override_font_sizes/font_size = 14
+text = ": 210"
+
+[node name="ore" type="Label" parent="Menu/sprite"]
+offset_left = -13.5
+offset_top = 78.0
+offset_right = 46.5
+offset_bottom = 101.0
+theme_override_font_sizes/font_size = 14
+text = ": 42"
+
+[node name="ore2" type="Label" parent="Menu/sprite"]
+offset_left = -13.5
+offset_top = 106.0
+offset_right = 46.5
+offset_bottom = 129.0
+theme_override_font_sizes/font_size = 14
+text = ": 0"
+
+[connection signal="pressed" from="Menu/open" to="Menu" method="_on_open_pressed"]
+[connection signal="pressed" from="Menu/Control/close" to="Menu" method="_on_close_pressed"]

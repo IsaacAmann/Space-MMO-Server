@@ -11,33 +11,43 @@ import {url} from "../../App.jsx"
 import {loginUrl} from "../../App.jsx"
 import {signoutUrl} from "../../App.jsx"
 
-function HomePage()
-{
+function HomePage() {
     const loginInfo = useContext(LoginInfoContext);
 
-    function GameWindow()
-    {
+    function GameWindow() {
         var token = sessionStorage.getItem("accessToken")
         console.log("TOKEN: " + token)
-        if(token != "null")
-        {
+        if (token !== "null") {
             console.log("f")
-            return (<iframe src="./godot/Godot-client.html" width="1920" height="1080"> </iframe>)
-        }
-        else
-        {
+            return (
+                <iframe
+                    src="./godot/Godot-client.html"
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        border: "none",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                    }}
+                >
+                </iframe>
+            );
+        } else {
             return null;
         }
     }
 
-	return(
-		<>
-		    <Navbar/>
-		    <GameWindow/>
-			<p>test </p>
-		</>
-	);
+    return (
+        <>
+            <Navbar />
+            
+            <div style={{ position: "absolute", width: "100%", height: "94vh" }}>
+                <GameWindow />
+            </div>
+            <p>Kosmos Copyright 2024</p>
+        </>
+    );
 }
-
 
 export default HomePage;
