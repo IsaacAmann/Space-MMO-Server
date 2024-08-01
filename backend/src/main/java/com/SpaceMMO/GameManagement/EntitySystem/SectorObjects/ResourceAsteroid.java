@@ -18,6 +18,7 @@ public class ResourceAsteroid extends GameEntity
         this.itemToGive = itemToGive;
         godotScenePath = "res://Entities/Asteroids/goldAsteroid.tscn";
         health = 2000;
+        healthPerItem = 10;
     }
 
     public String getEntityDataJSON()
@@ -53,7 +54,9 @@ public class ResourceAsteroid extends GameEntity
         //Case where damage exceeds current health
         else
         {
+
             amount = this.health / healthPerItem;
+
             this.health = 0;
         }
         //Copy the item to give and set quantity

@@ -113,6 +113,8 @@ func _process(delta):
 					#Laser effect
 					7:
 						affectsHandler.handleLaserPacket(packet)
+					8:
+						entityHandler.handleEntityDelete(packet)
 						
 		elif state == WebSocketPeer.STATE_CLOSING:
 			

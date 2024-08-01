@@ -67,4 +67,16 @@ public class EntitySystemHandlers
         System.out.println("JSON: " + json);
         session.sendMessage(response);
     }
+
+    public void sendEntityDeleteNotification(WebSocketSession session, GameEntity entity) throws Exception
+    {
+        //Message type (1) + EntityID(4) = 5
+        ByteBuffer payload = ByteBuffer.allocate(5);
+
+        payload.put(ProtocolConstants.ENTITY_DELETE);
+        payload.putInt(entity.entityID);
+
+        BinaryMessage message = new BinaryMessage(payload.array());
+        session.sendMessage(message);
+    }
 }

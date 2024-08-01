@@ -98,9 +98,12 @@ func handleNewEntity(message: PackedByteArray):
 func handleEntityDelete(message: PackedByteArray):
 	#parse message
 	var entityId
-	var currentIndex = 1
 	
-	entityId = message.decode_s32(currentIndex)
+	var currentIndex = 1
+	var currentSlice = message.slice(currentIndex, currentIndex + 4)
+	currentSlice.reverse()
+	entityId = currentSlice.decode_s32(0)
+	
 	#get reference from dictionary
 	var entity = entityDictionary.get(entityId)
 	if(entity != null):
