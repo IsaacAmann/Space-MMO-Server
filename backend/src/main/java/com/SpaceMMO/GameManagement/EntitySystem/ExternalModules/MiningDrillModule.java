@@ -1,7 +1,5 @@
 package com.SpaceMMO.GameManagement.EntitySystem.ExternalModules;
 
-import com.SpaceMMO.GameManagement.EntitySystem.CollisionSystem.CollisionCallBack;
-import com.SpaceMMO.GameManagement.EntitySystem.CollisionSystem.RayCast;
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
 import com.SpaceMMO.GameManagement.EntitySystem.SectorObjects.ResourceAsteroid;
@@ -49,14 +47,9 @@ public class MiningDrillModule extends ShipExternalModule implements Weapon
         }
         //Ray cast and search for hits
         Vector2 mousePositionVector = new Vector2(parentShip.player.mouseX, parentShip.player.mouseY);
-        //System.out.println("distance: " + parentShip.position.distance(mousePositionVector));
-        //RayCast rayCast = new RayCast(parentShip.position.x, parentShip.position.y, parentShip.position.distance(mousePositionVector), mousePositionVector.getDirection(), parentShip, new AsteroidLaserCallback());
-        //parentShip.player.currentSector.rayCastQueue.add(rayCast);
-        //Ray ray = new Ray(parentShip.position, mousePositionVector.getDirection());
         Ray ray = new Ray(parentShip.position, parentShip.position.to(mousePositionVector).getDirection());
 
         System.out.println(ray.getStart());
-        //Iterator<Body> rayHits = parentShip.player.currentSector.collisionDetector.raycastIterator(ray, parentShip.position.distance(mousePositionVector));
         Iterator<Body> rayHits = parentShip.player.currentSector.collisionDetector.raycastIterator(ray, 0.0);
 
         handleRayHits(rayHits);
@@ -84,19 +77,6 @@ public class MiningDrillModule extends ShipExternalModule implements Weapon
         }
     }
 
-    private class AsteroidLaserCallback implements CollisionCallBack
-    {
-        public void call(GameEntity rayCaster, GameEntity collision)
-        {
-            System.out.println("raycast hit");
-            if(collision instanceof ResourceAsteroid)
-            {
-                System.out.println(rayCaster + " mining laser hit on : " + collision);
-                //If asteroid, reduce asteroid health and add resources to inventory
-
-            }
-        }
-    }
     //Implementing reload from weapon interface
     @Override
     public void reload()
