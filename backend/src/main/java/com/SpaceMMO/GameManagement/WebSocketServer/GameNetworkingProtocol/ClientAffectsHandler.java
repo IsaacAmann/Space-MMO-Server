@@ -33,7 +33,7 @@ public class ClientAffectsHandler
         payload.putFloat(blue);
 
         //session.sendMessage(new BinaryMessage(payload));
-        player.messageQueue.add(new BinaryMessage(payload.array()));
+        player.currentSector.sectorMessageQueue.add(new BinaryMessage(payload.array()));
     }
 
 }

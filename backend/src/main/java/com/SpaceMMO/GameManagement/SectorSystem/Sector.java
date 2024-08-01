@@ -1,7 +1,6 @@
 package com.SpaceMMO.GameManagement.SectorSystem;
 
 import ch.qos.logback.core.encoder.EchoEncoder;
-import com.SpaceMMO.GameManagement.EntitySystem.CollisionSystem.RayCast;
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 
 import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
@@ -21,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.orm.hibernate5.SpringSessionContext;
 import org.springframework.security.core.parameters.P;
+import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.security.Provider;
@@ -65,6 +65,9 @@ public class Sector
     //public Sap<Body> sapDetector;
     public DynamicAABBTree<Body> collisionDetector;
 
+    //Sector's message queue
+    public ConcurrentLinkedQueue<BinaryMessage> sectorMessageQueue;
+
     public Sector(ServiceContainer serviceContainer)
     {
         name = "Unamed Sector";
@@ -86,6 +89,8 @@ public class Sector
 
         //sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
         collisionDetector = new DynamicAABBTree<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
+
+        sectorMessageQueue = new ConcurrentLinkedQueue<BinaryMessage>() ;
 
     }
 
@@ -198,23 +203,25 @@ public class Sector
             {
                 serviceContainer.entitySystemHandlers.sendEntityUpdate(player.session, entity);
             }
-            //Send messages on the queue
-
-            //Grab current number of elements, elements could change while running they will be sent in next game loop iteration
-            int numberMessage = player.messageQueue.size();
-            for(int i = 0; i < numberMessage; i++)
+        }
+        //Broadcast messages on the sector message queue to all players
+        //grabbing current size since the size may change while broadcasting
+        int numberMessages = sectorMessageQueue.size();
+        for(int i = 0; i < numberMessages; i++)
+        {
+            BinaryMessage message = sectorMessageQueue.remove();
+            for(Player player : players)
             {
-                try {
-                    player.session.sendMessage(player.messageQueue.remove());
+                try
+                {
+                    player.session.sendMessage(message);
                 }
                 catch(Exception e)
                 {
                     e.printStackTrace();
-                    System.exit(1);
                 }
             }
         }
-
     }
 
     public class SectorUpdateThread extends Thread
