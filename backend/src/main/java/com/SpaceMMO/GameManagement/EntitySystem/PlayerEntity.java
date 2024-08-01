@@ -71,8 +71,8 @@ public class PlayerEntity extends Ship
 
         if(otherEntity != this)
         {
-            System.out.println("PLAYER COLLISION: " + (otherEntity));
-            System.out.println(body.getTransform());
+            //System.out.println("PLAYER COLLISION: " + (otherEntity));
+           // System.out.println(body.getTransform());
         }
     }
 

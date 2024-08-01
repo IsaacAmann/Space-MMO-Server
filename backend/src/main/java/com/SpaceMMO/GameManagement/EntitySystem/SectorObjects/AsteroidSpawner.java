@@ -40,6 +40,7 @@ public class AsteroidSpawner extends GameEntity
         ticksPerAsteroid = 50;
         tickCounter = ticksPerAsteroid;
         maxAsteroids = 4;
+        healthPerItem = 10;
     }
 
     public void update()

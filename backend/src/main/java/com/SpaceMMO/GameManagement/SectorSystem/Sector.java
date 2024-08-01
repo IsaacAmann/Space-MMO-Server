@@ -15,10 +15,7 @@ import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.dyn4j.collision.CollisionPair;
-import org.dyn4j.collision.broadphase.BroadphaseFilter;
-import org.dyn4j.collision.broadphase.CollisionBodyAABBProducer;
-import org.dyn4j.collision.broadphase.NullAABBExpansionMethod;
-import org.dyn4j.collision.broadphase.Sap;
+import org.dyn4j.collision.broadphase.*;
 import org.dyn4j.dynamics.Body;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -60,17 +57,13 @@ public class Sector
     //Entity queue, allows outside classes to push entities into the sector
     //Needed since the add entity function makes a non-thread safe operation
     public ConcurrentLinkedQueue<GameEntity> entityAddQueue;
-    //List of ray cast entities that should be added to the quad tree for a frame
-    //Only added once and then discarded
-    public ConcurrentLinkedQueue<RayCast> rayCastQueue;
-    //Container to hold ray casts removed from the queue until the next frame where their update function can be called
-    public ArrayList<RayCast> processingRayCasts;
 
     public ServiceContainer serviceContainer;
 
     private SectorUpdateThread sectorUpdateThread;
 
-    private Sap<Body> sapDetector;
+    //public Sap<Body> sapDetector;
+    public DynamicAABBTree<Body> collisionDetector;
 
     public Sector(ServiceContainer serviceContainer)
     {
@@ -87,14 +80,12 @@ public class Sector
         players = new ArrayList<Player>();
         entityAddQueue = new ConcurrentLinkedQueue<GameEntity>();
 
-        rayCastQueue = new ConcurrentLinkedQueue<RayCast>();
-        processingRayCasts = new ArrayList<RayCast>();
-
         sectorUpdateThread = new SectorUpdateThread();
         sectorUpdateThread.running = true;
         sectorUpdateThread.start();
 
-        sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
+        //sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
+        collisionDetector = new DynamicAABBTree<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
 
     }
 
@@ -110,7 +101,7 @@ public class Sector
     {
         entity.entityID = nextEntityID++;
         entities.add(entity);
-        sapDetector.add(entity.body);
+        collisionDetector.add(entity.body);
         for(Player player : players)
         {
             try
@@ -154,29 +145,30 @@ public class Sector
     //Statements to be run each simulation frame
     public void gameTick() throws Exception
     {
-        //Handle input
-
         //Handle entity updates
-        for(GameEntity entity : entities)
+        Iterator<GameEntity> iterator = entities.iterator();
+        while(iterator.hasNext())
         {
-            //Check if entity should be deleted
+            GameEntity entity = iterator.next();
             if(entity.removeFlag == true)
             {
-                //Send entity remove notification to all clients
-
-                //Remove entity
+                for(Player player : players)
+                {
+                    serviceContainer.entitySystemHandlers.sendEntityDeleteNotification(player.session, entity);
+                }
+                collisionDetector.remove(entity.body);
+                iterator.remove();
             }
             else
             {
                 entity.update();
             }
-
         }
 
 
         //Handle Collisions
-        sapDetector.update();
-        Iterator<CollisionPair<Body>> pairs = sapDetector.detectIterator(false);
+        collisionDetector.update();
+        Iterator<CollisionPair<Body>> pairs = collisionDetector.detectIterator(false);
         while(pairs.hasNext())
         {
             CollisionPair<Body> pair = pairs.next();
@@ -185,36 +177,6 @@ public class Sector
 
             e1.handleCollision(e2);
             e2.handleCollision(e1);
-        }
-
-        //Handle processing ray casts
-        for(RayCast rayCast : processingRayCasts)
-        {
-            rayCast.update();
-        }
-        //Clear processing ray casts list
-        processingRayCasts.clear();
-
-        //Rebuild quad tree
-
-        //Clear tree
-        //entityTree.set(0, 0, SECTOR_WIDTH, SECTOR_HEIGHT, 0);
-
-        //Add entities to tree
-       /* for(GameEntity entity : entities)
-        {
-            entityTree.add(entity);
-        }
-        */
-        //Pull ray casts off the queue and add them to the tree
-        int currentRayCasts = rayCastQueue.size();
-        for(int i = 0; i < currentRayCasts; i++)
-        {
-            RayCast currentRayCast = rayCastQueue.remove();
-            //Add to tree
-            entityTree.add(currentRayCast);
-            //Add to processing list
-            processingRayCasts.add(currentRayCast);
         }
 
         //Add items off the entity add queue
@@ -258,8 +220,6 @@ public class Sector
     public class SectorUpdateThread extends Thread
     {
         public boolean running;
-        
-
 
         //When this hits the max value, it should be reset and game state should be broadcasted to connected players
         private int packetSendCounter;
