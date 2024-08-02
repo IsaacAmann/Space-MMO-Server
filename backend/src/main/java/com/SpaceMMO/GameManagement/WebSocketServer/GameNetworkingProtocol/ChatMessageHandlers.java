@@ -35,4 +35,15 @@ public class ChatMessageHandlers
             e.printStackTrace();
         }
     }
+
+    public void receiveChatMessage(WebSocketSession session, BinaryMessage message)
+    {
+        ByteBuffer messageBuffer = message.getPayload();
+        int channel = messageBuffer.getInt(1);
+
+        //ByteBuffer stringBytes = ByteBuffer.allocate(messageBuffer.capacity() - 5);
+
+        ByteBuffer stringBytes = messageBuffer.get(null, 5, messageBuffer.capacity() - 5);
+
+    }
 }
