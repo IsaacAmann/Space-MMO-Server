@@ -45,5 +45,8 @@ public class ChatMessageHandlers
 
         ByteBuffer stringBytes = messageBuffer.get(null, 5, messageBuffer.capacity() - 5);
 
+        String decodedMessage = new String(Base64.getDecoder().decode(stringBytes).array());
+
+        System.out.println(decodedMessage);
     }
 }
