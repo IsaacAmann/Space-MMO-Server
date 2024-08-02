@@ -1,7 +1,6 @@
 package com.SpaceMMO.GameManagement.SectorSystem;
 
 import ch.qos.logback.core.encoder.EchoEncoder;
-import com.SpaceMMO.GameManagement.EntitySystem.CollisionSystem.RayCast;
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 
 import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
