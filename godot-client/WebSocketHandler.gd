@@ -9,10 +9,12 @@ signal new_entity_message(message)
 signal entity_delete_message(message)
 signal sector_join_message(message)
 signal error_message(message)
+signal chat_message_receive(message)
 
 var entityHandler
 var inputHandler
 var affectsHandler
+var chatHandler
 
 var debugMode = false
 var requestComplete = false
@@ -42,6 +44,7 @@ func _ready():
 	entityHandler = get_node("../EntityHandler")
 	inputHandler = get_node("../InputHandler")
 	affectsHandler = get_node("../AffectsHandler")
+	chatHandler = get_node("../ChatHandler")
 	
 func getTokenRequestComplete(result, response_code, headers, body):
 	print(body)
@@ -115,6 +118,8 @@ func _process(delta):
 						affectsHandler.handleLaserPacket(packet)
 					8:
 						entityHandler.handleEntityDelete(packet)
+					9:
+						chatHandler.handleChatMessage(packet)
 						
 		elif state == WebSocketPeer.STATE_CLOSING:
 			

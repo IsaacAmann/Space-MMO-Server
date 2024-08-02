@@ -1,40 +1,38 @@
 package com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol;
 
+import com.SpaceMMO.GameManagement.ChatSystem.ChatMessage;
+import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import org.dyn4j.geometry.Vector2;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.BinaryMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Service
 public class ChatMessageHandlers
 {
-    public void sendChatMessage(Player player, int channel, String message)
+    public void sendChatMessage(Player player, ChatMessage message)
     {
+        String encodedMessage = Base64.getEncoder().encodeToString(message.getFormattedString().getBytes(StandardCharsets.US_ASCII));
+        //Message type (1) + channel (4) + message length (variable)
+        ByteBuffer payload = ByteBuffer.allocate(5 + encodedMessage.getBytes(StandardCharsets.US_ASCII).length);
 
-    }
+        payload.put(ProtocolConstants.CHAT_MESSAGE);
+        payload.putInt(message.channel);
+        payload.put(encodedMessage.getBytes(StandardCharsets.US_ASCII));
 
-    public void sendLaserAffect(Player player, Vector2 startPosition, Vector2 endPosition, float duration, float red, float green, float blue) throws Exception
-    {
-        //byte messageType(1) + Float startx (4) + float starty(4) + float endx(4) + float endy(4) + float duration(4) + float red(4) + float green(4) + float blue(4) = 33
-        ByteBuffer payload = ByteBuffer.allocate(33);
-
-        payload.put(ProtocolConstants.LASER_AFFECT);
-
-        payload.putFloat((float)startPosition.x);
-        payload.putFloat((float)startPosition.y);
-
-        payload.putFloat((float)endPosition.x);
-        payload.putFloat((float)endPosition.y);
-
-        payload.putFloat(duration);
-
-        payload.putFloat(red);
-        payload.putFloat(green);
-        payload.putFloat(blue);
-
-        //session.sendMessage(new BinaryMessage(payload));
-        player.currentSector.sectorMessageQueue.add(new BinaryMessage(payload.array()));
+        try
+        {
+            BinaryMessage response = new BinaryMessage(payload.array());
+            player.session.sendMessage(response);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

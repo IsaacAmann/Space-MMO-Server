@@ -26,5 +26,6 @@ public class ServiceContainer
     public UserInputHandlers userInputHandlers;
     @Autowired
     public ClientAffectsHandler clientAffectsHandler;
-    @Autowired ChatMessageHandlers chatMessageHandlers;
+    @Autowired
+    public ChatMessageHandlers chatMessageHandlers;
 }

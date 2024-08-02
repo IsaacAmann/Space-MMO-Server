@@ -1,6 +1,8 @@
 package com.SpaceMMO.GameManagement.SectorSystem;
 
 import ch.qos.logback.core.encoder.EchoEncoder;
+import com.SpaceMMO.GameManagement.ChatSystem.ChatChannel;
+import com.SpaceMMO.GameManagement.ChatSystem.ChatMessage;
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 
 import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
@@ -68,6 +70,9 @@ public class Sector
     //Sector's message queue
     public ConcurrentLinkedQueue<BinaryMessage> sectorMessageQueue;
 
+    //Local chat channel
+    public ChatChannel sectorChat;
+
     public Sector(ServiceContainer serviceContainer)
     {
         name = "Unamed Sector";
@@ -90,7 +95,11 @@ public class Sector
         //sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
         collisionDetector = new DynamicAABBTree<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
 
-        sectorMessageQueue = new ConcurrentLinkedQueue<BinaryMessage>() ;
+        sectorMessageQueue = new ConcurrentLinkedQueue<BinaryMessage>();
+
+        sectorChat = new ChatChannel(0);
+        sectorChat.localSector = this;
+        sectorChat.broadcastSector = true;
 
     }
 
@@ -195,6 +204,8 @@ public class Sector
     //Prepare a game state update message for each player and send it
     public void postGameStateUpdate() throws Exception
     {
+        sectorChat.messageQueue.add(new ChatMessage(null, 0, "Testing message: Hello World"));
+
         for(Player player : this.players)
         {
             //System.out.println("Posting gamestate");
@@ -222,6 +233,27 @@ public class Sector
                 }
             }
         }
+
+        //Handle each players private message queue
+        for(Player player : players)
+        {
+            int currentMessages = player.messageQueue.size();
+            for(int i = 0; i < currentMessages; i++)
+            {
+                BinaryMessage message = player.messageQueue.remove();
+                try
+                {
+                    player.session.sendMessage(message);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        sectorChat.sendMessages();
+
     }
 
     public class SectorUpdateThread extends Thread
@@ -252,6 +284,7 @@ public class Sector
                     if(packetSendCounter == TICKS_PER_PACKET)
                     {
                         postGameStateUpdate();
+                        //Send chat messages
                         packetSendCounter = 0;
                     }
 
