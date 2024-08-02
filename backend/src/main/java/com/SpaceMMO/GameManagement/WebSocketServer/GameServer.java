@@ -33,6 +33,8 @@ public class GameServer extends BinaryWebSocketHandler
     TestingMessageHandlers testingMessageHandlers;
     @Autowired
     UserInputHandlers userInputHandlers;
+    @Autowired
+    ChatMessageHandlers chatMessageHandlers;
 
     public static Sector testSector;
     public static float testX = 1;
@@ -60,7 +62,10 @@ public class GameServer extends BinaryWebSocketHandler
                 break;
             case ProtocolConstants.PLAYER_SHIP_INPUT:
                 userInputHandlers.handlePlayerShipControl(session, message);
-
+                break;
+            case ProtocolConstants.CHAT_MESSAGE:
+                chatMessageHandlers.receiveChatMessage(session, message);
+                break;
             default:
 
                 break;

@@ -78,7 +78,7 @@ public class PlayerEntity extends Ship
 
 
     @Override
-    public void update()
+    public void update(float delta)
     {
         Vector2 impulse = new Vector2();
 
@@ -126,30 +126,13 @@ public class PlayerEntity extends Ship
 
         //Handle rotation
         this.desiredRotation = player.desiredRotation;
-        //springRotation();
 
-        //this.rectangle.rotateAboutCenter(rotationalVelocity);
         this.body.rotateAboutCenter(rotationalVelocity);
         this.rotation += rotationalVelocity;
 
         impulse.rotate(rotation);
         velocityVector = velocityVector.add(impulse);
-
-        super.update();
-
-        //Check that magnitude does not exceed max speed
-        /*
-        if(velocityVector.getMagnitude() > maxSpeed)
-        {
-            velocityVector.setMagnitude(maxSpeed);
-        }
-
-        Vector2 oldPosition = position;
-        this.position.x += velocityVector.x / Sector.TICKS_PER_SECOND;
-        this.position.y += velocityVector.y / Sector.TICKS_PER_SECOND;
-
-        this.rectangle.translate(position.difference(oldPosition));
-        */
+        super.update(delta);
 
     }
 

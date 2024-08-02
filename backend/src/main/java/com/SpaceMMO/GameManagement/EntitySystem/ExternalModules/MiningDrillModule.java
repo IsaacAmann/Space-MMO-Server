@@ -50,7 +50,7 @@ public class MiningDrillModule extends ShipExternalModule implements Weapon
         Ray ray = new Ray(parentShip.position, parentShip.position.to(mousePositionVector).getDirection());
 
         System.out.println(ray.getStart());
-        Iterator<Body> rayHits = parentShip.player.currentSector.collisionDetector.raycastIterator(ray, 0.0);
+        Iterator<Body> rayHits = parentShip.player.currentSector.collisionDetector.raycastIterator(ray, parentShip.position.distance(mousePositionVector));
 
         handleRayHits(rayHits);
     }

@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://InputHandler.gd" id="4_x3vnl"]
 [ext_resource type="PackedScene" uid="uid://dn6pc3k7m0eko" path="res://ImportedSector/testingSystem.tscn" id="5_dfn8h"]
 [ext_resource type="Script" path="res://AffectsHandler.gd" id="6_baqi1"]
+[ext_resource type="Script" path="res://ChatHandler.gd" id="7_one1j"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -34,4 +35,13 @@ script = ExtResource("6_baqi1")
 [node name="SectorContainer" type="Node2D" parent="."]
 
 [node name="testingSystem" parent="SectorContainer" instance=ExtResource("5_dfn8h")]
+
 position = Vector2(-14, -34)
+
+
+[node name="AffectsHandler" type="Node2D" parent="."]
+script = ExtResource("6_baqi1")
+
+[node name="ChatHandler" type="Node2D" parent="."]
+script = ExtResource("7_one1j")
+

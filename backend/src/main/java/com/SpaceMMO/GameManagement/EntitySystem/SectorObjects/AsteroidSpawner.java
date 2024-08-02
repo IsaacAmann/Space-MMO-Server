@@ -43,7 +43,7 @@ public class AsteroidSpawner extends GameEntity
         healthPerItem = 10;
     }
 
-    public void update()
+    public void update(float delta)
     {
         //remove asteroids that have been removed from local list
         ArrayList<ResourceAsteroid> removeList = new ArrayList<ResourceAsteroid>();

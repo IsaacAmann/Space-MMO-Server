@@ -45,8 +45,6 @@ public abstract class GameEntity
         body.translate(position);
         body.rotate(rotation);
         body.setUserData(this);
-        //rectangle.translate(position);
-        //rectangle.rotate(rotation);
     }
 
     public void handleCollision(GameEntity otherEntity)
@@ -74,29 +72,7 @@ public abstract class GameEntity
 
     public abstract String getEntityDataJSON();
 
-    public abstract void update();
+    public abstract void update(float delta);
 
-    /*
-    public boolean isColliding(GameEntity otherEntity)
-    {
-        Transform transform1 = new Transform();
-        //transform1.rotate(rotation, rectangle.getCenter());
-       // transform1.setTranslation(position);
-        transform1.setTranslation(new Vector2(0,0));
-        transform1.setRotation(new Rotation(0.0));
-
-        //System.out.println("local: " + rectangle.getRotation().toRadians());
-
-        Transform transform2 = new Transform();
-
-        //transform2.rotate(otherEntity.rotation, otherEntity.rectangle.getCenter());
-        //transform2.setTranslation(otherEntity.position);
-        transform2.setRotation(new Rotation(0.0));
-        transform2.setTranslation(new Vector2(0,0));
-
-        //Run collision check
-        return collisionDetector.detect(this.rectangle, transform1, otherEntity.rectangle, transform2);
-    }
-    */
 }
 
