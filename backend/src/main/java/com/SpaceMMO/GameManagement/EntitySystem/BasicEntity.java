@@ -33,7 +33,7 @@ public class BasicEntity extends GameEntity
     }
 
     @Override
-    public void update()
+    public void update(float delta)
     {
 
     }

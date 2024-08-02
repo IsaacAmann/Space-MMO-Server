@@ -30,7 +30,7 @@ public class ResourceAsteroid extends GameEntity
         return basicGetEntityJSON(data);
     }
 
-    public void update()
+    public void update(float delta)
     {
 
         //If 0, asteroid depleted and should be removed

@@ -62,7 +62,7 @@ public class Ship extends GameEntity
     }
 
     @Override
-    public void update()
+    public void update(float delta)
     {
         //Check that magnitude does not exceed max speed
         if(velocityVector.getMagnitude() > maxSpeed)
@@ -71,11 +71,10 @@ public class Ship extends GameEntity
         }
 
         Vector2 oldPosition = new Vector2(position);
-        this.position.x += velocityVector.x / Sector.TICKS_PER_SECOND;
-        this.position.y += velocityVector.y / Sector.TICKS_PER_SECOND;
 
-        //this.rectangle.translate(position.difference(oldPosition));
-        //System.out.println(oldPosition.difference(position));
+        this.position.x += velocityVector.x * delta;
+        this.position.y += velocityVector.y * delta;
+
         this.body.translate(position.difference(oldPosition));
     }
 }

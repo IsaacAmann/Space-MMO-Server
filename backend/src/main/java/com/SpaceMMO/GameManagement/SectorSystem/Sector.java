@@ -148,7 +148,7 @@ public class Sector
     }
 
     //Statements to be run each simulation frame
-    public void gameTick() throws Exception
+    public void gameTick(float delta) throws Exception
     {
         //Handle entity updates
         Iterator<GameEntity> iterator = entities.iterator();
@@ -166,7 +166,7 @@ public class Sector
             }
             else
             {
-                entity.update();
+                entity.update(delta);
             }
         }
 
@@ -240,13 +240,15 @@ public class Sector
         @Override
         public void run()
         {
+            long previousFrameStartTime = System.nanoTime();
             while(running)
             {
                 try
                 {
                     long startTime = System.nanoTime();
 
-                    gameTick();
+                    gameTick(((float)(startTime - previousFrameStartTime)) / 1000000000);
+
                     if(packetSendCounter == TICKS_PER_PACKET)
                     {
                         postGameStateUpdate();
@@ -258,6 +260,8 @@ public class Sector
                     long wait = (OPTIMAL_TIME - updateTime) / 1000000;
 
                     packetSendCounter++;
+                    previousFrameStartTime = startTime;
+
                     Thread.sleep(wait);
 
                 }

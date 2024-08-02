@@ -74,7 +74,7 @@ public abstract class GameEntity
 
     public abstract String getEntityDataJSON();
 
-    public abstract void update();
+    public abstract void update(float delta);
 
     /*
     public boolean isColliding(GameEntity otherEntity)
