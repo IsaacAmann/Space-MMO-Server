@@ -1,4 +1,4 @@
-[gd_scene load_steps=178 format=3 uid="uid://dn6pc3k7m0eko"]
+[gd_scene load_steps=214 format=3 uid="uid://dn6pc3k7m0eko"]
 
 [ext_resource type="Texture2D" uid="uid://byfl3n5gnrf0r" path="res://ImportedSector/assets/space.png" id="1_aa0lj"]
 [ext_resource type="Script" path="res://ImportedSector/asteroidSpawn.gd" id="2_bvhqk"]
@@ -16,13 +16,49 @@
 [ext_resource type="Texture2D" uid="uid://bdd0dsjfuhh1" path="res://ImportedSector/assets/MediumStar11.png" id="12_auxh1"]
 [ext_resource type="Script" path="res://ImportedSector/AnimatedSprite2D.gd" id="13_eg1f6"]
 [ext_resource type="Texture2D" uid="uid://cc2vy0ub2lf31" path="res://ImportedSector/assets/RedDwarf.png" id="14_iul0u"]
-[ext_resource type="Texture2D" uid="uid://cjk1064vyknrl" path="res://ImportedSector/assets/TerrestrialPlane5.png" id="15_tdeh7"]
-[ext_resource type="Texture2D" uid="uid://dhfsgqyu3oje7" path="res://ImportedSector/assets/TerrestrialPlane6.png" id="16_ljhxp"]
+[ext_resource type="Texture2D" uid="uid://cjk1064vyknrl" path="res://ImportedSector/assets/TerrestrialPlanet5.png" id="15_tdeh7"]
+[ext_resource type="Texture2D" uid="uid://pa05hujvdb8f" path="res://Entities/Portal/Portal1.png" id="15_tva32"]
+[ext_resource type="Texture2D" uid="uid://dhfsgqyu3oje7" path="res://ImportedSector/assets/TerrestrialPlanet6.png" id="16_ljhxp"]
+[ext_resource type="Texture2D" uid="uid://cerxsmehkv4dd" path="res://Entities/Portal/Portal2.png" id="16_wxctt"]
+[ext_resource type="Texture2D" uid="uid://bv68fc17wip1e" path="res://Entities/Portal/Portal3.png" id="17_4wjb4"]
 [ext_resource type="Texture2D" uid="uid://bgjqbgt6wj7nw" path="res://ImportedSector/assets/TerrestrialPlanet2.png" id="17_l38h6"]
 [ext_resource type="Texture2D" uid="uid://dfbxpi2d8hf3x" path="res://ImportedSector/assets/TerrestrialPlanet3.png" id="18_i7lmn"]
+[ext_resource type="Texture2D" uid="uid://c6q0v0fgpi4co" path="res://Entities/Portal/Portal4.png" id="18_s1s5x"]
 [ext_resource type="Texture2D" uid="uid://byqnmj188bvhs" path="res://ImportedSector/assets/TerrestrialPlanet4.png" id="19_33av5"]
-[ext_resource type="Texture2D" uid="uid://chroy0o2k2nrw" path="res://ImportedSector/assets/terrestrialPlanet.png" id="20_qtqe7"]
+[ext_resource type="Texture2D" uid="uid://ioa0ccsw0v3i" path="res://Entities/Portal/Portal5.png" id="19_pvxu2"]
+[ext_resource type="Texture2D" uid="uid://dlaabopwa4kwc" path="res://Entities/Portal/Portal6.png" id="20_7snhn"]
+[ext_resource type="Texture2D" uid="uid://chroy0o2k2nrw" path="res://ImportedSector/assets/TerrestrialPlanet1.png" id="20_qtqe7"]
+[ext_resource type="Texture2D" uid="uid://eg1cpimse06i" path="res://Entities/Portal/Portal7.png" id="21_i7nb0"]
 [ext_resource type="Texture2D" uid="uid://dl07nr8qsdclx" path="res://ImportedSector/assets/OrangeWhiteGiantStatic.png" id="21_vav2e"]
+[ext_resource type="Texture2D" uid="uid://bs1lsi7po72qh" path="res://Entities/Portal/Portal8.png" id="22_cwtp0"]
+[ext_resource type="Texture2D" uid="uid://djqy7dtmici2a" path="res://Entities/Portal/Portal9.png" id="23_d38up"]
+[ext_resource type="PackedScene" uid="uid://d2bnyhb4w4ciw" path="res://Ships/SpaceStation/SpaceStation.tscn" id="24_eesjm"]
+[ext_resource type="Texture2D" uid="uid://b47iume3gu21g" path="res://Entities/Portal/Portal10.png" id="24_f42qq"]
+[ext_resource type="Texture2D" uid="uid://bw7vo4u332vc3" path="res://Entities/Portal/Portal11.png" id="25_y644n"]
+[ext_resource type="Texture2D" uid="uid://w0m3wfkn0cuy" path="res://Entities/Portal/Portal12.png" id="26_pilji"]
+[ext_resource type="Texture2D" uid="uid://njulw86gk2sg" path="res://Entities/Portal/Portal13.png" id="27_lwupj"]
+[ext_resource type="Texture2D" uid="uid://b1fwbcq1osphe" path="res://Entities/Portal/Portal14.png" id="28_bh1xa"]
+[ext_resource type="Texture2D" uid="uid://dtshe8s086rbk" path="res://Entities/Portal/Portal15.png" id="29_1af8e"]
+[ext_resource type="Texture2D" uid="uid://df6x3d4t7u5w" path="res://Entities/Portal/Portal16.png" id="30_qca7i"]
+[ext_resource type="Texture2D" uid="uid://bapruvtaiqctv" path="res://Entities/Portal/Portal17.png" id="31_3jtm7"]
+[ext_resource type="Texture2D" uid="uid://c1gkqr1hdaebv" path="res://Entities/Portal/Portal18.png" id="32_lmsvv"]
+[ext_resource type="Texture2D" uid="uid://g8qcye3jicuh" path="res://Entities/Portal/Portal19.png" id="33_ivsqp"]
+[ext_resource type="Texture2D" uid="uid://dmbit7he1551o" path="res://Entities/Portal/Portal20.png" id="34_8cru1"]
+[ext_resource type="Texture2D" uid="uid://b7proms6ji6cu" path="res://Entities/Portal/Portal21.png" id="35_mo3oc"]
+[ext_resource type="Texture2D" uid="uid://dxx2g3qysdh3w" path="res://Entities/Portal/Portal22.png" id="36_nfqr5"]
+[ext_resource type="Texture2D" uid="uid://cdnvroasyos28" path="res://Entities/Portal/Portal23.png" id="37_2kvb2"]
+[ext_resource type="Texture2D" uid="uid://cc4dulipkmiu3" path="res://Entities/Portal/Portal24.png" id="38_43al7"]
+[ext_resource type="Texture2D" uid="uid://yva57ik45fp8" path="res://Entities/Portal/Portal25.png" id="39_etsb8"]
+[ext_resource type="Texture2D" uid="uid://c6j1p5kcmun6g" path="res://Entities/Portal/Portal26.png" id="40_chifc"]
+[ext_resource type="Texture2D" uid="uid://pn4nyyy68rjt" path="res://Entities/Portal/Portal27.png" id="41_p0q3i"]
+[ext_resource type="Texture2D" uid="uid://bdhmbry5ajapo" path="res://Entities/Portal/Portal28.png" id="42_gixbc"]
+[ext_resource type="Texture2D" uid="uid://6jx67d35sqvs" path="res://Entities/Portal/Portal29.png" id="43_2p8wq"]
+[ext_resource type="Texture2D" uid="uid://b5xq3sc5rfr2b" path="res://Entities/Portal/Portal30.png" id="44_okd0w"]
+[ext_resource type="Texture2D" uid="uid://5pymkukrtflb" path="res://Entities/Portal/Portal31.png" id="45_6e3gk"]
+[ext_resource type="Texture2D" uid="uid://cy48ciyekejhx" path="res://Entities/Portal/Portal32.png" id="46_lhbmy"]
+[ext_resource type="Texture2D" uid="uid://bk137xlmjhtjv" path="res://Entities/Portal/Portal33.png" id="47_tujws"]
+[ext_resource type="Texture2D" uid="uid://7iml6kfr8o56" path="res://Entities/Portal/Portal34.png" id="48_vytgg"]
+[ext_resource type="Texture2D" uid="uid://ctywmqk5rma51" path="res://Entities/Portal/Portal35.png" id="49_8aqw0"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kk20t"]
 
@@ -823,6 +859,116 @@ animations = [{
 "loop": true,
 "name": &"mediumStar",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_tva32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_wxctt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_4wjb4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_s1s5x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_pvxu2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_7snhn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_i7nb0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_cwtp0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_d38up")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_f42qq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_y644n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_pilji")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_lwupj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_bh1xa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_1af8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_qca7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_3jtm7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_lmsvv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_ivsqp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_8cru1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_mo3oc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_nfqr5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_2kvb2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_43al7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_etsb8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_chifc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_p0q3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_gixbc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_2p8wq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_okd0w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_6e3gk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_lhbmy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_tujws")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_vytgg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_8aqw0")
+}],
+"loop": true,
+"name": &"portal",
+"speed": 20.0
 }]
 
 [sub_resource type="Animation" id="Animation_1la63"]
@@ -866,7 +1012,7 @@ position = Vector2(2240, 2240)
 texture = ExtResource("1_aa0lj")
 
 [node name="asteroidLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.9, 0.9)
+position = Vector2(-608, -608)
 
 [node name="Node2D" type="Node2D" parent="ParallaxBackground/asteroidLayer"]
 script = ExtResource("2_bvhqk")
@@ -875,12 +1021,26 @@ asteroid_scene = ExtResource("3_6phrn")
 [node name="asteroid" parent="ParallaxBackground/asteroidLayer/Node2D" instance=ExtResource("3_6phrn")]
 
 [node name="starLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.9, 0.9)
+position = Vector2(-608, -608)
+
+[node name="portal" type="AnimatedSprite2D" parent="ParallaxBackground/starLayer"]
+position = Vector2(-753, 1897)
+sprite_frames = SubResource("SpriteFrames_nno3k")
+animation = &"portal"
+frame_progress = 0.733296
+script = ExtResource("13_eg1f6")
+animation_to_play = "portal"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ParallaxBackground/starLayer/portal"]
+libraries = {
+"": SubResource("AnimationLibrary_okuqq")
+}
 
 [node name="star" type="AnimatedSprite2D" parent="ParallaxBackground/starLayer"]
 sprite_frames = SubResource("SpriteFrames_nno3k")
 animation = &"mediumStar"
 script = ExtResource("13_eg1f6")
+animation_to_play = "mediumStar"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ParallaxBackground/starLayer/star"]
 libraries = {
@@ -888,7 +1048,7 @@ libraries = {
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/starLayer"]
-position = Vector2(-4211, 4738)
+position = Vector2(-4302, 4421)
 texture = ExtResource("14_iul0u")
 
 [node name="TerrestrialPlane5" type="Sprite2D" parent="ParallaxBackground/starLayer"]
@@ -920,5 +1080,8 @@ position = Vector2(-1012.5, -1005)
 texture = ExtResource("20_qtqe7")
 
 [node name="OrangeWhiteGiantStatic" type="Sprite2D" parent="ParallaxBackground/starLayer"]
-position = Vector2(6046, -5886)
+position = Vector2(7819, -7253)
 texture = ExtResource("21_vav2e")
+
+[node name="SpaceStation" parent="ParallaxBackground/starLayer" instance=ExtResource("24_eesjm")]
+position = Vector2(927, 927)

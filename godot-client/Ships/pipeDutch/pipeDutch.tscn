@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmjllj3mwmw3d"]
+
+[ext_resource type="Script" path="res://Ships/pipeDutch/pipeDutch.gd" id="1_d5u0h"]
+[ext_resource type="Texture2D" uid="uid://fww2ra4mpa30" path="res://Ships/pipeDutch/pipeDutch.png" id="2_n5a03"]
+[ext_resource type="PackedScene" uid="uid://boga0g0prj40d" path="res://Affects/fire.tscn" id="3_hr0ub"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bukiv"]
+size = Vector2(203, 33)
+
+[node name="dutchPipe" type="CharacterBody2D"]
+z_as_relative = false
+script = ExtResource("1_d5u0h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8.5, 0.5)
+shape = SubResource("RectangleShape2D_bukiv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("2_n5a03")
+
+[node name="externalModuleContainer2" type="Node2D" parent="."]
+position = Vector2(10, -16)
+
+[node name="externalModuleContainer" type="Node2D" parent="."]
+position = Vector2(41, -16)
+
+[node name="fire1" parent="." instance=ExtResource("3_hr0ub")]
+position = Vector2(-91, 0)
+
+[node name="fire2" parent="." instance=ExtResource("3_hr0ub")]
+position = Vector2(-93, 13)
+
+[node name="fire3" parent="." instance=ExtResource("3_hr0ub")]
+position = Vector2(-93, -12)

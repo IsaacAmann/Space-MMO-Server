@@ -5,7 +5,7 @@ extends Node2D
 @export var entityDictionary: Dictionary
 
 var adminOrb = preload("res://Ships/Debug/AdminOrb/AdminOrb.tscn")
-var sovietRocketOne = preload("res://Ships/SovietRocketOne/SovietRocketOne.tscn")
+var pipeDutch = preload("res://Ships/pipeDutch/pipeDutch.tscn")
 
 var playerShip = null
 func getPlayerShip():
