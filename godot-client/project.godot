@@ -13,6 +13,7 @@ config_version=5
 config/name="Godot-client"
 run/main_scene="res://MainScene.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+run/max_fps=30
 config/icon="res://icon.svg"
 
 [display]

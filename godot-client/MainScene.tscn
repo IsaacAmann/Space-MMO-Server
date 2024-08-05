@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkwtjjfwfojqi"]
+[gd_scene load_steps=9 format=3 uid="uid://bkwtjjfwfojqi"]
 
 [ext_resource type="Script" path="res://WebSocketHandler.gd" id="1_355yi"]
 [ext_resource type="Script" path="res://EntityHandler.gd" id="2_tn10v"]
@@ -35,13 +35,10 @@ script = ExtResource("6_baqi1")
 [node name="SectorContainer" type="Node2D" parent="."]
 
 [node name="testingSystem" parent="SectorContainer" instance=ExtResource("5_dfn8h")]
-
 position = Vector2(-14, -34)
 
-
-[node name="AffectsHandler" type="Node2D" parent="."]
+[node name="AffectsHandler2" type="Node2D" parent="."]
 script = ExtResource("6_baqi1")
 
 [node name="ChatHandler" type="Node2D" parent="."]
 script = ExtResource("7_one1j")
-
