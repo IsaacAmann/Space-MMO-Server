@@ -44,6 +44,8 @@ public class Sector
     public static final int TICKS_PER_SECOND = 30;
     public static final long OPTIMAL_TIME = 1000000000 / TICKS_PER_SECOND;
 
+    public static final int PACKETS_PER_SECOND = 15;
+
     public String name;
 
     //Quad tree for collision handling
@@ -65,6 +67,7 @@ public class Sector
     public ServiceContainer serviceContainer;
 
     private SectorUpdateThread sectorUpdateThread;
+    private ClientUpdateThread clientUpdateThread;
 
     //public Sap<Body> sapDetector;
     public DynamicAABBTree<Body> collisionDetector;
@@ -90,9 +93,7 @@ public class Sector
         players = new ArrayList<Player>();
         entityAddQueue = new ConcurrentLinkedQueue<GameEntity>();
 
-        sectorUpdateThread = new SectorUpdateThread();
-        sectorUpdateThread.running = true;
-        sectorUpdateThread.start();
+
 
         //sapDetector = new Sap<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
         collisionDetector = new DynamicAABBTree<Body>(new filter(), new CollisionBodyAABBProducer<Body>(),new NullAABBExpansionMethod());
@@ -102,6 +103,14 @@ public class Sector
         sectorChat = new ChatChannel(0);
         sectorChat.localSector = this;
         sectorChat.broadcastSector = true;
+
+        sectorUpdateThread = new SectorUpdateThread();
+        sectorUpdateThread.running = true;
+        sectorUpdateThread.start();
+
+        clientUpdateThread = new ClientUpdateThread();
+        clientUpdateThread.running = true;
+        clientUpdateThread.start();
 
     }
 
@@ -258,6 +267,39 @@ public class Sector
 
     }
 
+    //Networking thread
+    public class ClientUpdateThread extends Thread
+    {
+        public boolean running;
+        //wait time in milliseconds
+        public float waitTime = ((float)1.0/PACKETS_PER_SECOND) * 1000;
+
+        public ClientUpdateThread()
+        {
+            running = true;
+            System.out.println("wait: " + waitTime);
+        }
+        @Override
+        public void run()
+        {
+            while(running)
+            {
+                try
+                {
+                    postGameStateUpdate();
+                    //System.out.println("Updating");
+                    Thread.sleep((long) waitTime);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    //Game loop thread
     public class SectorUpdateThread extends Thread
     {
         public boolean running;
@@ -274,30 +316,34 @@ public class Sector
         @Override
         public void run()
         {
-            long previousFrameStartTime = System.nanoTime();
+            long lastTime = System.nanoTime();
             while(running)
             {
                 try
                 {
                     long startTime = System.nanoTime();
 
-                    gameTick(((float)(startTime - previousFrameStartTime)) / 1000000000);
+                    gameTick(((float)(startTime - lastTime)) / 1000000000);
+                    lastTime = System.nanoTime();
 
+                    /*
                     if(packetSendCounter == TICKS_PER_PACKET)
                     {
                         postGameStateUpdate();
                         //Send chat messages
                         packetSendCounter = 0;
                     }
+                    */
+
 
                     long updateTime = System.nanoTime() - startTime;
                     //System.out.println(updateTime);
                     long wait = (OPTIMAL_TIME - updateTime) / 1000000;
 
                     packetSendCounter++;
-                    previousFrameStartTime = startTime;
 
                     Thread.sleep(wait);
+
 
                 }
                 catch(Exception e)
