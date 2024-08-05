@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkwtjjfwfojqi"]
+[gd_scene load_steps=10 format=3 uid="uid://bkwtjjfwfojqi"]
 
 [ext_resource type="Script" path="res://WebSocketHandler.gd" id="1_355yi"]
 [ext_resource type="Script" path="res://EntityHandler.gd" id="2_tn10v"]
@@ -8,12 +8,15 @@
 [ext_resource type="PackedScene" uid="uid://dn6pc3k7m0eko" path="res://ImportedSector/testingSystem.tscn" id="5_dfn8h"]
 [ext_resource type="Script" path="res://AffectsHandler.gd" id="6_baqi1"]
 [ext_resource type="Script" path="res://ChatHandler.gd" id="7_one1j"]
+[ext_resource type="PackedScene" uid="uid://udj8l7mlv3y0" path="res://UI/ChatBox/chat_box.tscn" id="9_ehfob"]
 
 [node name="MainScene" type="Node2D"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GUI" parent="CanvasLayer" instance=ExtResource("4_gywek")]
+
+[node name="ChatBox" parent="CanvasLayer" instance=ExtResource("9_ehfob")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true

@@ -215,7 +215,7 @@ public class Sector
     //Prepare a game state update message for each player and send it
     public void postGameStateUpdate() throws Exception
     {
-        sectorChat.messageQueue.add(new ChatMessage(null, 0, "Testing message: Hello World"));
+        //sectorChat.messageQueue.add(new ChatMessage(null, 0, "Testing message: Hello World"));
 
         for(Player player : this.players)
         {

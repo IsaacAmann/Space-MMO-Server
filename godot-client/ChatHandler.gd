@@ -1,9 +1,12 @@
 extends Node
 
 var webSocketHandler
+var chatBox
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	webSocketHandler = get_node("../WebSocketHandler")
+	chatBox = get_node("../CanvasLayer/ChatBox/ChatContainer/ChatWindow")
 	pass # Replace with function body.
 
 
@@ -27,6 +30,7 @@ func handleChatMessage(message):
 	
 	var messageString = Marshalls.base64_to_raw(chatSection.get_string_from_ascii()).get_string_from_ascii()
 	print(messageString)
+	chatBox.text += "\n" + str(messageString)
 
 func sendChatMessage(channel, message):
 	var packet = PackedByteArray()

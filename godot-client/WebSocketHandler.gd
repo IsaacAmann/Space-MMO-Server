@@ -84,7 +84,7 @@ func _process(delta):
 				sent = true
 			while socket.get_available_packet_count():
 				var packet = socket.get_packet()
-				print("packet: ", packet)
+				#print("packet: ", packet)
 				#Get message type
 				var type = packet.decode_s8(0)
 				match type:
