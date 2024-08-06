@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt3h7s25haxxk"]
+
+[ext_resource type="Texture2D" uid="uid://btmt7qyxyinfc" path="res://Entities/Projectiles/BasicBullet/BasicBullet.png" id="1_n0ho7"]
+
+[node name="BasicBullet" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("1_n0ho7")
