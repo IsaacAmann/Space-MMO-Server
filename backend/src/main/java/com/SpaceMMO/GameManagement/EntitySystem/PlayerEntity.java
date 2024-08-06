@@ -33,6 +33,7 @@ public class PlayerEntity extends Ship
         externalModules = new ArrayList<ShipExternalModule>();
         externalModules.add(new MiningDrillModule(0,0, this));
         godotScenePath = "res://Ships/pipeDutch/pipeDutch.tscn";
+        this.health = 500;
         this.player = player;
     }
 
