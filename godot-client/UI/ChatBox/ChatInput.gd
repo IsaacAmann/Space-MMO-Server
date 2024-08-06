@@ -16,3 +16,4 @@ func on_text_submit(text: String):
 	print("submitting")
 	chatHandler.sendChatMessage(0, text)
 	self.text = ""
+	self.release_focus()

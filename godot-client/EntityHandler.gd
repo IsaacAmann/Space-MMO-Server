@@ -7,6 +7,7 @@ extends Node2D
 var adminOrb = preload("res://Ships/Debug/AdminOrb/AdminOrb.tscn")
 var pipeDutch = preload("res://Ships/pipeDutch/pipeDutch.tscn")
 
+
 var playerShip = null
 func getPlayerShip():
 	return playerShip
@@ -169,7 +170,11 @@ func handleEntityUpdate(message: PackedByteArray):
 	#modify entity
 	var entity = entityDictionary.get(entityId)
 	if(entity != null):
-		entity.position = Vector2(positionX, positionY)
+		if("lerpPosition" in entity):
+			entity.lerpPosition = Vector2(positionX, positionY)
+		else:
+			entity.position = Vector2(positionX, positionY)
+			
 		if("velocity" in entity):
 			entity.velocity = Vector2(velocityX, velocityY)
 		if("angularVelocity" in entity):

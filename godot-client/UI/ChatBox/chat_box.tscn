@@ -31,6 +31,9 @@ alignment = 2
 [node name="ChatWindow" type="TextEdit" parent="ChatContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+editable = false
+context_menu_enabled = false
+virtual_keyboard_enabled = false
 wrap_mode = 1
 
 [node name="ChatInput" type="LineEdit" parent="ChatContainer"]

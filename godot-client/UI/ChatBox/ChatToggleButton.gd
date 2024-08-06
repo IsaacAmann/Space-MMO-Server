@@ -15,4 +15,5 @@ func _process(delta):
 func on_pressed():
 	print("toggled Chat")
 	chatWindow.set_visible(!chatWindow.visible)
+	self.release_focus()
 	
