@@ -34,6 +34,7 @@ public abstract class Projectile extends GameEntity
             //Apply damage and set remove flag
             otherEntity.health -= damage;
             this.removeFlag = true;
+            notifyDeletion = false;
         }
     }
 
@@ -50,6 +51,10 @@ public abstract class Projectile extends GameEntity
         if(ticksAlive >= lifeTime)
         {
             this.removeFlag = true;
+            //Projectile being removed early, notify clients that it no longer exists
+            notifyDeletion = true;
+            linearProjectile = true;
+
         }
         else
         {

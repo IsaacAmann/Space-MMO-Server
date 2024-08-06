@@ -8,6 +8,7 @@ import com.SpaceMMO.GameManagement.ChatSystem.ChatMessage;
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 
 import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
+import com.SpaceMMO.GameManagement.EntitySystem.Projectiles.Projectile;
 import com.SpaceMMO.GameManagement.QuadTree.PooledQuadNodeFactory;
 import com.SpaceMMO.GameManagement.QuadTree.QuadTreeNode;
 import com.SpaceMMO.GameManagement.ServiceContainer;
@@ -55,6 +56,7 @@ public class Sector
     //Entity containers
     private ArrayList<GameEntity> entities;
     public ArrayList<Player> players;
+
     public int nextEntityID = 0;
 
     public static int nextID = 0;
@@ -177,9 +179,12 @@ public class Sector
             GameEntity entity = iterator.next();
             if(entity.removeFlag == true)
             {
-                for(Player player : players)
+                if(entity.notifyDeletion == true)
                 {
-                    serviceContainer.entitySystemHandlers.sendEntityDeleteNotification(player.session, entity);
+                    for (Player player : players)
+                    {
+                        serviceContainer.entitySystemHandlers.sendEntityDeleteNotification(player.session, entity);
+                    }
                 }
                 collisionDetector.remove(entity.body);
                 iterator.remove();
