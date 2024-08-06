@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://udj8l7mlv3y0"]
+
+[ext_resource type="Script" path="res://UI/ChatBox/ChatToggleButton.gd" id="1_duvn8"]
+[ext_resource type="Script" path="res://UI/ChatBox/ChatInput.gd" id="2_re4ab"]
+
+[node name="ChatBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChatToggleButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1787.0
+offset_top = 805.0
+offset_right = 1858.0
+offset_bottom = 844.0
+text = "Chat"
+script = ExtResource("1_duvn8")
+
+[node name="ChatContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 1254.0
+offset_top = 14.0
+offset_right = 1847.0
+offset_bottom = 786.0
+alignment = 2
+
+[node name="ChatWindow" type="TextEdit" parent="ChatContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+wrap_mode = 1
+
+[node name="ChatInput" type="LineEdit" parent="ChatContainer"]
+layout_mode = 2
+script = ExtResource("2_re4ab")

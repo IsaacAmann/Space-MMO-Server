@@ -11,10 +11,12 @@ var angularVelocity: float = 0
 @export var entityID: int
 @export var spriteRotation: float
 @export var nameLabel: String
+@export var lerpPosition: Vector2
 
 var sprite
 var externalModuleContainer
 var label
+var lerpModifier = 2.0
 
 # Define minimum and maximum scales
 var min_scale: float = 0.2
@@ -43,6 +45,9 @@ func _process(delta):
 	position += velocity * delta
 	rotation += angularVelocity * delta
 
+	#Attempt to correct to server position
+	position = position.lerp(lerpPosition, delta * lerpModifier)
+	
 	# Calculate velocity magnitude
 	var velocity_magnitude = velocity.length()
 
