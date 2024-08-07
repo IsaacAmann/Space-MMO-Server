@@ -62,6 +62,9 @@ public class EntitySystemHandlers
         payload.put((byte)0);
         payload.put(json.getBytes(StandardCharsets.US_ASCII));
 
+        System.out.println(payload.order());
+
+
         BinaryMessage response = new BinaryMessage(payload.array());
         System.out.println("new entity message");
         System.out.println("JSON: " + json);

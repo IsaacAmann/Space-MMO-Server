@@ -21,6 +21,9 @@ public abstract class Projectile extends GameEntity
         this.lifeTime = 240;
         ticksAlive = 0;
         this.damage = 2;
+        linearProjectile = true;
+        notifyDeletion = false;
+
 
         this.velocityVector = new Vector2(0, velocity);
         velocityVector.rotate(rotation);
@@ -34,7 +37,8 @@ public abstract class Projectile extends GameEntity
             //Apply damage and set remove flag
             otherEntity.health -= damage;
             this.removeFlag = true;
-            notifyDeletion = false;
+            //Projectile being removed early, notify clients that it no longer exists
+            notifyDeletion = true;
         }
     }
 
@@ -51,9 +55,6 @@ public abstract class Projectile extends GameEntity
         if(ticksAlive >= lifeTime)
         {
             this.removeFlag = true;
-            //Projectile being removed early, notify clients that it no longer exists
-            notifyDeletion = true;
-            linearProjectile = true;
 
         }
         else
