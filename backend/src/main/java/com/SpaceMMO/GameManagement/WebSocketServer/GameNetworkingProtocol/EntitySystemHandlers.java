@@ -43,16 +43,23 @@ public class EntitySystemHandlers
         String json = entity.getEntityDataJSON();
         json = Base64.getEncoder().encodeToString(json.getBytes());
 
-        ByteBuffer payload = ByteBuffer.allocate(json.getBytes(StandardCharsets.US_ASCII).length + 1 + 1 + 4);
+        //
+        ByteBuffer payload = ByteBuffer.allocate(json.getBytes(StandardCharsets.US_ASCII).length + 1 + 1 + 4 + 4 + 4 + 4 + 4 + 4);
         payload.order(ByteOrder.LITTLE_ENDIAN);
 
         payload.put(ProtocolConstants.NEW_ENTITY_NOTIFICATION);
 
         payload.putInt(entity.entityID);
         payload.put((byte)0);
+
+        payload.putFloat((float)entity.position.x);
+        payload.putFloat((float)entity.position.y);
+        payload.putFloat((float)entity.rotation);
+        payload.putFloat((float)entity.velocityVector.x);
+        payload.putFloat((float)entity.velocityVector.y);
         payload.put(json.getBytes(StandardCharsets.US_ASCII));
 
-        System.out.println(payload.order());
+
 
 
         BinaryMessage response = new BinaryMessage(payload.array());

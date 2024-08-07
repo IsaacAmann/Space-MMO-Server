@@ -30,6 +30,11 @@ func handleNewEntity(message: PackedByteArray):
 	var entityId
 	var entityType
 	var entityDataLength
+	var positionX
+	var positionY
+	var rotation
+	var velocityX
+	var velocityY
 	
 	#skip message type label
 	var currentIndex = 1
@@ -39,6 +44,21 @@ func handleNewEntity(message: PackedByteArray):
 	
 	entityType = message.decode_s8(currentIndex)
 	currentIndex += 1
+	
+	positionX = message.decode_float(currentIndex)
+	currentIndex += 4
+	
+	positionY = message.decode_float(currentIndex)
+	currentIndex += 4
+	
+	rotation = message.decode_float(currentIndex)
+	currentIndex += 4
+	
+	velocityX = message.decode_float(currentIndex)
+	currentIndex += 4
+	
+	velocityY = message.decode_float(currentIndex)
+	currentIndex += 4
 	
 	print("entityID: " + str(entityId))
 	print("entityType: " + str(entityType))
@@ -91,6 +111,12 @@ func handleNewEntity(message: PackedByteArray):
 	if newEntity != null:
 		get_tree().root.add_child(newEntity)
 		entityDictionary[entityId] = newEntity
+		if("position" in newEntity):
+			newEntity.position = Vector2(positionX, positionY)
+		if("rotation" in newEntity):	
+			newEntity.rotation = rotation
+		if("velocity" in newEntity):	
+			newEntity.velocity = Vector2(velocityX, velocityY)
 	
 	
 func handleEntityDelete(message: PackedByteArray):
