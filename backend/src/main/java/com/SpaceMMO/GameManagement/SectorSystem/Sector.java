@@ -183,7 +183,8 @@ public class Sector
                 {
                     for (Player player : players)
                     {
-                        serviceContainer.entitySystemHandlers.sendEntityDeleteNotification(player.session, entity);
+                        //serviceContainer.entitySystemHandlers.sendEntityDeleteNotification(player.session, entity);
+                        player.messageQueue.add(serviceContainer.entitySystemHandlers.sendEntityDeleteNotification(player.session, entity));
                     }
                 }
                 collisionDetector.remove(entity.body);
@@ -245,6 +246,7 @@ public class Sector
                 }
                 catch(Exception e)
                 {
+                    System.out.println("Bad message: " + message);
                     e.printStackTrace();
                 }
             }

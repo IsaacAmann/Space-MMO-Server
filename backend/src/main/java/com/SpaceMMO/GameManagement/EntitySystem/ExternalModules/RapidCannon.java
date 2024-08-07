@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement.EntitySystem.ExternalModules;
 
 import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
+import com.SpaceMMO.GameManagement.EntitySystem.Projectiles.CannonRound;
 import com.SpaceMMO.GameManagement.EntitySystem.ShipExternalModule;
 import com.SpaceMMO.GameManagement.EntitySystem.Weapon;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +31,9 @@ public class RapidCannon extends ShipExternalModule implements Weapon
     @Override
     public void fire()
     {
-
+        //Spawn a projectile heading towards mouse position
+        CannonRound currentRound = new CannonRound(parentShip.position.x + this.offsetVector.x, parentShip.position.y + this.offsetVector.y, 6, 13, parentShip.rotation, 100, parentShip);
+        parentShip.player.currentSector.entityAddQueue.add(currentRound);
     }
 
     //Implementing reload from weapon interface

@@ -5,6 +5,8 @@ import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
 import com.SpaceMMO.GameManagement.EntitySystem.Ship;
 import org.dyn4j.geometry.Vector2;
 
+import java.util.HashMap;
+
 public abstract class Projectile extends GameEntity
 {
     public PlayerEntity owner;
@@ -45,7 +47,10 @@ public abstract class Projectile extends GameEntity
     @Override
     public String getEntityDataJSON()
     {
-        return null;
+        HashMap<String, Object> data = new HashMap<String, Object>();
+        data.put("godotScenePath", godotScenePath);
+
+        return basicGetEntityJSON(data);
     }
 
     @Override

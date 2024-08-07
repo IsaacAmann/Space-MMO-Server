@@ -68,7 +68,7 @@ public class EntitySystemHandlers
         session.sendMessage(response);
     }
 
-    public void sendEntityDeleteNotification(WebSocketSession session, GameEntity entity) throws Exception
+    public BinaryMessage sendEntityDeleteNotification(WebSocketSession session, GameEntity entity) throws Exception
     {
         //Message type (1) + EntityID(4) = 5
         ByteBuffer payload = ByteBuffer.allocate(5);
@@ -78,6 +78,7 @@ public class EntitySystemHandlers
         payload.putInt(entity.entityID);
 
         BinaryMessage message = new BinaryMessage(payload.array());
-        session.sendMessage(message);
+        //session.sendMessage(message);
+        return message;
     }
 }

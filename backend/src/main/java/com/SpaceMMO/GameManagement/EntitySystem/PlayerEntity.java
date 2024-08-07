@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement.EntitySystem;
 
 import com.SpaceMMO.GameManagement.EntitySystem.ExternalModules.MiningDrillModule;
+import com.SpaceMMO.GameManagement.EntitySystem.ExternalModules.RapidCannon;
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +33,7 @@ public class PlayerEntity extends Ship
         internalModules = new ArrayList<ShipInternalModule>();
         externalModules = new ArrayList<ShipExternalModule>();
         externalModules.add(new MiningDrillModule(0,0, this));
+        externalModules.add(new RapidCannon(10,10,this));
         godotScenePath = "res://Ships/pipeDutch/pipeDutch.tscn";
         this.health = 500;
         this.player = player;
