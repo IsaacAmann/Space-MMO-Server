@@ -15,6 +15,7 @@ import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +33,6 @@ public class SectorMessages
     public void sectorJoinNotification(WebSocketSession session, Sector sector) throws Exception
     {
 
-
         //Sector data to send
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, Object> sectorData = new HashMap<String, Object>();
@@ -46,6 +46,7 @@ public class SectorMessages
 
         //Create message
         ByteBuffer payload = ByteBuffer.allocate(encodedJSON.getBytes(StandardCharsets.US_ASCII).length + 1);
+        payload.order(ByteOrder.LITTLE_ENDIAN);
 
         System.out.println(payload.array().length);
         payload.put(ProtocolConstants.SECTOR_JOIN);

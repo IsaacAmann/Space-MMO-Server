@@ -13,6 +13,7 @@ import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -30,6 +31,7 @@ public class ChatMessageHandlers
         String encodedMessage = Base64.getEncoder().encodeToString(message.getFormattedString().getBytes(StandardCharsets.US_ASCII));
         //Message type (1) + channel (4) + message length (variable)
         ByteBuffer payload = ByteBuffer.allocate(5 + encodedMessage.getBytes(StandardCharsets.US_ASCII).length);
+        payload.order(ByteOrder.LITTLE_ENDIAN);
 
         payload.put(ProtocolConstants.CHAT_MESSAGE);
         payload.putInt(message.channel);
@@ -50,6 +52,8 @@ public class ChatMessageHandlers
     public void receiveChatMessage(WebSocketSession session, BinaryMessage message)
     {
         ByteBuffer messageBuffer = message.getPayload();
+        messageBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
         int channel = messageBuffer.getInt(1);
 
         //ByteBuffer stringBytes = ByteBuffer.allocate(messageBuffer.capacity() - 5);

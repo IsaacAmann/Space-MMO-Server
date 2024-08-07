@@ -35,44 +35,29 @@ func handleLaserPacket(packet):
 	var blue: float
 	
 	var currentIndex = 1
-	var currentSlice = packet.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	startX = currentSlice.decode_float(0)
+
+	startX = packet.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = packet.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	startY = currentSlice.decode_float(0)
+	startY = packet.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = packet.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	endX = currentSlice.decode_float(0)
+	endX = packet.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = packet.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	endY = currentSlice.decode_float(0)
+	endY = packet.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = packet.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	duration = currentSlice.decode_float(0)
+	duration = packet.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = packet.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	red = currentSlice.decode_float(0)
+	red = packet.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = packet.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	green = currentSlice.decode_float(0)
+	green = packet.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = packet.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	blue = currentSlice.decode_float(0)
+	blue = packet.decode_float(currentIndex)
 	currentIndex += 4
 	
 	createLaserAffect(Vector2(startX, startY), Vector2(endX, endY), duration, Color(red, green, blue))

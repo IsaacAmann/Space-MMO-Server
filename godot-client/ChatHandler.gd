@@ -17,12 +17,9 @@ func _process(delta):
 
 func handleChatMessage(message):
 	var currentIndex = 1
-	
 	var channelID
-	
-	var currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	channelID = currentSlice.decode_s32(0)
+
+	channelID = message.decode_s32(currentIndex)
 	currentIndex += 4
 	
 	var messageSize = message.size() - currentIndex
@@ -34,14 +31,9 @@ func handleChatMessage(message):
 
 func sendChatMessage(channel, message):
 	var packet = PackedByteArray()
-	packet.resize(1)
+	packet.resize(5)
 	packet.encode_u8(0, 0x9)
-	
-	var valueArray = PackedByteArray()
-	valueArray.resize(4)
-	valueArray.encode_s32(0, channel)
-	valueArray.reverse()
-	packet.append_array(valueArray)
+	packet.encode_s32(1, channel)
 	
 	print("TEST: " + Marshalls.utf8_to_base64(message))
 	packet.append_array(Marshalls.utf8_to_base64(message).to_ascii_buffer())

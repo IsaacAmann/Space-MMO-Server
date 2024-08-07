@@ -33,14 +33,11 @@ func handleNewEntity(message: PackedByteArray):
 	
 	#skip message type label
 	var currentIndex = 1
-	var currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	entityId = currentSlice.decode_s32(0)
+
+	entityId = message.decode_s32(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = message.slice(currentIndex, currentIndex + 1)
-	currentSlice.reverse()
-	entityType = currentSlice.decode_s8(0)
+	entityType = message.decode_s8(currentIndex)
 	currentIndex += 1
 	
 	print("entityID: " + str(entityId))
@@ -101,9 +98,8 @@ func handleEntityDelete(message: PackedByteArray):
 	var entityId
 	
 	var currentIndex = 1
-	var currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	entityId = currentSlice.decode_s32(0)
+
+	entityId = message.decode_s32(currentIndex)
 	
 	#get reference from dictionary
 	var entity = entityDictionary.get(entityId)
@@ -125,47 +121,30 @@ func handleEntityUpdate(message: PackedByteArray):
 	var rotationalVelocity
 	
 	var currentIndex = 1
-	var currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	entityId = currentSlice.decode_s32(0)
+
+	entityId = message.decode_s32(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	positionX = currentSlice.decode_float(0)
+	positionX = message.decode_float(currentIndex)
 	currentIndex += 4
-	#print(positionX)
-	
-	currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	positionY = currentSlice.decode_float(0)
+
+	positionY = message.decode_float(currentIndex)
 	currentIndex += 4
 	
-	#java encodes in big endian, need to reverse the floats
-	var velocitySlice = message.slice(currentIndex, currentIndex + 4)
-	velocitySlice.reverse()
-	velocityX = velocitySlice.decode_float(0)
+	velocityX = message.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	velocityY = currentSlice.decode_float(0)
+	velocityY = message.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	health = currentSlice.decode_s32(0)
+	health = message.decode_s32(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	rotation = currentSlice.decode_float(0)
+	rotation = message.decode_float(currentIndex)
 	currentIndex += 4
 	
-	currentSlice = message.slice(currentIndex, currentIndex + 4)
-	currentSlice.reverse()
-	rotationalVelocity = currentSlice.decode_float(0)
-	
+	rotationalVelocity = message.decode_float(currentIndex)
+	currentIndex += 4
 	
 	#modify entity
 	var entity = entityDictionary.get(entityId)
@@ -181,11 +160,3 @@ func handleEntityUpdate(message: PackedByteArray):
 			entity.angularVelocity = rotationalVelocity
 		#entity.spriteRotation = rotation
 		entity.rotation = rotation
-		#print("velocityx: " + str(velocityX))
-		
-			
-
-		#print("y: " + str(positionY))
-		#print("rotation: " + str(rotation))
-
-

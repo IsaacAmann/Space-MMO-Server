@@ -8,6 +8,7 @@ import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 //Contains socket handlers for displaying affects client side that do not need to be a synchronized entity
 @Service
@@ -17,6 +18,7 @@ public class ClientAffectsHandler
     {
         //byte messageType(1) + Float startx (4) + float starty(4) + float endx(4) + float endy(4) + float duration(4) + float red(4) + float green(4) + float blue(4) = 33
         ByteBuffer payload = ByteBuffer.allocate(33);
+        payload.order(ByteOrder.LITTLE_ENDIAN);
 
         payload.put(ProtocolConstants.LASER_AFFECT);
 
