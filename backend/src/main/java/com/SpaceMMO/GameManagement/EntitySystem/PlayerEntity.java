@@ -135,6 +135,14 @@ public class PlayerEntity extends Ship
 
         impulse.rotate(rotation);
         velocityVector = velocityVector.add(impulse);
+
+        if(this.health <= 0)
+        {
+            System.out.println(this.player.account.username + " is dead");
+            this.removeFlag = true;
+        }
+
+
         super.update(delta);
 
     }

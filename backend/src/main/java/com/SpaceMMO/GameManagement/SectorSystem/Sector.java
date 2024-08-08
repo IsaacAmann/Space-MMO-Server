@@ -150,6 +150,7 @@ public class Sector
         //Send new entity notifications for pre existing entities
         for(GameEntity entity : entities)
         {
+            //Change this to add to message queue, can cause concurrency exceptions
             try {
                 serviceContainer.entitySystemHandlers.sendNewEntityNotification(player.session, entity);
             }
@@ -160,6 +161,7 @@ public class Sector
         }
         //Create player entity
         PlayerEntity newPlayerEntity = new PlayerEntity(player);
+        player.currentEntity = newPlayerEntity;
         addEntity(newPlayerEntity);
     }
 
@@ -215,6 +217,21 @@ public class Sector
         for(int i = 0; i < amountToAdd; i++)
         {
             addEntity(entityAddQueue.remove());
+        }
+
+        //Player specific updates
+        for(Player player : players)
+        {
+            //Check if current ship is dead
+            if(player.currentEntity == null || player.currentEntity.removeFlag == true)
+            {
+                //Respawn
+                player.currentEntity = null;
+                player.currentEntity = new PlayerEntity(player);
+                entityAddQueue.add(player.currentEntity);
+                System.out.println("respawned " + player.account.username);
+
+            }
         }
     }
 

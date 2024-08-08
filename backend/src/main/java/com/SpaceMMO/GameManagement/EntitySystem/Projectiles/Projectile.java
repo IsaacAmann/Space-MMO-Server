@@ -13,7 +13,7 @@ public abstract class Projectile extends GameEntity
     //Number of ticks that projectile will exist for
     int lifeTime;
     int ticksAlive;
-    int damage;
+    public int damage;
 
     public Projectile(double x, double y, double width, double height, double rotation, double velocity, PlayerEntity owner)
     {
@@ -27,8 +27,8 @@ public abstract class Projectile extends GameEntity
         notifyDeletion = false;
 
 
-        this.velocityVector = new Vector2(0, velocity);
-        velocityVector.rotate(rotation);
+        this.velocityVector = new Vector2(velocity, 0);
+        velocityVector = velocityVector.setDirection(rotation);
     }
 
     @Override
@@ -41,6 +41,7 @@ public abstract class Projectile extends GameEntity
             this.removeFlag = true;
             //Projectile being removed early, notify clients that it no longer exists
             notifyDeletion = true;
+            System.out.println("projectile Collision: " + otherEntity);
         }
     }
 
@@ -69,7 +70,7 @@ public abstract class Projectile extends GameEntity
             this.position.x += velocityVector.x * delta;
             this.position.y += velocityVector.y * delta;
 
-            this.body.translate(position.difference(oldPosition));
+            this.body.translate(yFlipPosition(position.difference(oldPosition)));
         }
     }
 }

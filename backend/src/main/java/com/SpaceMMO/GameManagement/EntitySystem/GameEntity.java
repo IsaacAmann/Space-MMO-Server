@@ -37,6 +37,8 @@ public abstract class GameEntity
 
     public static Sat collisionDetector = new Sat();
 
+    public static Vector2 yFlip = new Vector2(1, -1);
+
     public GameEntity(double x, double y, double width, double height, double rotation)
     {
         this.velocityVector = new Vector2(0, 0);
@@ -46,11 +48,18 @@ public abstract class GameEntity
         this.body = new Body();
         body.addFixture(rectangle);
 
-        body.translate(position);
-        body.rotate(rotation);
+        body.translate(yFlipPosition(position));
+        body.rotateAboutCenter(rotation);
         body.setUserData(this);
         notifyDeletion = true;
         linearProjectile = false;
+    }
+
+    public Vector2 yFlipPosition(Vector2 position)
+    {
+        Vector2 tempPosition = new Vector2(position);
+        tempPosition.y = tempPosition.y * -1;
+        return tempPosition;
     }
 
     public void handleCollision(GameEntity otherEntity)

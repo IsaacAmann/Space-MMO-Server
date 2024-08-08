@@ -23,18 +23,24 @@ public class RapidCannon extends ShipExternalModule implements Weapon
         this.scenePath = "res://Ships/Modules/ExternalModules/Weapons/RapidCannon/RapidCannon.tscn";
         this.offsetVector = new Vector2(x, y);
 
-        damage = 2;
+        damage = 20;
         aimCone = 0.2;
         projectileVelocity = 1000;
+
     }
 
     @Override
     public void fire()
     {
         //Spawn a projectile heading towards mouse position
-        CannonRound currentRound = new CannonRound(parentShip.position.x + this.offsetVector.x, parentShip.position.y + this.offsetVector.y, 6, 13, parentShip.rotation, 560, parentShip);
+        CannonRound currentRound = new CannonRound(parentShip.position.x + this.offsetVector.x, parentShip.position.y + this.offsetVector.y, 6, 13, parentShip.rotation, projectileVelocity, parentShip);
         currentRound.velocityVector = currentRound.velocityVector.setDirection(parentShip.rotation);
+        currentRound.damage = damage;
+        //System.out.println("Projecilebody: " + currentRound.body.getTransform());
+       // System.out.println("ParentP: " + parentShip.body.getTransform());
         parentShip.player.currentSector.entityAddQueue.add(currentRound);
+
+
     }
 
     //Implementing reload from weapon interface

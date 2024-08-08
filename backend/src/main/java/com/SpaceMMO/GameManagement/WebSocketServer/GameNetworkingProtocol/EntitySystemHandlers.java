@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement.WebSocketServer.GameNetworkingProtocol;
 
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
+import com.SpaceMMO.GameManagement.EntitySystem.Projectiles.Projectile;
 import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.BinaryMessage;
@@ -63,8 +64,8 @@ public class EntitySystemHandlers
 
 
         BinaryMessage response = new BinaryMessage(payload.array());
-        System.out.println("new entity message");
-        System.out.println("JSON: " + json);
+       // System.out.println("new entity message");
+        //System.out.println("JSON: " + json);
         session.sendMessage(response);
     }
 

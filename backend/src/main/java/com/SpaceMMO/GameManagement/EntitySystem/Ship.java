@@ -75,6 +75,6 @@ public class Ship extends GameEntity
         this.position.x += velocityVector.x * delta;
         this.position.y += velocityVector.y * delta;
 
-        this.body.translate(position.difference(oldPosition));
+        this.body.translate(yFlipPosition(position.difference(oldPosition)));
     }
 }
