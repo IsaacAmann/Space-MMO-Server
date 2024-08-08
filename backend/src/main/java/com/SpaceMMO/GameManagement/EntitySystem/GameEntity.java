@@ -19,6 +19,10 @@ public abstract class GameEntity
     public Vector2 velocityVector;
     //Indicates that the entity should be removed on the next game loop iteration
     public boolean removeFlag;
+    //Flag for whether or not a packet should be sent on deletion (mostly relevant to projectiles)
+    public boolean notifyDeletion;
+    //Do not update client every tick, velocity is constant
+    public boolean linearProjectile;
 
     //public Rectangle rectangle;
     public Body body;
@@ -33,18 +37,29 @@ public abstract class GameEntity
 
     public static Sat collisionDetector = new Sat();
 
+    public static Vector2 yFlip = new Vector2(1, -1);
+
     public GameEntity(double x, double y, double width, double height, double rotation)
     {
         this.velocityVector = new Vector2(0, 0);
-        this.position = new Vector2(x, -1*y);
+        this.position = new Vector2(x, y);
         this.rotation = rotation;
         Rectangle rectangle = new Rectangle(width, height);
         this.body = new Body();
         body.addFixture(rectangle);
 
-        body.translate(position);
-        body.rotate(rotation);
+        body.translate(yFlipPosition(position));
+        body.rotateAboutCenter(rotation);
         body.setUserData(this);
+        notifyDeletion = true;
+        linearProjectile = false;
+    }
+
+    public Vector2 yFlipPosition(Vector2 position)
+    {
+        Vector2 tempPosition = new Vector2(position);
+        tempPosition.y = tempPosition.y * -1;
+        return tempPosition;
     }
 
     public void handleCollision(GameEntity otherEntity)

@@ -109,7 +109,7 @@ func _process(delta):
 					#new entity notification
 					5: 
 						entityHandler.handleNewEntity(packet)
-						print("new entity notification")
+						#print("new entity notification")
 					#Player input (probably wont be needed by client
 					6:
 						pass

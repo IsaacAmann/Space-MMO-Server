@@ -1,6 +1,7 @@
 package com.SpaceMMO.GameManagement.SectorSystem;
 
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
+import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
 import com.SpaceMMO.UserManagement.UserAccount;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;

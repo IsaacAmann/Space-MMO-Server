@@ -14,6 +14,7 @@ import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -73,6 +74,7 @@ public class BasicMessageHandlers
         String encodedMessage = Base64.getEncoder().encodeToString(message.getBytes());
 
         ByteBuffer payload = ByteBuffer.allocate(encodedMessage.getBytes(StandardCharsets.US_ASCII).length + 3);
+        payload.order(ByteOrder.LITTLE_ENDIAN);
 
         payload.put(ProtocolConstants.ERROR);
         payload.putShort(errorCode);

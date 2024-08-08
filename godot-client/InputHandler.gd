@@ -127,29 +127,21 @@ func _process(delta):
 		if(fDown):
 			inputByte = inputByte | 0b10000000
 		
-		message.resize(2)
+		message.resize(14)
+		
 		message.encode_u8(0, 0x6)
 		message.encode_u8(1, inputByte)
-		#print("SIZE: " + str(message.size()))
-		#print("Byte: " + str(inputByte))
-		print("ANGLE: " + str(angle))
-		var floatArray = PackedByteArray()
-		floatArray.resize(4)
-		floatArray.encode_float(0, angle)
-		floatArray.reverse()
-		message.append_array(floatArray)
-		
-		floatArray = PackedByteArray()
-		floatArray.resize(4)
-		floatArray.encode_float(0, mousePosition.x)
-		floatArray.reverse()
-		message.append_array(floatArray)
-		
-		floatArray = PackedByteArray()
-		floatArray.resize(4)
-		floatArray.encode_float(0, mousePosition.y)
-		floatArray.reverse()
-		message.append_array(floatArray)
-		
-		
+		var currentIndex = 2
+
+		#print("ANGLE: " + str(angle))
+
+		message.encode_float(currentIndex, angle)
+		currentIndex += 4
+
+		message.encode_float(currentIndex, mousePosition.x)
+		currentIndex += 4
+
+		message.encode_float(currentIndex, mousePosition.y)
+		currentIndex += 4
+
 		webSocketHandler.sendMessage(message)

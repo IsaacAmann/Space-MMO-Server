@@ -115,7 +115,7 @@ public class GameServer extends BinaryWebSocketHandler
             account.inGame = true;
             System.out.println(username + " has connected to the game");
             gameSessionService.userSocketSessions.put(session.getId(), account);
-            gameSessionService.usernameToSessionMap.put(account.username, new ConcurrentWebSocketSessionDecorator(session, 500, 8000));
+            gameSessionService.usernameToSessionMap.put(account.username, new ConcurrentWebSocketSessionDecorator(session, 100, 30000));
             Player newPlayer = new Player(gameSessionService.usernameToSessionMap.get(account.username), account);
             gameSessionService.playerList.put(account.username, newPlayer);
             userAccountRepository.save(account);

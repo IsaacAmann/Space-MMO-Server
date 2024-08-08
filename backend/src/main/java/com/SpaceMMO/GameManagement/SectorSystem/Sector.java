@@ -8,6 +8,7 @@ import com.SpaceMMO.GameManagement.ChatSystem.ChatMessage;
 import com.SpaceMMO.GameManagement.EntitySystem.GameEntity;
 
 import com.SpaceMMO.GameManagement.EntitySystem.PlayerEntity;
+import com.SpaceMMO.GameManagement.EntitySystem.Projectiles.Projectile;
 import com.SpaceMMO.GameManagement.QuadTree.PooledQuadNodeFactory;
 import com.SpaceMMO.GameManagement.QuadTree.QuadTreeNode;
 import com.SpaceMMO.GameManagement.ServiceContainer;
@@ -55,6 +56,7 @@ public class Sector
     //Entity containers
     private ArrayList<GameEntity> entities;
     public ArrayList<Player> players;
+
     public int nextEntityID = 0;
 
     public static int nextID = 0;
@@ -148,6 +150,7 @@ public class Sector
         //Send new entity notifications for pre existing entities
         for(GameEntity entity : entities)
         {
+            //Change this to add to message queue, can cause concurrency exceptions
             try {
                 serviceContainer.entitySystemHandlers.sendNewEntityNotification(player.session, entity);
             }
@@ -158,6 +161,7 @@ public class Sector
         }
         //Create player entity
         PlayerEntity newPlayerEntity = new PlayerEntity(player);
+        player.currentEntity = newPlayerEntity;
         addEntity(newPlayerEntity);
     }
 
@@ -177,9 +181,13 @@ public class Sector
             GameEntity entity = iterator.next();
             if(entity.removeFlag == true)
             {
-                for(Player player : players)
+                if(entity.notifyDeletion == true)
                 {
-                    serviceContainer.entitySystemHandlers.sendEntityDeleteNotification(player.session, entity);
+                    for (Player player : players)
+                    {
+                        //serviceContainer.entitySystemHandlers.sendEntityDeleteNotification(player.session, entity);
+                        player.messageQueue.add(serviceContainer.entitySystemHandlers.sendEntityDeleteNotification(player.session, entity));
+                    }
                 }
                 collisionDetector.remove(entity.body);
                 iterator.remove();
@@ -209,6 +217,21 @@ public class Sector
         for(int i = 0; i < amountToAdd; i++)
         {
             addEntity(entityAddQueue.remove());
+        }
+
+        //Player specific updates
+        for(Player player : players)
+        {
+            //Check if current ship is dead
+            if(player.currentEntity == null || player.currentEntity.removeFlag == true)
+            {
+                //Respawn
+                player.currentEntity = null;
+                player.currentEntity = new PlayerEntity(player);
+                entityAddQueue.add(player.currentEntity);
+                System.out.println("respawned " + player.account.username);
+
+            }
         }
     }
 
@@ -240,6 +263,7 @@ public class Sector
                 }
                 catch(Exception e)
                 {
+                    System.out.println("Bad message: " + message);
                     e.printStackTrace();
                 }
             }

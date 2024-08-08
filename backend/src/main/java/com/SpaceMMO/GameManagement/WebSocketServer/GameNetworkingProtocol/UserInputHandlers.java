@@ -11,6 +11,7 @@ import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 @Service
 public class UserInputHandlers
@@ -39,6 +40,8 @@ public class UserInputHandlers
         {
             //Parse message
             ByteBuffer messageBuffer = message.getPayload();
+            messageBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
             byte inputBitMap = messageBuffer.get(1);
             float desiredRotation = messageBuffer.getFloat(2);
             //desiredRotation = (byte)Integer.reverse(Float.floatToIntBits(desiredRotation));

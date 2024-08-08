@@ -22,6 +22,9 @@ var lerpModifier = 2.0
 var min_scale: float = 0.2
 var max_scale: float = 1.0
 
+#func _draw():
+#	draw_rect(Rect2(-120,-40,240,80), Color.PINK)
+#	pass;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	externalModuleContainer = get_node("./externalModuleContainer")
