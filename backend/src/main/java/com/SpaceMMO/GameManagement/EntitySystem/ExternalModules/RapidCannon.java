@@ -32,7 +32,8 @@ public class RapidCannon extends ShipExternalModule implements Weapon
     public void fire()
     {
         //Spawn a projectile heading towards mouse position
-        CannonRound currentRound = new CannonRound(parentShip.position.x + this.offsetVector.x, parentShip.position.y + this.offsetVector.y, 6, 13, parentShip.rotation, 100, parentShip);
+        CannonRound currentRound = new CannonRound(parentShip.position.x + this.offsetVector.x, parentShip.position.y + this.offsetVector.y, 6, 13, parentShip.rotation, 560, parentShip);
+        currentRound.velocityVector = currentRound.velocityVector.setDirection(parentShip.rotation);
         parentShip.player.currentSector.entityAddQueue.add(currentRound);
     }
 

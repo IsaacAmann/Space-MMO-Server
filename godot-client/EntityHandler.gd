@@ -182,6 +182,7 @@ func handleEntityUpdate(message: PackedByteArray):
 			
 		if("velocity" in entity):
 			entity.velocity = Vector2(velocityX, velocityY)
+			print("velocity: " + str(velocityX))
 		if("angularVelocity" in entity):
 			entity.angularVelocity = rotationalVelocity
 		#entity.spriteRotation = rotation

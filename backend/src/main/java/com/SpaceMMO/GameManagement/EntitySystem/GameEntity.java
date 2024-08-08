@@ -40,7 +40,7 @@ public abstract class GameEntity
     public GameEntity(double x, double y, double width, double height, double rotation)
     {
         this.velocityVector = new Vector2(0, 0);
-        this.position = new Vector2(x, -1*y);
+        this.position = new Vector2(x, y);
         this.rotation = rotation;
         Rectangle rectangle = new Rectangle(width, height);
         this.body = new Body();

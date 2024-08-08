@@ -133,7 +133,7 @@ func _process(delta):
 		message.encode_u8(1, inputByte)
 		var currentIndex = 2
 
-		print("ANGLE: " + str(angle))
+		#print("ANGLE: " + str(angle))
 
 		message.encode_float(currentIndex, angle)
 		currentIndex += 4
