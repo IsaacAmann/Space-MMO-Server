@@ -34,7 +34,7 @@ public class AsteroidSpawner extends GameEntity
         godotScenePath = "asteroidSpawner";
         this.parentSector = parentSector;
 
-        itemToGive = new InventoryItem(itemName, 1);
+        itemToGive = new InventoryItem(itemName, 1, 1);
         asteroids = new ArrayList<ResourceAsteroid>();
         spawnRadius = 333;
         ticksPerAsteroid = 50;

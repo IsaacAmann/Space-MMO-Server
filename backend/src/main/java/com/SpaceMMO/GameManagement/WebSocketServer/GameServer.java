@@ -35,6 +35,8 @@ public class GameServer extends BinaryWebSocketHandler
     UserInputHandlers userInputHandlers;
     @Autowired
     ChatMessageHandlers chatMessageHandlers;
+    @Autowired
+    InventoryMessageHandlers inventoryMessageHandlers;
 
     public static Sector testSector;
     public static float testX = 1;
@@ -66,8 +68,13 @@ public class GameServer extends BinaryWebSocketHandler
             case ProtocolConstants.CHAT_MESSAGE:
                 chatMessageHandlers.receiveChatMessage(session, message);
                 break;
+            case ProtocolConstants.REQUEST_INVENTORY:
+                inventoryMessageHandlers.handleInventoryRequest(session, message);
+                break;
+            case ProtocolConstants.REQUEST_TRADE:
+                inventoryMessageHandlers.handleTradeRequest(session, message);
+                break;
             default:
-
                 break;
         }
     }

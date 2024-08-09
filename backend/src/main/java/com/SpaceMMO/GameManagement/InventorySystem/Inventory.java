@@ -8,10 +8,13 @@ import java.util.HashMap;
 public class Inventory
 {
     public HashMap<String, InventoryItem> items;
+    //Inventory ID will likely match the entity ID that it is attached to
+    public int inventoryID;
 
-    public Inventory()
+    public Inventory(int inventoryID)
     {
         items = new HashMap<String, InventoryItem>();
+        this.inventoryID = inventoryID;
     }
 
     public boolean addItem(InventoryItem item)
@@ -60,6 +63,7 @@ public class Inventory
     {
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, Object> entityData = new HashMap<String, Object>();
+        String output = null;
 
         //Add items
         HashMap<String, Object>[] itemData = new HashMap[items.size()];
@@ -70,8 +74,17 @@ public class Inventory
             i++;
         }
 
+        try
+        {
+            output = objectMapper.writeValueAsString(entityData);
+            System.out.println("JSON: : : : " + output);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
-        return null;
+        return output;
     }
 
 

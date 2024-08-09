@@ -8,10 +8,18 @@ public class InventoryItem
 
     public int itemQuantity;
 
-    public InventoryItem(String itemName, int itemQuantity)
+    public int volumeRatio;
+
+    public int volume;
+
+
+    public InventoryItem(String itemName, int itemQuantity, int volumeRatio)
     {
         this.itemName = itemName;
         this.itemQuantity = itemQuantity;
+        this.volumeRatio = volumeRatio;
+
+        this.volume = itemQuantity * volumeRatio;
     }
     //Copy constructor
     public InventoryItem(InventoryItem item)

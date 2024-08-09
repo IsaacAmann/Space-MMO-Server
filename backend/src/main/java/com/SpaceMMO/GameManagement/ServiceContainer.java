@@ -28,4 +28,6 @@ public class ServiceContainer
     public ClientAffectsHandler clientAffectsHandler;
     @Autowired
     public ChatMessageHandlers chatMessageHandlers;
+    @Autowired
+    public InventoryMessageHandlers inventoryMessageHandlers;
 }

@@ -75,7 +75,7 @@ public abstract class GameEntity
         try
         {
             output = objectMapper.writeValueAsString(data);
-            System.out.println("JSON: : : : " + output);
+            //System.out.println("JSON: : : : " + output);
         }
         catch(Exception e)
         {

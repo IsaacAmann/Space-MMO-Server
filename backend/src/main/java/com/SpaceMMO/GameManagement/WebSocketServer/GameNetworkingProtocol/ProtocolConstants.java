@@ -15,4 +15,6 @@ public class ProtocolConstants
     public static final byte LASER_AFFECT = 0x7;
     public static final byte ENTITY_DELETE = 0x8;
     public static final byte CHAT_MESSAGE = 0x9;
+    public static final byte REQUEST_INVENTORY = 0xA;
+    public static final byte REQUEST_TRADE = 0xB;
 }

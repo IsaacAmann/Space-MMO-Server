@@ -163,6 +163,7 @@ public class Sector
         PlayerEntity newPlayerEntity = new PlayerEntity(player);
         player.currentEntity = newPlayerEntity;
         addEntity(newPlayerEntity);
+        newPlayerEntity.playerInventory.inventoryID = newPlayerEntity.entityID;
     }
 
     public void removePlayer(Player player)
