@@ -1,5 +1,7 @@
 package com.SpaceMMO.GameManagement.InventorySystem;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,6 +54,24 @@ public class Inventory
         }
 
         return amountRemoved;
+    }
+
+    public String getInventoryJSON()
+    {
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String, Object> entityData = new HashMap<String, Object>();
+
+        //Add items
+        HashMap<String, Object>[] itemData = new HashMap[items.size()];
+        int i = 0;
+        for(String key : items.keySet())
+        {
+            itemData[i] = items.get(key).getDataMap();
+            i++;
+        }
+
+
+        return null;
     }
 
 
