@@ -46,11 +46,15 @@ public class MiningDrillModule extends ShipExternalModule implements Weapon
             }
         }
         //Ray cast and search for hits
+
         Vector2 mousePositionVector = new Vector2(parentShip.player.mouseX, parentShip.player.mouseY);
-        Ray ray = new Ray(parentShip.position, parentShip.position.to(mousePositionVector).getDirection());
+        mousePositionVector = parentShip.yFlipPosition(mousePositionVector);
+        Vector2 flippedPosition = parentShip.yFlipPosition(parentShip.position);
+
+        Ray ray = new Ray(flippedPosition, flippedPosition.to(mousePositionVector).getDirection());
 
         System.out.println(ray.getStart());
-        Iterator<Body> rayHits = parentShip.player.currentSector.collisionDetector.raycastIterator(ray, parentShip.position.distance(mousePositionVector));
+        Iterator<Body> rayHits = parentShip.player.currentSector.collisionDetector.raycastIterator(ray, flippedPosition.distance(mousePositionVector));
 
         handleRayHits(rayHits);
     }
