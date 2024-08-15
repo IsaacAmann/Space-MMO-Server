@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bkwtjjfwfojqi"]
+[gd_scene load_steps=11 format=3 uid="uid://bkwtjjfwfojqi"]
 
 [ext_resource type="Script" path="res://WebSocketHandler.gd" id="1_355yi"]
 [ext_resource type="Script" path="res://EntityHandler.gd" id="2_tn10v"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://AffectsHandler.gd" id="6_baqi1"]
 [ext_resource type="Script" path="res://ChatHandler.gd" id="7_one1j"]
 [ext_resource type="PackedScene" uid="uid://udj8l7mlv3y0" path="res://UI/ChatBox/chat_box.tscn" id="9_ehfob"]
+[ext_resource type="Script" path="res://InventoryHandler.gd" id="10_4v3vq"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -45,3 +46,6 @@ script = ExtResource("6_baqi1")
 
 [node name="ChatHandler" type="Node2D" parent="."]
 script = ExtResource("7_one1j")
+
+[node name="InventoryHandler" type="Node2D" parent="."]
+script = ExtResource("10_4v3vq")

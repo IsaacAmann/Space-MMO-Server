@@ -54,7 +54,7 @@ public class Sector
     public QuadTreeNode entityTree;
 
     //Entity containers
-    private ArrayList<GameEntity> entities;
+    public ArrayList<GameEntity> entities;
     public ArrayList<Player> players;
 
     public int nextEntityID = 0;
@@ -140,6 +140,24 @@ public class Sector
                 e.printStackTrace();
             }
         }
+    }
+
+    public GameEntity getEntityByID(int entityID)
+    {
+        GameEntity output = null;
+
+        Iterator<GameEntity> iterator = entities.iterator();
+        while(iterator.hasNext())
+        {
+            GameEntity entity = iterator.next();
+            if(entity.entityID == entityID)
+            {
+                output = entity;
+                break;
+            }
+        }
+
+        return output;
     }
 
     public void addPlayer(Player player)

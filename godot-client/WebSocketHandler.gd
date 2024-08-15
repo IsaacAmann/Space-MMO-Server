@@ -15,6 +15,7 @@ var entityHandler
 var inputHandler
 var affectsHandler
 var chatHandler
+var inventoryHandler
 
 var debugMode = false
 var requestComplete = false
@@ -45,6 +46,7 @@ func _ready():
 	inputHandler = get_node("../InputHandler")
 	affectsHandler = get_node("../AffectsHandler")
 	chatHandler = get_node("../ChatHandler")
+	inventoryHandler = get_node("../InventoryHandler")
 	
 func getTokenRequestComplete(result, response_code, headers, body):
 	print(body)
@@ -120,6 +122,8 @@ func _process(delta):
 						entityHandler.handleEntityDelete(packet)
 					9:
 						chatHandler.handleChatMessage(packet)
+					10:
+						inventoryHandler.handleInventoryPacket(packet)
 						
 		elif state == WebSocketPeer.STATE_CLOSING:
 			
