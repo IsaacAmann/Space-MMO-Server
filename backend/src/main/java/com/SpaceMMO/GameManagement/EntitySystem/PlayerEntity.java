@@ -2,6 +2,7 @@ package com.SpaceMMO.GameManagement.EntitySystem;
 
 import com.SpaceMMO.GameManagement.EntitySystem.ExternalModules.MiningDrillModule;
 import com.SpaceMMO.GameManagement.EntitySystem.ExternalModules.RapidCannon;
+import com.SpaceMMO.GameManagement.InventorySystem.HasInventory;
 import com.SpaceMMO.GameManagement.InventorySystem.Inventory;
 import com.SpaceMMO.GameManagement.SectorSystem.Player;
 import com.SpaceMMO.GameManagement.SectorSystem.Sector;
@@ -13,7 +14,7 @@ import org.dyn4j.geometry.Vector2;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PlayerEntity extends Ship
+public class PlayerEntity extends Ship implements HasInventory
 {
 
     //Reference to the Player object that owns the entity
@@ -38,8 +39,7 @@ public class PlayerEntity extends Ship
         externalModules.add(new MiningDrillModule(0,0, this));
         externalModules.add(new RapidCannon(10,10,this));
         godotScenePath = "res://Ships/pipeDutch/pipeDutch.tscn";
-        //Need to update this to the player's entity ID manually
-        playerInventory = new Inventory(-1);
+        playerInventory = new Inventory();
         this.health = 500;
         this.player = player;
     }
@@ -152,5 +152,9 @@ public class PlayerEntity extends Ship
 
     }
 
-
+    @Override
+    public Inventory getInventory()
+    {
+        return this.playerInventory;
+    }
 }

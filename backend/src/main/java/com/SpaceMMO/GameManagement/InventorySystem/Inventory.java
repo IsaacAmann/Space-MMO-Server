@@ -8,13 +8,10 @@ import java.util.HashMap;
 public class Inventory
 {
     public HashMap<String, InventoryItem> items;
-    //Inventory ID will likely match the entity ID that it is attached to
-    public int inventoryID;
 
-    public Inventory(int inventoryID)
+    public Inventory()
     {
         items = new HashMap<String, InventoryItem>();
-        this.inventoryID = inventoryID;
     }
 
     public boolean addItem(InventoryItem item)

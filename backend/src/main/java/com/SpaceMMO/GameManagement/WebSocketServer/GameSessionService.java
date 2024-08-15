@@ -24,4 +24,15 @@ public class GameSessionService
     public static ConcurrentHashMap<String, Player> playerList = new ConcurrentHashMap<String, Player>();
     //Sector map
     public static ConcurrentHashMap<Integer, Sector> sectorMap = new ConcurrentHashMap<Integer, Sector>();
+
+    //Get user account from session
+    public UserAccount getAccountFromSession(WebSocketSession session)
+    {
+        return userSocketSessions.get(session.getId());
+    }
+    //Get player from session
+    public Player getPlayerFromSession(WebSocketSession session)
+    {
+        return playerList.get(getAccountFromSession(session).username);
+    }
 }
